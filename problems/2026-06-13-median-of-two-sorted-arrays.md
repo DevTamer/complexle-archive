@@ -43,10 +43,6 @@ def find_median_sorted_arrays(nums1: list[int], nums2: list[int]) -> float:
 ### C++
 
 ```cpp
-#include <vector>
-#include <algorithm>
-#include <climits>
-
 double findMedianSortedArrays(std::vector<int>& nums1, std::vector<int>& nums2) {
     if (nums1.size() > nums2.size()) std::swap(nums1, nums2);
     int m = nums1.size(), n = nums2.size();

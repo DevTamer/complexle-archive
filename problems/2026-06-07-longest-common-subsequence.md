@@ -32,10 +32,6 @@ def lcs(text1: str, text2: str) -> int:
 ### C++
 
 ```cpp
-#include <string>
-#include <vector>
-#include <algorithm>
-
 int lcs(std::string text1, std::string text2) {
     int m = text1.size(), n = text2.size();
     std::vector<std::vector<int>> dp(m + 1, std::vector<int>(n + 1, 0));

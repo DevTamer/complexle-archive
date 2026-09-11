@@ -29,9 +29,6 @@ def rob(nums: list[int]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-#include <algorithm>
-
 int rob(std::vector<int>& nums) {
     int prev2 = 0, prev1 = 0;
     for (int n : nums) {

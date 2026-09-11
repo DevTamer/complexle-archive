@@ -41,8 +41,6 @@ def trap(height: list[int]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-
 int trap(std::vector<int>& height) {
     if (height.empty()) return 0;
     int lo = 0, hi = height.size() - 1;

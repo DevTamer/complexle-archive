@@ -38,8 +38,6 @@ def wiggle_max_length(nums: list[int]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-
 int wiggleMaxLength(std::vector<int>& nums) {
     if (nums.size() < 2) {
         return static_cast<int>(nums.size());

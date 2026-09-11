@@ -33,8 +33,6 @@ def binary_search(nums: list[int], target: int) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-
 int binarySearch(std::vector<int>& nums, int target) {
     int lo = 0, hi = nums.size() - 1;
     while (lo <= hi) {

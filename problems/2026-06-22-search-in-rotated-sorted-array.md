@@ -39,8 +39,6 @@ def search(nums: list[int], target: int) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-
 int search(std::vector<int>& nums, int target) {
     int lo = 0, hi = nums.size() - 1;
     while (lo <= hi) {

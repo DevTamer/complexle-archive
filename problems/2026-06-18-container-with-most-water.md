@@ -33,9 +33,6 @@ def max_area(height: list[int]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-#include <algorithm>
-
 int maxArea(std::vector<int>& height) {
     int lo = 0, hi = height.size() - 1, best = 0;
     while (lo < hi) {

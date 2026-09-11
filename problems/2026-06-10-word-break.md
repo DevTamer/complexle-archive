@@ -33,10 +33,6 @@ def word_break(s: str, word_dict: list[str]) -> bool:
 ### C++
 
 ```cpp
-#include <string>
-#include <vector>
-#include <unordered_set>
-
 bool wordBreak(std::string s, std::vector<std::string>& wordDict) {
     std::unordered_set<std::string> words(wordDict.begin(), wordDict.end());
     int n = s.size();
@@ -57,8 +53,6 @@ bool wordBreak(std::string s, std::vector<std::string>& wordDict) {
 ### Rust
 
 ```rust
-use std::collections::HashSet;
-
 fn word_break(s: &str, word_dict: &[&str]) -> bool {
     let words: HashSet<&str> = word_dict.iter().copied().collect();
     let n = s.len();

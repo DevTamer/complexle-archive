@@ -34,8 +34,6 @@ def find_duplicate(nums: list[int]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-
 int findDuplicate(std::vector<int>& nums) {
     int slow = nums[0], fast = nums[0];
     do {

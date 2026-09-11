@@ -28,9 +28,6 @@ def max_subarray(nums: list[int]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-#include <algorithm>
-
 int maxSubArray(std::vector<int>& nums) {
     int best = nums[0], curr = nums[0];
     for (size_t i = 1; i < nums.size(); i++) {

@@ -44,10 +44,6 @@ def majority_element(nums: list[int]) -> list[int]:
 ### C++
 
 ```cpp
-#include <vector>
-#include <unordered_map>
-#include <algorithm>
-
 std::vector<int> majorityElement(std::vector<int>& nums) {
     int k = 3;
     int n = nums.size();
@@ -91,8 +87,6 @@ std::vector<int> majorityElement(std::vector<int>& nums) {
 ### Rust
 
 ```rust
-use std::collections::HashMap;
-
 fn majority_element(nums: &[i32]) -> Vec<i32> {
     let k = 3usize;
     let n = nums.len();

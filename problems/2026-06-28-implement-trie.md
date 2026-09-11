@@ -49,9 +49,6 @@ class Trie:
 ### C++
 
 ```cpp
-#include <string>
-#include <unordered_map>
-
 class Trie {
     std::unordered_map<char, Trie*> children;
     bool end = false;
@@ -80,8 +77,6 @@ public:
 ### Rust
 
 ```rust
-use std::collections::HashMap;
-
 struct Trie {
     children: HashMap<char, Trie>,
     end: bool,

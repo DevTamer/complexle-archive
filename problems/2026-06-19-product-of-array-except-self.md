@@ -34,8 +34,6 @@ def product_except_self(nums: list[int]) -> list[int]:
 ### C++
 
 ```cpp
-#include <vector>
-
 std::vector<int> productExceptSelf(std::vector<int>& nums) {
     int n = nums.size();
     std::vector<int> result(n, 1);

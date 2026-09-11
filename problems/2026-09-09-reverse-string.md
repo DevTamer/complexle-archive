@@ -28,8 +28,6 @@ def reverse_string(s: list[str]) -> None:
 ### C++
 
 ```cpp
-#include <vector>
-
 void reverseString(std::vector<char>& s) {
     for (int i = 0, j = (int)s.size() - 1; i < j; ++i, --j) {
         std::swap(s[i], s[j]);

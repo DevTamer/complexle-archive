@@ -33,8 +33,6 @@ def two_sum(nums: list[int], target: int) -> list[int]:
 ### C++
 
 ```cpp
-#include <vector>
-
 std::vector<int> twoSum(std::vector<int>& numbers, int target) {
     int left = 0, right = static_cast<int>(numbers.size()) - 1;
     while (left != right) {

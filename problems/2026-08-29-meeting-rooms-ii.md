@@ -30,10 +30,6 @@ def min_meeting_rooms(intervals: list[list[int]]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-#include <algorithm>
-#include <utility>
-
 int minMeetingRooms(std::vector<std::vector<int>>& intervals) {
     std::vector<std::pair<int,int>> line;
     for (auto& iv : intervals) {

@@ -28,9 +28,6 @@ def find_max_consecutive_ones(nums: list[int]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-#include <algorithm>
-
 int findMaxConsecutiveOnes(std::vector<int>& nums) {
     int result = 0, local_max = 0;
     for (const auto& n : nums) {

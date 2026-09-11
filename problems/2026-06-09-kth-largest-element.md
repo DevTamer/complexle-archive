@@ -17,8 +17,6 @@ space complexity — only the language differs.
 ### Python
 
 ```python
-import heapq
-
 def find_kth_largest(nums: list[int], k: int) -> int:
     heap = []
     for n in nums:
@@ -31,9 +29,6 @@ def find_kth_largest(nums: list[int], k: int) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-#include <queue>
-
 int findKthLargest(std::vector<int>& nums, int k) {
     std::priority_queue<int, std::vector<int>, std::greater<int>> minHeap;
     for (int n : nums) {
@@ -48,9 +43,6 @@ int findKthLargest(std::vector<int>& nums, int k) {
 ### Rust
 
 ```rust
-use std::collections::BinaryHeap;
-use std::cmp::Reverse;
-
 fn find_kth_largest(nums: &[i32], k: usize) -> i32 {
     let mut heap = BinaryHeap::new();
     for &n in nums {

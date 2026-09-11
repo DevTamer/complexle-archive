@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle
 
-**71 puzzles** archived, from 2026-06-01 to 2026-09-10.
+**51 puzzles** archived, from 2026-06-01 to 2026-09-10.
 
 ## Index
 
@@ -43,26 +43,6 @@ Updated daily, automatically, as each puzzle retires.
 | 2026-08-22 | [Insert Interval](problems/2026-08-22-insert-interval.md) | arrays | `O(n)` | `O(n)` |
 | 2026-08-21 | [Rotate Image](problems/2026-08-21-rotate-image.md) | arrays | `O(n^2)` | `O(1)` |
 | 2026-08-20 | [First Missing Positive](problems/2026-08-20-first-missing-positive.md) | arrays | `O(n)` | `O(1)` |
-| 2026-07-19 | [Valid Anagram](problems/2026-07-19-valid-anagram.md) | hash map | `O(n)` | `O(1)` |
-| 2026-07-18 | [Merge Intervals](problems/2026-07-18-merge-intervals.md) | sorting | `O(n log n)` | `O(n)` |
-| 2026-07-17 | [Top K Frequent Elements](problems/2026-07-17-top-k-frequent-elements.md) | heap | `O(n log k)` | `O(n)` |
-| 2026-07-16 | [Maximum Product Subarray](problems/2026-07-16-maximum-product-subarray.md) | dynamic programming | `O(n)` | `O(1)` |
-| 2026-07-15 | [Longest Palindromic Substring](problems/2026-07-15-longest-palindromic-substring.md) | two pointers | `O(n²)` | `O(1)` |
-| 2026-07-14 | [Longest Increasing Subsequence](problems/2026-07-14-longest-increasing-subsequence.md) | dynamic programming | `O(n log n)` | `O(n)` |
-| 2026-07-13 | [Daily Temperatures](problems/2026-07-13-daily-temperatures.md) | stack | `O(n)` | `O(n)` |
-| 2026-07-12 | [Spiral Matrix](problems/2026-07-12-spiral-matrix.md) | arrays | `O(m*n)` | `O(m*n)` |
-| 2026-07-11 | [Jump Game](problems/2026-07-11-jump-game.md) | arrays | `O(n)` | `O(1)` |
-| 2026-07-10 | [Validate Binary Search Tree](problems/2026-07-10-validate-binary-search-tree.md) | tree | `O(n)` | `O(n)` |
-| 2026-07-09 | [Diameter of Binary Tree](problems/2026-07-09-diameter-of-binary-tree.md) | tree | `O(n)` | `O(n)` |
-| 2026-07-08 | [Invert Binary Tree](problems/2026-07-08-invert-binary-tree.md) | tree | `O(n)` | `O(h)` |
-| 2026-07-07 | [Symmetric Tree](problems/2026-07-07-symmetric-tree.md) | tree | `O(n)` | `O(n)` |
-| 2026-07-06 | [Pascal's Triangle](problems/2026-07-06-pascals-triangle.md) | arrays | `O(n²)` | `O(n²)` |
-| 2026-07-05 | [Remove Duplicates from Sorted Array](problems/2026-07-05-remove-duplicates-from-sorted-array.md) | two pointers | `O(n)` | `O(1)` |
-| 2026-07-04 | [Linked List Cycle](problems/2026-07-04-linked-list-cycle.md) | cycle detection | `O(n)` | `O(1)` |
-| 2026-07-03 | [Merge Two Sorted Lists](problems/2026-07-03-merge-two-sorted-lists.md) | linked list | `O(n + m)` | `O(1)` |
-| 2026-07-02 | [Majority Element](problems/2026-07-02-majority-element.md) | arrays | `O(n)` | `O(1)` |
-| 2026-07-01 | [Contains Duplicate](problems/2026-07-01-contains-duplicate.md) | hash map | `O(n)` | `O(n)` |
-| 2026-06-30 | [Best Time to Buy and Sell Stock](problems/2026-06-30-best-time-to-buy-and-sell-stock.md) | arrays | `O(n)` | `O(1)` |
 | 2026-06-29 | [House Robber](problems/2026-06-29-house-robber.md) | dynamic programming | `O(n)` | `O(1)` |
 | 2026-06-28 | [Implement Trie](problems/2026-06-28-implement-trie.md) | trie | `O(n)` | `O(n)` |
 | 2026-06-27 | [Subsets](problems/2026-06-27-subsets.md) | backtracking | `O(n * 2^n)` | `O(n * 2^n)` |

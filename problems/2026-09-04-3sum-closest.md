@@ -41,11 +41,6 @@ def three_sum_closest(nums: list[int], target: int) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-#include <algorithm>
-#include <climits>
-#include <cmath>
-
 int threeSumClosest(std::vector<int>& nums, int target) {
     std::sort(nums.begin(), nums.end());
     int result = 0;

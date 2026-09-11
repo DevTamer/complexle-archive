@@ -17,8 +17,6 @@ space complexity — only the language differs.
 ### Python
 
 ```python
-from collections import deque
-
 def max_sliding_window(nums: list[int], k: int) -> list[int]:
     dq = deque()  # stores indices
     result = []
@@ -36,9 +34,6 @@ def max_sliding_window(nums: list[int], k: int) -> list[int]:
 ### C++
 
 ```cpp
-#include <vector>
-#include <deque>
-
 std::vector<int> maxSlidingWindow(std::vector<int>& nums, int k) {
     std::deque<int> dq;  // stores indices
     std::vector<int> result;
@@ -58,8 +53,6 @@ std::vector<int> maxSlidingWindow(std::vector<int>& nums, int k) {
 ### Rust
 
 ```rust
-use std::collections::VecDeque;
-
 fn max_sliding_window(nums: &[i32], k: usize) -> Vec<i32> {
     let mut dq: VecDeque<usize> = VecDeque::new();
     let mut result = Vec::new();

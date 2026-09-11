@@ -32,8 +32,6 @@ def can_place_flowers(flowerbed: list[int], n: int) -> bool:
 ### C++
 
 ```cpp
-#include <vector>
-
 bool canPlaceFlowers(std::vector<int>& flowerbed, int n) {
     for (size_t i = 0; i < flowerbed.size(); ++i) {
         if (flowerbed[i] == 0 && (i == 0 || flowerbed[i - 1] == 0) &&
