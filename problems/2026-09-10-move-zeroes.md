@@ -29,9 +29,6 @@ def move_zeroes(nums: list[int]) -> list[int]:
 ### C++
 
 ```cpp
-#include <vector>
-#include <utility>
-
 std::vector<int> moveZeroes(std::vector<int>& nums) {
     int pos = 0;
     for (auto& num : nums) {

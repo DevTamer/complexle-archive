@@ -17,8 +17,6 @@ space complexity — only the language differs.
 ### Python
 
 ```python
-from collections import deque
-
 def oranges_rotting(grid: list[list[int]]) -> int:
     rows, cols = len(grid), len(grid[0])
     queue = deque()
@@ -43,9 +41,6 @@ def oranges_rotting(grid: list[list[int]]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-#include <queue>
-
 int orangesRotting(std::vector<std::vector<int>>& grid) {
     int rows = grid.size(), cols = grid[0].size();
     std::queue<std::tuple<int,int,int>> q;
@@ -75,8 +70,6 @@ int orangesRotting(std::vector<std::vector<int>>& grid) {
 ### Rust
 
 ```rust
-use std::collections::VecDeque;
-
 fn oranges_rotting(grid: &mut Vec<Vec<i32>>) -> i32 {
     let (rows, cols) = (grid.len(), grid[0].len());
     let mut queue: VecDeque<(i32, i32, i32)> = VecDeque::new();

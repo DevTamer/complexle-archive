@@ -33,9 +33,6 @@ def is_palindrome(s: str) -> bool:
 ### C++
 
 ```cpp
-#include <string>
-#include <cctype>
-
 bool isPalindrome(std::string s) {
     int i = 0, j = (int)s.length() - 1;
     while (i < j) {

@@ -41,8 +41,6 @@ def num_islands(grid: list[list[str]]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-
 void dfs(std::vector<std::vector<char>>& grid, int r, int c) {
     int rows = grid.size(), cols = grid[0].size();
     if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] != '1')

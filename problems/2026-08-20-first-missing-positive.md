@@ -31,9 +31,6 @@ def first_missing_positive(nums: list[int]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-#include <utility>
-
 int firstMissingPositive(std::vector<int>& nums) {
     int n = nums.size();
     for (int i = 0; i < n; i++) {

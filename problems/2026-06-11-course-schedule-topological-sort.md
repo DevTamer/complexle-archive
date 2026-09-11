@@ -17,8 +17,6 @@ space complexity — only the language differs.
 ### Python
 
 ```python
-from collections import deque
-
 def can_finish(num_courses: int, prerequisites: list[list[int]]) -> bool:
     in_degree = [0] * num_courses
     adj = [[] for _ in range(num_courses)]
@@ -40,9 +38,6 @@ def can_finish(num_courses: int, prerequisites: list[list[int]]) -> bool:
 ### C++
 
 ```cpp
-#include <vector>
-#include <queue>
-
 bool canFinish(int numCourses, std::vector<std::vector<int>>& prerequisites) {
     std::vector<int> inDegree(numCourses, 0);
     std::vector<std::vector<int>> adj(numCourses);
@@ -67,8 +62,6 @@ bool canFinish(int numCourses, std::vector<std::vector<int>>& prerequisites) {
 ### Rust
 
 ```rust
-use std::collections::VecDeque;
-
 fn can_finish(num_courses: usize, prerequisites: &[(usize, usize)]) -> bool {
     let mut in_degree = vec![0usize; num_courses];
     let mut adj = vec![vec![]; num_courses];

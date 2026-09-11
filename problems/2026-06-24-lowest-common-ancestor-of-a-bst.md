@@ -52,9 +52,6 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 ### Rust
 
 ```rust
-use std::cell::RefCell;
-use std::rc::Rc;
-
 type Link = Option<Rc<RefCell<TreeNode>>>;
 
 struct TreeNode { val: i32, left: Link, right: Link }

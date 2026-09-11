@@ -29,8 +29,6 @@ def get_row(row_index: int) -> list[int]:
 ### C++
 
 ```cpp
-#include <vector>
-
 std::vector<int> getRow(int rowIndex) {
     std::vector<int> result(rowIndex + 1);
     for (int i = 0; i < (int)result.size(); ++i) {

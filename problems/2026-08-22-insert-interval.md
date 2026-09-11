@@ -36,9 +36,6 @@ def insert(intervals: list[list[int]], new_interval: list[int]) -> list[list[int
 ### C++
 
 ```cpp
-#include <vector>
-#include <algorithm>
-
 std::vector<std::vector<int>> insert(std::vector<std::vector<int>>& intervals, std::vector<int>& newInterval) {
     size_t i = 0;
     std::vector<std::vector<int>> result;

@@ -17,8 +17,6 @@ space complexity — only the language differs.
 ### Python
 
 ```python
-import bisect
-
 def sorted_squares(nums: list[int]) -> list[int]:
     right = bisect.bisect_left(nums, 0)
     left = right - 1
@@ -36,9 +34,6 @@ def sorted_squares(nums: list[int]) -> list[int]:
 ### C++
 
 ```cpp
-#include <vector>
-#include <algorithm>
-
 std::vector<int> sortedSquares(std::vector<int>& nums) {
     int right = std::distance(nums.cbegin(), std::lower_bound(nums.cbegin(), nums.cend(), 0));
     int left = right - 1;

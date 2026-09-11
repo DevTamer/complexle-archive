@@ -27,8 +27,6 @@ def single_number(nums: list[int]) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-
 int singleNumber(std::vector<int>& nums) {
     int one = 0, two = 0;
     for (int i : nums) {

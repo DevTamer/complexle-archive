@@ -47,9 +47,6 @@ int maxDepth(TreeNode* root) {
 ### Rust
 
 ```rust
-use std::cell::RefCell;
-use std::rc::Rc;
-
 struct TreeNode {
     val: i32,
     left: Option<Rc<RefCell<TreeNode>>>,

@@ -37,9 +37,6 @@ def sort_colors(nums: list[int]) -> list[int]:
 ### C++
 
 ```cpp
-#include <vector>
-#include <utility>
-
 std::vector<int> sortColors(std::vector<int>& nums) {
     const int target = 1;
     int right = static_cast<int>(nums.size()) - 1;

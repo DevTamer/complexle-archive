@@ -17,8 +17,6 @@ space complexity — only the language differs.
 ### Python
 
 ```python
-from collections import deque
-
 class Codec:
     def serialize(self, root) -> str:
         if not root:
@@ -58,10 +56,6 @@ class Codec:
 ### C++
 
 ```cpp
-#include <string>
-#include <queue>
-#include <sstream>
-
 struct TreeNode { int val; TreeNode *left, *right; };
 
 std::string serialize(TreeNode* root) {
@@ -108,8 +102,6 @@ TreeNode* deserialize(std::string data) {
 ### Rust
 
 ```rust
-use std::collections::VecDeque;
-
 fn serialize(root: Option<Box<TreeNode>>) -> String {
     let Some(root) = root else { return "null".into() };
     let mut result = Vec::new();

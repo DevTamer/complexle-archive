@@ -33,10 +33,6 @@ def is_valid(s: str) -> bool:
 ### C++
 
 ```cpp
-#include <stack>
-#include <string>
-#include <unordered_map>
-
 bool isValid(std::string s) {
     std::stack<char> stk;
     std::unordered_map<char,char> m = {{')', '('}, {'}', '{'}, {']', '['}};

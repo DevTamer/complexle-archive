@@ -32,11 +32,6 @@ def partition_labels(s: str) -> list[int]:
 ### C++
 
 ```cpp
-#include <vector>
-#include <string>
-#include <unordered_map>
-#include <algorithm>
-
 std::vector<int> partitionLabels(std::string s) {
     std::unordered_map<char, int> lookup;
     for (int i = 0; i < (int)s.length(); ++i) {
@@ -58,8 +53,6 @@ std::vector<int> partitionLabels(std::string s) {
 ### Rust
 
 ```rust
-use std::collections::HashMap;
-
 fn partition_labels(s: &str) -> Vec<i32> {
     let chars: Vec<char> = s.chars().collect();
     let mut lookup: HashMap<char, usize> = HashMap::new();

@@ -41,8 +41,6 @@ def merge(left, right):
 ### C++
 
 ```cpp
-#include <vector>
-
 void merge(std::vector<int>& arr, int l, int m, int r) {
     std::vector<int> tmp(arr.begin() + l, arr.begin() + r + 1);
     int i = 0, j = m - l + 1, k = l;

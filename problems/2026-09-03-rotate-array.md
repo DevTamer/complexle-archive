@@ -34,9 +34,6 @@ def rotate(nums: list[int], k: int) -> list[int]:
 ### C++
 
 ```cpp
-#include <vector>
-#include <algorithm>
-
 std::vector<int> rotate(std::vector<int>& nums, int k) {
     if (!nums.empty()) {
         k %= (int)nums.size();

@@ -30,9 +30,6 @@ def coin_change(coins: list[int], amount: int) -> int:
 ### C++
 
 ```cpp
-#include <vector>
-#include <algorithm>
-
 int coinChange(std::vector<int>& coins, int amount) {
     std::vector<int> dp(amount + 1, amount + 1);
     dp[0] = 0;

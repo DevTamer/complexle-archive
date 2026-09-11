@@ -17,8 +17,6 @@ space complexity — only the language differs.
 ### Python
 
 ```python
-from collections import defaultdict
-
 def group_anagrams(strs: list[str]) -> list[list[str]]:
     groups = defaultdict(list)
     for s in strs:
@@ -32,10 +30,6 @@ def group_anagrams(strs: list[str]) -> list[list[str]]:
 ### C++
 
 ```cpp
-#include <vector>
-#include <string>
-#include <unordered_map>
-
 std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& strs) {
     std::unordered_map<std::string, std::vector<std::string>> groups;
     for (const auto& s : strs) {
@@ -52,8 +46,6 @@ std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& st
 ### Rust
 
 ```rust
-use std::collections::HashMap;
-
 fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
     let mut groups: HashMap<[u8; 26], Vec<String>> = HashMap::new();
     for s in strs {

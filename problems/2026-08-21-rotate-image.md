@@ -36,9 +36,6 @@ def rotate(matrix: list[list[int]]) -> list[list[int]]:
 ### C++
 
 ```cpp
-#include <vector>
-#include <utility>
-
 std::vector<std::vector<int>> rotate(std::vector<std::vector<int>>& matrix) {
     int n = matrix.size();
 
