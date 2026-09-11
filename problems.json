@@ -1,0 +1,996 @@
+[
+  {
+    "date": "2026-06-01",
+    "title": "Two Sum",
+    "category": "hash map",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The algorithm iterates through the list exactly once, performing O(1) hash map lookups and insertions at each step, yielding O(n) time complexity overall. The hash map 'seen' stores at most n key-value pairs in the worst case (when no solution is found until the last element), resulting in O(n) space complexity.",
+    "source_url": null,
+    "implementations": {
+      "python": "def two_sum(nums: list[int], target: int) -> list[int]:\n    seen = {}\n    for i, n in enumerate(nums):\n        if target - n in seen:\n            return [seen[target - n], i]\n        seen[n] = i\n    return []",
+      "cpp": "#include <vector>\n#include <unordered_map>\n\nstd::vector<int> twoSum(std::vector<int>& nums, int target) {\n    std::unordered_map<int, int> seen;\n    for (int i = 0; i < nums.size(); i++) {\n        int diff = target - nums[i];\n        if (seen.count(diff))\n            return {seen[diff], i};\n        seen[nums[i]] = i;\n    }\n    return {};\n}",
+      "rust": "use std::collections::HashMap;\n\nfn two_sum(nums: &[i32], target: i32) -> Vec<usize> {\n    let mut seen = HashMap::new();\n    for (i, &n) in nums.iter().enumerate() {\n        if let Some(&j) = seen.get(&(target - n)) {\n            return vec![j, i];\n        }\n        seen.insert(n, i);\n    }\n    vec![]\n}"
+    }
+  },
+  {
+    "date": "2026-06-02",
+    "title": "Binary Search",
+    "category": "binary search",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "explanation": "Binary search halves the search space on each iteration, so the number of iterations is at most log₂(n), yielding O(log n) time complexity. The algorithm uses only a fixed number of variables (lo, hi, mid) regardless of input size, so space complexity is O(1). No recursion or auxiliary data structures are used, confirming constant space usage.",
+    "source_url": null,
+    "implementations": {
+      "python": "def binary_search(nums: list[int], target: int) -> int:\n    lo, hi = 0, len(nums) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if nums[mid] == target:\n            return mid\n        elif nums[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return -1",
+      "cpp": "#include <vector>\n\nint binarySearch(std::vector<int>& nums, int target) {\n    int lo = 0, hi = nums.size() - 1;\n    while (lo <= hi) {\n        int mid = lo + (hi - lo) / 2;\n        if (nums[mid] == target) return mid;\n        else if (nums[mid] < target) lo = mid + 1;\n        else hi = mid - 1;\n    }\n    return -1;\n}",
+      "rust": "fn binary_search(nums: &[i32], target: i32) -> i32 {\n    let (mut lo, mut hi) = (0i32, nums.len() as i32 - 1);\n    while lo <= hi {\n        let mid = lo + (hi - lo) / 2;\n        match nums[mid as usize].cmp(&target) {\n            std::cmp::Ordering::Equal => return mid,\n            std::cmp::Ordering::Less => lo = mid + 1,\n            std::cmp::Ordering::Greater => hi = mid - 1,\n        }\n    }\n    -1\n}"
+    }
+  },
+  {
+    "date": "2026-06-03",
+    "title": "Merge Sort",
+    "category": "sorting",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n log n)",
+    "explanation": "The array is recursively divided in half O(log n) times, and at each level of recursion the merge step processes all n elements, giving O(n log n) time overall. For space, note that Python's arr[:mid] and arr[mid:] slicing creates new list copies at each recursive call; across all log n levels of recursion, the total memory allocated for these slices and the merged result arrays sums to O(n log n) rather than the O(n) you would see in an in-place merge sort implementation.",
+    "source_url": null,
+    "implementations": {
+      "python": "def merge_sort(arr: list[int]) -> list[int]:\n    if len(arr) <= 1:\n        return arr\n    mid = len(arr) // 2\n    left = merge_sort(arr[:mid])\n    right = merge_sort(arr[mid:])\n    return merge(left, right)\n\ndef merge(left, right):\n    result = []\n    i = j = 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            result.append(left[i]); i += 1\n        else:\n            result.append(right[j]); j += 1\n    result.extend(left[i:])\n    result.extend(right[j:])\n    return result",
+      "cpp": "#include <vector>\n\nvoid merge(std::vector<int>& arr, int l, int m, int r) {\n    std::vector<int> tmp(arr.begin() + l, arr.begin() + r + 1);\n    int i = 0, j = m - l + 1, k = l;\n    int mid = m - l;\n    while (i <= mid && j < (int)tmp.size()) {\n        if (tmp[i] <= tmp[j]) arr[k++] = tmp[i++];\n        else arr[k++] = tmp[j++];\n    }\n    while (i <= mid) arr[k++] = tmp[i++];\n    while (j < (int)tmp.size()) arr[k++] = tmp[j++];\n}\n\nvoid mergeSort(std::vector<int>& arr, int l, int r) {\n    if (l >= r) return;\n    int m = l + (r - l) / 2;\n    mergeSort(arr, l, m);\n    mergeSort(arr, m + 1, r);\n    merge(arr, l, m, r);\n}",
+      "rust": "fn merge_sort(arr: &mut [i32]) {\n    let len = arr.len();\n    if len <= 1 { return; }\n    let mid = len / 2;\n    merge_sort(&mut arr[..mid]);\n    merge_sort(&mut arr[mid..]);\n    let mut tmp = arr.to_vec();\n    let (mut i, mut j, mut k) = (0, mid, 0);\n    while i < mid && j < len {\n        if arr[i] <= arr[j] { tmp[k] = arr[i]; i += 1; }\n        else { tmp[k] = arr[j]; j += 1; }\n        k += 1;\n    }\n    tmp[k..].copy_from_slice(if i < mid { &arr[i..mid] } else { &arr[j..len] });\n    arr.copy_from_slice(&tmp);\n}"
+    }
+  },
+  {
+    "date": "2026-06-04",
+    "title": "Climbing Stairs",
+    "category": "dynamic programming",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The function iterates from 3 to n+1 exactly once, performing constant-time operations in each iteration, resulting in O(n) time complexity. Only two variables (a and b) are used regardless of input size, so the space complexity is O(1) — no arrays or recursive call stack are involved.",
+    "source_url": null,
+    "implementations": {
+      "python": "def climb_stairs(n: int) -> int:\n    if n <= 2:\n        return n\n    a, b = 1, 2\n    for _ in range(3, n + 1):\n        a, b = b, a + b\n    return b",
+      "cpp": "int climbStairs(int n) {\n    if (n <= 2) return n;\n    int a = 1, b = 2;\n    for (int i = 3; i <= n; i++) {\n        int tmp = b;\n        b = a + b;\n        a = tmp;\n    }\n    return b;\n}",
+      "rust": "fn climb_stairs(n: u32) -> u64 {\n    if n <= 2 { return n as u64; }\n    let (mut a, mut b) = (1u64, 2u64);\n    for _ in 3..=n {\n        let tmp = b;\n        b = a + b;\n        a = tmp;\n    }\n    b\n}"
+    }
+  },
+  {
+    "date": "2026-06-05",
+    "title": "Valid Parentheses",
+    "category": "stack",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The algorithm iterates through each character in the string exactly once, performing O(1) operations per character (dictionary lookup, stack push/pop), resulting in O(n) time complexity where n is the length of the string. The space complexity is O(n) in the worst case because the stack can grow up to n/2 elements (e.g., when all characters are opening brackets like '((((...'), and the mapping dictionary is constant size O(1) so it does not affect the overall space complexity.",
+    "source_url": null,
+    "implementations": {
+      "python": "def is_valid(s: str) -> bool:\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    for ch in s:\n        if ch in mapping:\n            top = stack.pop() if stack else '#'\n            if mapping[ch] != top:\n                return False\n        else:\n            stack.append(ch)\n    return not stack",
+      "cpp": "#include <stack>\n#include <string>\n#include <unordered_map>\n\nbool isValid(std::string s) {\n    std::stack<char> stk;\n    std::unordered_map<char,char> m = {{')', '('}, {'}', '{'}, {']', '['}};\n    for (char ch : s) {\n        if (m.count(ch)) {\n            char top = stk.empty() ? '#' : stk.top();\n            if (!stk.empty()) stk.pop();\n            if (m[ch] != top) return false;\n        } else {\n            stk.push(ch);\n        }\n    }\n    return stk.empty();\n}",
+      "rust": "fn is_valid(s: &str) -> bool {\n    let mut stack = Vec::new();\n    for ch in s.chars() {\n        match ch {\n            '(' | '{' | '[' => stack.push(ch),\n            ')' => if stack.pop() != Some('(') { return false; },\n            '}' => if stack.pop() != Some('{') { return false; },\n            ']' => if stack.pop() != Some('[') { return false; },\n            _ => {}\n        }\n    }\n    stack.is_empty()\n}"
+    }
+  },
+  {
+    "date": "2026-06-06",
+    "title": "Maximum Depth of Binary Tree",
+    "category": "tree",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The algorithm visits every node in the tree exactly once to compute the maximum depth, resulting in O(n) time complexity where n is the number of nodes. The space complexity is O(n) due to the recursion call stack, which in the worst case (a completely skewed/unbalanced tree) can grow as deep as n frames; for a balanced tree it would be O(log n), but worst case is O(n).",
+    "source_url": null,
+    "implementations": {
+      "python": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef max_depth(root: TreeNode | None) -> int:\n    if root is None:\n        return 0\n    return 1 + max(max_depth(root.left), max_depth(root.right))",
+      "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nint maxDepth(TreeNode* root) {\n    if (!root) return 0;\n    return 1 + std::max(maxDepth(root->left), maxDepth(root->right));\n}",
+      "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\nstruct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {\n    match root {\n        None => 0,\n        Some(node) => {\n            let n = node.borrow();\n            1 + max_depth(n.left.clone()).max(max_depth(n.right.clone()))\n        }\n    }\n}"
+    }
+  },
+  {
+    "date": "2026-06-07",
+    "title": "Longest Common Subsequence",
+    "category": "dynamic programming",
+    "time_complexity": "O(m*n)",
+    "space_complexity": "O(m*n)",
+    "explanation": "The algorithm uses two nested loops, one iterating over all m characters of text1 and one over all n characters of text2, resulting in O(m*n) time complexity. The space complexity is also O(m*n) because a 2D DP table of size (m+1)*(n+1) is allocated to store intermediate LCS lengths. Note that space could be optimized to O(min(m,n)) by using rolling arrays, but this implementation does not do that.",
+    "source_url": null,
+    "implementations": {
+      "python": "def lcs(text1: str, text2: str) -> int:\n    m, n = len(text1), len(text2)\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if text1[i-1] == text2[j-1]:\n                dp[i][j] = dp[i-1][j-1] + 1\n            else:\n                dp[i][j] = max(dp[i-1][j], dp[i][j-1])\n    return dp[m][n]",
+      "cpp": "#include <string>\n#include <vector>\n#include <algorithm>\n\nint lcs(std::string text1, std::string text2) {\n    int m = text1.size(), n = text2.size();\n    std::vector<std::vector<int>> dp(m + 1, std::vector<int>(n + 1, 0));\n    for (int i = 1; i <= m; i++) {\n        for (int j = 1; j <= n; j++) {\n            if (text1[i-1] == text2[j-1])\n                dp[i][j] = dp[i-1][j-1] + 1;\n            else\n                dp[i][j] = std::max(dp[i-1][j], dp[i][j-1]);\n        }\n    }\n    return dp[m][n];\n}",
+      "rust": "fn lcs(text1: &str, text2: &str) -> usize {\n    let (a, b): (Vec<char>, Vec<char>) =\n        (text1.chars().collect(), text2.chars().collect());\n    let (m, n) = (a.len(), b.len());\n    let mut dp = vec![vec![0usize; n + 1]; m + 1];\n    for i in 1..=m {\n        for j in 1..=n {\n            dp[i][j] = if a[i-1] == b[j-1] {\n                dp[i-1][j-1] + 1\n            } else {\n                dp[i-1][j].max(dp[i][j-1])\n            };\n        }\n    }\n    dp[m][n]\n}"
+    }
+  },
+  {
+    "date": "2026-06-08",
+    "title": "Number of Islands",
+    "category": "graph",
+    "time_complexity": "O(m*n)",
+    "space_complexity": "O(m*n)",
+    "explanation": "Every cell in the m×n grid is visited at most once by the outer loop and DFS combined, since visited cells are marked '0' immediately, giving O(m*n) time. The space complexity is O(m*n) in the worst case due to the DFS recursion stack, which can reach depth m*n when the entire grid is one large island (e.g., a snake-shaped path covering all cells).",
+    "source_url": null,
+    "implementations": {
+      "python": "def num_islands(grid: list[list[str]]) -> int:\n    if not grid:\n        return 0\n    rows, cols = len(grid), len(grid[0])\n    count = 0\n\n    def dfs(r, c):\n        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != '1':\n            return\n        grid[r][c] = '0'\n        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:\n            dfs(r+dr, c+dc)\n\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1':\n                dfs(r, c)\n                count += 1\n    return count",
+      "cpp": "#include <vector>\n\nvoid dfs(std::vector<std::vector<char>>& grid, int r, int c) {\n    int rows = grid.size(), cols = grid[0].size();\n    if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] != '1')\n        return;\n    grid[r][c] = '0';\n    dfs(grid, r+1, c); dfs(grid, r-1, c);\n    dfs(grid, r, c+1); dfs(grid, r, c-1);\n}\n\nint numIslands(std::vector<std::vector<char>>& grid) {\n    if (grid.empty()) return 0;\n    int count = 0;\n    for (int r = 0; r < grid.size(); r++)\n        for (int c = 0; c < grid[0].size(); c++)\n            if (grid[r][c] == '1') { dfs(grid, r, c); count++; }\n    return count;\n}",
+      "rust": "fn num_islands(grid: &mut Vec<Vec<char>>) -> i32 {\n    let (rows, cols) = (grid.len(), grid[0].len());\n    let mut count = 0;\n\n    fn dfs(grid: &mut Vec<Vec<char>>, r: i32, c: i32) {\n        let (rows, cols) = (grid.len() as i32, grid[0].len() as i32);\n        if r < 0 || r >= rows || c < 0 || c >= cols { return; }\n        if grid[r as usize][c as usize] != '1' { return; }\n        grid[r as usize][c as usize] = '0';\n        for (dr, dc) in [(1,0),(-1,0),(0,1),(0,-1)] {\n            dfs(grid, r + dr, c + dc);\n        }\n    }\n\n    for r in 0..rows {\n        for c in 0..cols {\n            if grid[r][c] == '1' { dfs(grid, r as i32, c as i32); count += 1; }\n        }\n    }\n    count\n}"
+    }
+  },
+  {
+    "date": "2026-06-09",
+    "title": "Kth Largest Element",
+    "category": "heap",
+    "time_complexity": "O(n log k)",
+    "space_complexity": "O(k)",
+    "explanation": "We iterate over all n elements, and for each element we perform a heappush and conditionally a heappop on a min-heap that is capped at size k, each of which costs O(log k), giving O(n log k) total time. The heap never grows beyond k+1 elements before the pop trims it back to k, so the auxiliary space is O(k). This approach is more efficient than sorting the full array when k << n.",
+    "source_url": null,
+    "implementations": {
+      "python": "import heapq\n\ndef find_kth_largest(nums: list[int], k: int) -> int:\n    heap = []\n    for n in nums:\n        heapq.heappush(heap, n)\n        if len(heap) > k:\n            heapq.heappop(heap)\n    return heap[0]",
+      "cpp": "#include <vector>\n#include <queue>\n\nint findKthLargest(std::vector<int>& nums, int k) {\n    std::priority_queue<int, std::vector<int>, std::greater<int>> minHeap;\n    for (int n : nums) {\n        minHeap.push(n);\n        if ((int)minHeap.size() > k)\n            minHeap.pop();\n    }\n    return minHeap.top();\n}",
+      "rust": "use std::collections::BinaryHeap;\nuse std::cmp::Reverse;\n\nfn find_kth_largest(nums: &[i32], k: usize) -> i32 {\n    let mut heap = BinaryHeap::new();\n    for &n in nums {\n        heap.push(Reverse(n));\n        if heap.len() > k {\n            heap.pop();\n        }\n    }\n    heap.peek().unwrap().0\n}"
+    }
+  },
+  {
+    "date": "2026-06-10",
+    "title": "Word Break",
+    "category": "dynamic programming",
+    "time_complexity": "O(n³)",
+    "space_complexity": "O(n + m)",
+    "explanation": "The double loop over i and j gives O(n²) iterations, and each iteration performs a substring slice s[j:i] which takes O(n) time in the worst case, resulting in O(n³) total time. The space complexity is O(n + m) where n is the length of s for the dp array and m is the total number of characters in word_dict stored in the hash set (word_set).",
+    "source_url": null,
+    "implementations": {
+      "python": "def word_break(s: str, word_dict: list[str]) -> bool:\n    word_set = set(word_dict)\n    n = len(s)\n    dp = [False] * (n + 1)\n    dp[0] = True\n    for i in range(1, n + 1):\n        for j in range(i):\n            if dp[j] and s[j:i] in word_set:\n                dp[i] = True\n                break\n    return dp[n]",
+      "cpp": "#include <string>\n#include <vector>\n#include <unordered_set>\n\nbool wordBreak(std::string s, std::vector<std::string>& wordDict) {\n    std::unordered_set<std::string> words(wordDict.begin(), wordDict.end());\n    int n = s.size();\n    std::vector<bool> dp(n + 1, false);\n    dp[0] = true;\n    for (int i = 1; i <= n; i++) {\n        for (int j = 0; j < i; j++) {\n            if (dp[j] && words.count(s.substr(j, i - j))) {\n                dp[i] = true;\n                break;\n            }\n        }\n    }\n    return dp[n];\n}",
+      "rust": "use std::collections::HashSet;\n\nfn word_break(s: &str, word_dict: &[&str]) -> bool {\n    let words: HashSet<&str> = word_dict.iter().copied().collect();\n    let n = s.len();\n    let mut dp = vec![false; n + 1];\n    dp[0] = true;\n    for i in 1..=n {\n        for j in 0..i {\n            if dp[j] && words.contains(&s[j..i]) {\n                dp[i] = true;\n                break;\n            }\n        }\n    }\n    dp[n]\n}"
+    }
+  },
+  {
+    "date": "2026-06-11",
+    "title": "Course Schedule (Topological Sort)",
+    "category": "graph",
+    "time_complexity": "O(V + E)",
+    "space_complexity": "O(V + E)",
+    "explanation": "This is Kahn's algorithm for topological sort. We iterate over all prerequisites once to build the adjacency list and in-degree array (O(E)), then process each node and edge exactly once in the BFS loop (O(V + E)), giving a total time complexity of O(V + E) where V = num_courses and E = len(prerequisites). The space complexity is also O(V + E) because we store the adjacency list (O(V + E)), the in-degree array (O(V)), and the BFS queue which holds at most O(V) nodes.",
+    "source_url": null,
+    "implementations": {
+      "python": "from collections import deque\n\ndef can_finish(num_courses: int, prerequisites: list[list[int]]) -> bool:\n    in_degree = [0] * num_courses\n    adj = [[] for _ in range(num_courses)]\n    for a, b in prerequisites:\n        adj[b].append(a)\n        in_degree[a] += 1\n    queue = deque(i for i in range(num_courses) if in_degree[i] == 0)\n    completed = 0\n    while queue:\n        node = queue.popleft()\n        completed += 1\n        for neighbor in adj[node]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                queue.append(neighbor)\n    return completed == num_courses",
+      "cpp": "#include <vector>\n#include <queue>\n\nbool canFinish(int numCourses, std::vector<std::vector<int>>& prerequisites) {\n    std::vector<int> inDegree(numCourses, 0);\n    std::vector<std::vector<int>> adj(numCourses);\n    for (auto& p : prerequisites) {\n        adj[p[1]].push_back(p[0]);\n        inDegree[p[0]]++;\n    }\n    std::queue<int> q;\n    for (int i = 0; i < numCourses; i++)\n        if (inDegree[i] == 0) q.push(i);\n    int completed = 0;\n    while (!q.empty()) {\n        int node = q.front(); q.pop();\n        completed++;\n        for (int nb : adj[node])\n            if (--inDegree[nb] == 0) q.push(nb);\n    }\n    return completed == numCourses;\n}",
+      "rust": "use std::collections::VecDeque;\n\nfn can_finish(num_courses: usize, prerequisites: &[(usize, usize)]) -> bool {\n    let mut in_degree = vec![0usize; num_courses];\n    let mut adj = vec![vec![]; num_courses];\n    for &(a, b) in prerequisites {\n        adj[b].push(a);\n        in_degree[a] += 1;\n    }\n    let mut queue: VecDeque<usize> = (0..num_courses)\n        .filter(|&i| in_degree[i] == 0)\n        .collect();\n    let mut completed = 0;\n    while let Some(node) = queue.pop_front() {\n        completed += 1;\n        for &nb in &adj[node] {\n            in_degree[nb] -= 1;\n            if in_degree[nb] == 0 { queue.push_back(nb); }\n        }\n    }\n    completed == num_courses\n}"
+    }
+  },
+  {
+    "date": "2026-06-12",
+    "title": "Trapping Rain Water",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The two-pointer approach traverses the height array exactly once, with lo starting at the left and hi starting at the right, each moving inward until they meet — giving O(n) time. Only a fixed number of scalar variables (lo, hi, max_left, max_right, water) are used regardless of input size, resulting in O(1) space complexity.",
+    "source_url": null,
+    "implementations": {
+      "python": "def trap(height: list[int]) -> int:\n    if not height:\n        return 0\n    lo, hi = 0, len(height) - 1\n    max_left = max_right = water = 0\n    while lo < hi:\n        if height[lo] < height[hi]:\n            if height[lo] >= max_left:\n                max_left = height[lo]\n            else:\n                water += max_left - height[lo]\n            lo += 1\n        else:\n            if height[hi] >= max_right:\n                max_right = height[hi]\n            else:\n                water += max_right - height[hi]\n            hi -= 1\n    return water",
+      "cpp": "#include <vector>\n\nint trap(std::vector<int>& height) {\n    if (height.empty()) return 0;\n    int lo = 0, hi = height.size() - 1;\n    int maxLeft = 0, maxRight = 0, water = 0;\n    while (lo < hi) {\n        if (height[lo] < height[hi]) {\n            if (height[lo] >= maxLeft) maxLeft = height[lo];\n            else water += maxLeft - height[lo];\n            lo++;\n        } else {\n            if (height[hi] >= maxRight) maxRight = height[hi];\n            else water += maxRight - height[hi];\n            hi--;\n        }\n    }\n    return water;\n}",
+      "rust": "fn trap(height: &[i32]) -> i32 {\n    if height.is_empty() { return 0; }\n    let (mut lo, mut hi) = (0, height.len() - 1);\n    let (mut max_left, mut max_right, mut water) = (0, 0, 0);\n    while lo < hi {\n        if height[lo] < height[hi] {\n            if height[lo] >= max_left { max_left = height[lo]; }\n            else { water += max_left - height[lo]; }\n            lo += 1;\n        } else {\n            if height[hi] >= max_right { max_right = height[hi]; }\n            else { water += max_right - height[hi]; }\n            hi -= 1;\n        }\n    }\n    water\n}"
+    }
+  },
+  {
+    "date": "2026-06-13",
+    "title": "Median of Two Sorted Arrays",
+    "category": "binary search",
+    "time_complexity": "O(log(min(m,n)))",
+    "space_complexity": "O(1)",
+    "explanation": "The algorithm performs binary search on the smaller of the two arrays (length m after the swap), halving the search space each iteration, resulting in O(log(min(m,n))) time. Only a constant number of variables are used regardless of input size, so space complexity is O(1).",
+    "source_url": null,
+    "implementations": {
+      "python": "def find_median_sorted_arrays(nums1: list[int], nums2: list[int]) -> float:\n    if len(nums1) > len(nums2):\n        nums1, nums2 = nums2, nums1\n    m, n = len(nums1), len(nums2)\n    lo, hi = 0, m\n    while lo <= hi:\n        i = (lo + hi) // 2\n        j = (m + n + 1) // 2 - i\n        max_left1 = float('-inf') if i == 0 else nums1[i-1]\n        min_right1 = float('inf') if i == m else nums1[i]\n        max_left2 = float('-inf') if j == 0 else nums2[j-1]\n        min_right2 = float('inf') if j == n else nums2[j]\n        if max_left1 <= min_right2 and max_left2 <= min_right1:\n            if (m + n) % 2 == 0:\n                return (max(max_left1, max_left2) + min(min_right1, min_right2)) / 2\n            return float(max(max_left1, max_left2))\n        elif max_left1 > min_right2:\n            hi = i - 1\n        else:\n            lo = i + 1\n    raise ValueError(\"Input arrays are not sorted\")",
+      "cpp": "#include <vector>\n#include <algorithm>\n#include <climits>\n\ndouble findMedianSortedArrays(std::vector<int>& nums1, std::vector<int>& nums2) {\n    if (nums1.size() > nums2.size()) std::swap(nums1, nums2);\n    int m = nums1.size(), n = nums2.size();\n    int lo = 0, hi = m;\n    while (lo <= hi) {\n        int i = (lo + hi) / 2;\n        int j = (m + n + 1) / 2 - i;\n        int ml1 = (i == 0) ? INT_MIN : nums1[i-1];\n        int mr1 = (i == m) ? INT_MAX : nums1[i];\n        int ml2 = (j == 0) ? INT_MIN : nums2[j-1];\n        int mr2 = (j == n) ? INT_MAX : nums2[j];\n        if (ml1 <= mr2 && ml2 <= mr1) {\n            if ((m + n) % 2 == 0)\n                return (std::max(ml1,ml2) + std::min(mr1,mr2)) / 2.0;\n            return std::max(ml1, ml2);\n        } else if (ml1 > mr2) hi = i - 1;\n        else lo = i + 1;\n    }\n    return 0.0;\n}",
+      "rust": "fn find_median_sorted_arrays(nums1: &[i32], nums2: &[i32]) -> f64 {\n    let (a, b) = if nums1.len() <= nums2.len() { (nums1, nums2) }\n                 else { (nums2, nums1) };\n    let (m, n) = (a.len(), b.len());\n    let (mut lo, mut hi) = (0usize, m);\n    while lo <= hi {\n        let i = (lo + hi) / 2;\n        let j = (m + n + 1) / 2 - i;\n        let ml1 = if i == 0 { i32::MIN } else { a[i-1] };\n        let mr1 = if i == m { i32::MAX } else { a[i] };\n        let ml2 = if j == 0 { i32::MIN } else { b[j-1] };\n        let mr2 = if j == n { i32::MAX } else { b[j] };\n        if ml1 <= mr2 && ml2 <= mr1 {\n            return if (m + n) % 2 == 0 {\n                (ml1.max(ml2) as f64 + mr1.min(mr2) as f64) / 2.0\n            } else { ml1.max(ml2) as f64 };\n        } else if ml1 > mr2 { hi = i - 1; }\n        else { lo = i + 1; }\n    }\n    0.0\n}"
+    }
+  },
+  {
+    "date": "2026-06-14",
+    "title": "Serialize and Deserialize Binary Tree",
+    "category": "tree",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "Both serialize and deserialize perform a BFS traversal visiting each of the n nodes exactly once, so time complexity is O(n). The space complexity is also O(n) because the queue can hold at most O(n) nodes at a time (in a complete binary tree the last level has n/2 nodes), and the result array/string stores a representation proportional to n nodes.",
+    "source_url": null,
+    "implementations": {
+      "python": "from collections import deque\n\nclass Codec:\n    def serialize(self, root) -> str:\n        if not root:\n            return \"null\"\n        result = []\n        queue = deque([root])\n        while queue:\n            node = queue.popleft()\n            if node:\n                result.append(str(node.val))\n                queue.append(node.left)\n                queue.append(node.right)\n            else:\n                result.append(\"null\")\n        return \",\".join(result)\n\n    def deserialize(self, data: str):\n        if data == \"null\":\n            return None\n        vals = data.split(\",\")\n        root = TreeNode(int(vals[0]))\n        queue = deque([root])\n        i = 1\n        while queue:\n            node = queue.popleft()\n            if vals[i] != \"null\":\n                node.left = TreeNode(int(vals[i]))\n                queue.append(node.left)\n            i += 1\n            if vals[i] != \"null\":\n                node.right = TreeNode(int(vals[i]))\n                queue.append(node.right)\n            i += 1\n        return root",
+      "cpp": "#include <string>\n#include <queue>\n#include <sstream>\n\nstruct TreeNode { int val; TreeNode *left, *right; };\n\nstd::string serialize(TreeNode* root) {\n    if (!root) return \"null\";\n    std::string result;\n    std::queue<TreeNode*> q;\n    q.push(root);\n    while (!q.empty()) {\n        auto node = q.front(); q.pop();\n        if (node) {\n            result += std::to_string(node->val) + \",\";\n            q.push(node->left);\n            q.push(node->right);\n        } else {\n            result += \"null,\";\n        }\n    }\n    return result;\n}\n\nTreeNode* deserialize(std::string data) {\n    if (data == \"null\") return nullptr;\n    std::istringstream ss(data);\n    std::string token;\n    std::getline(ss, token, ',');\n    auto root = new TreeNode{std::stoi(token), nullptr, nullptr};\n    std::queue<TreeNode*> q;\n    q.push(root);\n    while (!q.empty()) {\n        auto node = q.front(); q.pop();\n        if (std::getline(ss, token, ',') && token != \"null\") {\n            node->left = new TreeNode{std::stoi(token), nullptr, nullptr};\n            q.push(node->left);\n        }\n        if (std::getline(ss, token, ',') && token != \"null\") {\n            node->right = new TreeNode{std::stoi(token), nullptr, nullptr};\n            q.push(node->right);\n        }\n    }\n    return root;\n}",
+      "rust": "use std::collections::VecDeque;\n\nfn serialize(root: Option<Box<TreeNode>>) -> String {\n    let Some(root) = root else { return \"null\".into() };\n    let mut result = Vec::new();\n    let mut queue = VecDeque::new();\n    queue.push_back(Some(root));\n    while let Some(node_opt) = queue.pop_front() {\n        match node_opt {\n            Some(node) => {\n                result.push(node.val.to_string());\n                queue.push_back(node.left.map(|n| *n).map(Box::new));\n                queue.push_back(node.right.map(|n| *n).map(Box::new));\n            }\n            None => result.push(\"null\".into()),\n        }\n    }\n    result.join(\",\")\n}"
+    }
+  },
+  {
+    "date": "2026-06-15",
+    "title": "Sliding Window Maximum",
+    "category": "sliding window",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(k)",
+    "explanation": "Each element is added to and removed from the deque at most once across the entire iteration, making the total number of deque operations O(2n) = O(n). The space complexity is O(k) because the deque holds at most k indices at any given time, corresponding to the current sliding window, while the result array is not counted as auxiliary space.",
+    "source_url": null,
+    "implementations": {
+      "python": "from collections import deque\n\ndef max_sliding_window(nums: list[int], k: int) -> list[int]:\n    dq = deque()  # stores indices\n    result = []\n    for i, n in enumerate(nums):\n        while dq and nums[dq[-1]] < n:\n            dq.pop()\n        dq.append(i)\n        if dq[0] == i - k:\n            dq.popleft()\n        if i >= k - 1:\n            result.append(nums[dq[0]])\n    return result",
+      "cpp": "#include <vector>\n#include <deque>\n\nstd::vector<int> maxSlidingWindow(std::vector<int>& nums, int k) {\n    std::deque<int> dq;  // stores indices\n    std::vector<int> result;\n    for (int i = 0; i < (int)nums.size(); i++) {\n        while (!dq.empty() && nums[dq.back()] < nums[i])\n            dq.pop_back();\n        dq.push_back(i);\n        if (dq.front() == i - k)\n            dq.pop_front();\n        if (i >= k - 1)\n            result.push_back(nums[dq.front()]);\n    }\n    return result;\n}",
+      "rust": "use std::collections::VecDeque;\n\nfn max_sliding_window(nums: &[i32], k: usize) -> Vec<i32> {\n    let mut dq: VecDeque<usize> = VecDeque::new();\n    let mut result = Vec::new();\n    for (i, &n) in nums.iter().enumerate() {\n        while dq.back().map_or(false, |&j| nums[j] < n) {\n            dq.pop_back();\n        }\n        dq.push_back(i);\n        if dq.front() == Some(&(i.wrapping_sub(k))) {\n            dq.pop_front();\n        }\n        if i >= k - 1 {\n            result.push(nums[*dq.front().unwrap()]);\n        }\n    }\n    result\n}"
+    }
+  },
+  {
+    "date": "2026-06-16",
+    "title": "Reverse Linked List",
+    "category": "linked list",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single while loop in reverse_list, which visits every node in the linked list exactly once. Since the list has n nodes, the loop runs n times, giving you O(n) time. The most tempting wrong time answer is O(n²), but there is no nested loop or repeated traversal — each node is touched exactly once and then moved on from. For space, you only ever use three pointer variables (prev, curr, nxt) regardless of how long the list is, so the extra memory stays constant at O(1). You might be tempted to say O(n) for space if you think about the list itself, but the algorithm works in-place and does not allocate any new nodes or data structures that grow with input size.",
+    "source_url": null,
+    "implementations": {
+      "python": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef reverse_list(head: ListNode | None) -> ListNode | None:\n    prev, curr = None, head\n    while curr:\n        nxt = curr.next\n        curr.next = prev\n        prev = curr\n        curr = nxt\n    return prev",
+      "cpp": "struct ListNode {\n    int val;\n    ListNode* next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n\nListNode* reverseList(ListNode* head) {\n    ListNode* prev = nullptr;\n    ListNode* curr = head;\n    while (curr) {\n        ListNode* nxt = curr->next;\n        curr->next = prev;\n        prev = curr;\n        curr = nxt;\n    }\n    return prev;\n}",
+      "rust": "struct ListNode {\n    val: i32,\n    next: Option<Box<ListNode>>,\n}\n\nfn reverse_list(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {\n    let mut prev = None;\n    while let Some(mut curr) = head {\n        head = curr.next.take();\n        curr.next = prev;\n        prev = Some(curr);\n    }\n    prev\n}"
+    }
+  },
+  {
+    "date": "2026-06-17",
+    "title": "Maximum Subarray",
+    "category": "dynamic programming",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single for-loop that iterates over nums[1:], visiting each element exactly once. Because each iteration does only a constant amount of work (two max() comparisons and an addition), the total time scales linearly with the input size n. You might be tempted to say O(n²) if you imagined tracking subarrays explicitly, but Kadane's algorithm cleverly avoids that by carrying a running sum in 'curr', meaning no nested loops are needed. For space, only two scalar variables ('best' and 'curr') are used regardless of how large the input is, so the extra memory stays constant at O(1).",
+    "source_url": null,
+    "implementations": {
+      "python": "def max_subarray(nums: list[int]) -> int:\n    best = curr = nums[0]\n    for n in nums[1:]:\n        curr = max(n, curr + n)\n        best = max(best, curr)\n    return best",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nint maxSubArray(std::vector<int>& nums) {\n    int best = nums[0], curr = nums[0];\n    for (size_t i = 1; i < nums.size(); i++) {\n        curr = std::max(nums[i], curr + nums[i]);\n        best = std::max(best, curr);\n    }\n    return best;\n}",
+      "rust": "fn max_subarray(nums: &[i32]) -> i32 {\n    let mut best = nums[0];\n    let mut curr = nums[0];\n    for &n in &nums[1..] {\n        curr = n.max(curr + n);\n        best = best.max(curr);\n    }\n    best\n}"
+    }
+  },
+  {
+    "date": "2026-06-18",
+    "title": "Container With Most Water",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single while loop that moves two pointers (lo and hi) from opposite ends of the array toward each other. Each iteration advances at least one pointer by one step, so the loop runs at most n-1 times total, giving you O(n) time. The most tempting wrong answer is O(n²) — you might think there are two nested loops because there are two pointers, but they move independently toward each other rather than one being nested inside the other, so their combined work is still linear. For space, you only use a fixed number of variables (lo, hi, best, area) regardless of input size, so no extra memory scales with n, giving you O(1) space.",
+    "source_url": null,
+    "implementations": {
+      "python": "def max_area(height: list[int]) -> int:\n    lo, hi = 0, len(height) - 1\n    best = 0\n    while lo < hi:\n        area = (hi - lo) * min(height[lo], height[hi])\n        best = max(best, area)\n        if height[lo] < height[hi]:\n            lo += 1\n        else:\n            hi -= 1\n    return best",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nint maxArea(std::vector<int>& height) {\n    int lo = 0, hi = height.size() - 1, best = 0;\n    while (lo < hi) {\n        int area = (hi - lo) * std::min(height[lo], height[hi]);\n        best = std::max(best, area);\n        if (height[lo] < height[hi]) lo++;\n        else hi--;\n    }\n    return best;\n}",
+      "rust": "fn max_area(height: &[i32]) -> i32 {\n    let (mut lo, mut hi) = (0usize, height.len() - 1);\n    let mut best = 0;\n    while lo < hi {\n        let area = (hi - lo) as i32 * height[lo].min(height[hi]);\n        best = best.max(area);\n        if height[lo] < height[hi] { lo += 1; }\n        else { hi -= 1; }\n    }\n    best\n}"
+    }
+  },
+  {
+    "date": "2026-06-19",
+    "title": "Product of Array Except Self",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost comes from the two separate for-loops, each iterating over all n elements once. Because these loops run sequentially rather than nested, the total work is 2n, which simplifies to O(n). For space, you might be tempted to say O(n) because of the 'result' array, but that array holds the output that the problem itself requires you to return — it is not auxiliary/extra space. The only additional variables used are the scalar 'left', 'right', and 'i', which are O(1). So the extra space beyond the output is O(1).",
+    "source_url": null,
+    "implementations": {
+      "python": "def product_except_self(nums: list[int]) -> list[int]:\n    n = len(nums)\n    result = [1] * n\n    left = 1\n    for i in range(n):\n        result[i] = left\n        left *= nums[i]\n    right = 1\n    for i in range(n - 1, -1, -1):\n        result[i] *= right\n        right *= nums[i]\n    return result",
+      "cpp": "#include <vector>\n\nstd::vector<int> productExceptSelf(std::vector<int>& nums) {\n    int n = nums.size();\n    std::vector<int> result(n, 1);\n    int left = 1;\n    for (int i = 0; i < n; i++) {\n        result[i] = left;\n        left *= nums[i];\n    }\n    int right = 1;\n    for (int i = n - 1; i >= 0; i--) {\n        result[i] *= right;\n        right *= nums[i];\n    }\n    return result;\n}",
+      "rust": "fn product_except_self(nums: &[i32]) -> Vec<i32> {\n    let n = nums.len();\n    let mut result = vec![1i32; n];\n    let mut left = 1;\n    for i in 0..n {\n        result[i] = left;\n        left *= nums[i];\n    }\n    let mut right = 1;\n    for i in (0..n).rev() {\n        result[i] *= right;\n        right *= nums[i];\n    }\n    result\n}"
+    }
+  },
+  {
+    "date": "2026-06-20",
+    "title": "Coin Change",
+    "category": "dynamic programming",
+    "time_complexity": "O(amount * n)",
+    "space_complexity": "O(amount)",
+    "explanation": "The dominant cost comes from the two nested loops: the outer loop runs `amount` times (from 1 to amount), and the inner loop iterates over all `n` coins for each value of i, giving you O(amount * n) total work. The `if c <= i` check is just a constant-time guard inside the inner loop and does not reduce the asymptotic cost. You might be tempted to say O(amount²) because the outer loop runs `amount` times, but the inner loop iterates over `n` coins — not `amount` values — so the second dimension is the number of coins, not the amount. The dp array is the only significant data structure allocated, and it has exactly `amount + 1` entries, so space is O(amount) regardless of how many coins there are.",
+    "source_url": null,
+    "implementations": {
+      "python": "def coin_change(coins: list[int], amount: int) -> int:\n    dp = [amount + 1] * (amount + 1)\n    dp[0] = 0\n    for i in range(1, amount + 1):\n        for c in coins:\n            if c <= i:\n                dp[i] = min(dp[i], dp[i - c] + 1)\n    return dp[amount] if dp[amount] <= amount else -1",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nint coinChange(std::vector<int>& coins, int amount) {\n    std::vector<int> dp(amount + 1, amount + 1);\n    dp[0] = 0;\n    for (int i = 1; i <= amount; i++) {\n        for (int c : coins) {\n            if (c <= i)\n                dp[i] = std::min(dp[i], dp[i - c] + 1);\n        }\n    }\n    return dp[amount] > amount ? -1 : dp[amount];\n}",
+      "rust": "fn coin_change(coins: &[i32], amount: i32) -> i32 {\n    let n = amount as usize;\n    let mut dp = vec![amount + 1; n + 1];\n    dp[0] = 0;\n    for i in 1..=n {\n        for &c in coins {\n            if c as usize <= i {\n                dp[i] = dp[i].min(dp[i - c as usize] + 1);\n            }\n        }\n    }\n    if dp[n] > amount { -1 } else { dp[n] }\n}"
+    }
+  },
+  {
+    "date": "2026-06-21",
+    "title": "Find the Duplicate Number",
+    "category": "cycle detection",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost here is the two-pointer (Floyd's cycle detection) traversal through the array, which drives both loops. In the first loop, the slow and fast pointers move through the array following index links — the fast pointer moves at most 2n steps before the two meet, so this is O(n). In the second loop, both pointers move one step at a time until they converge on the duplicate, again taking at most O(n) steps. You might be tempted to say O(n²) because there are two separate while loops, but they run sequentially — not nested — so their costs add rather than multiply, keeping the total linear. For space, you only use two integer variables (slow and fast) regardless of the input size, so no extra memory is allocated proportional to n, giving O(1) space.",
+    "source_url": null,
+    "implementations": {
+      "python": "def find_duplicate(nums: list[int]) -> int:\n    slow = fast = nums[0]\n    while True:\n        slow = nums[slow]\n        fast = nums[nums[fast]]\n        if slow == fast:\n            break\n    slow = nums[0]\n    while slow != fast:\n        slow = nums[slow]\n        fast = nums[fast]\n    return slow",
+      "cpp": "#include <vector>\n\nint findDuplicate(std::vector<int>& nums) {\n    int slow = nums[0], fast = nums[0];\n    do {\n        slow = nums[slow];\n        fast = nums[nums[fast]];\n    } while (slow != fast);\n    slow = nums[0];\n    while (slow != fast) {\n        slow = nums[slow];\n        fast = nums[fast];\n    }\n    return slow;\n}",
+      "rust": "fn find_duplicate(nums: &[i32]) -> i32 {\n    let mut slow = nums[0] as usize;\n    let mut fast = nums[0] as usize;\n    loop {\n        slow = nums[slow] as usize;\n        fast = nums[nums[fast] as usize] as usize;\n        if slow == fast { break; }\n    }\n    slow = nums[0] as usize;\n    while slow != fast {\n        slow = nums[slow] as usize;\n        fast = nums[fast] as usize;\n    }\n    slow as i32\n}"
+    }
+  },
+  {
+    "date": "2026-06-22",
+    "title": "Search in Rotated Sorted Array",
+    "category": "binary search",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the while loop, which performs a modified binary search on the array. Each iteration of the loop eliminates half of the remaining elements by moving either `lo` or `hi` to `mid ± 1`, so the loop runs at most log₂(n) times. You might be tempted to say O(n) because the array is rotated and seems like it might require a linear scan, but the key insight is that at every step you can still determine which half is sorted and whether the target lies within it, preserving the halving property. No additional data structures are used — only a fixed number of integer variables (`lo`, `hi`, `mid`) — so the space complexity is O(1).",
+    "source_url": null,
+    "implementations": {
+      "python": "def search(nums: list[int], target: int) -> int:\n    lo, hi = 0, len(nums) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if nums[mid] == target:\n            return mid\n        if nums[lo] <= nums[mid]:\n            if nums[lo] <= target < nums[mid]:\n                hi = mid - 1\n            else:\n                lo = mid + 1\n        else:\n            if nums[mid] < target <= nums[hi]:\n                lo = mid + 1\n            else:\n                hi = mid - 1\n    return -1",
+      "cpp": "#include <vector>\n\nint search(std::vector<int>& nums, int target) {\n    int lo = 0, hi = nums.size() - 1;\n    while (lo <= hi) {\n        int mid = lo + (hi - lo) / 2;\n        if (nums[mid] == target) return mid;\n        if (nums[lo] <= nums[mid]) {\n            if (nums[lo] <= target && target < nums[mid]) hi = mid - 1;\n            else lo = mid + 1;\n        } else {\n            if (nums[mid] < target && target <= nums[hi]) lo = mid + 1;\n            else hi = mid - 1;\n        }\n    }\n    return -1;\n}",
+      "rust": "fn search(nums: &[i32], target: i32) -> i32 {\n    let (mut lo, mut hi) = (0i32, nums.len() as i32 - 1);\n    while lo <= hi {\n        let mid = lo + (hi - lo) / 2;\n        let m = nums[mid as usize];\n        if m == target { return mid; }\n        if nums[lo as usize] <= m {\n            if nums[lo as usize] <= target && target < m { hi = mid - 1; }\n            else { lo = mid + 1; }\n        } else {\n            if m < target && target <= nums[hi as usize] { lo = mid + 1; }\n            else { hi = mid - 1; }\n        }\n    }\n    -1\n}"
+    }
+  },
+  {
+    "date": "2026-06-23",
+    "title": "Group Anagrams",
+    "category": "hash map",
+    "time_complexity": "O(n * k)",
+    "space_complexity": "O(n * k)",
+    "explanation": "The dominant cost is the outer loop over all n strings, and for each string, the inner loop over its characters of length k, making the total time O(n * k). The key insight is that building the frequency count array takes O(k) per string, and converting it to a tuple also takes O(26) which is constant, so the character counting drives the cost. You might be tempted to say O(n * k * log k) thinking that sorting each string is required — but this solution cleverly avoids sorting by using a fixed-size 26-element count array as the key instead. For space, you store every original string in the hash map and each key is a tuple of 26 integers, so across all n strings of average length k the total storage is O(n * k) for the strings themselves, which dominates the O(26n) key storage.",
+    "source_url": null,
+    "implementations": {
+      "python": "from collections import defaultdict\n\ndef group_anagrams(strs: list[str]) -> list[list[str]]:\n    groups = defaultdict(list)\n    for s in strs:\n        key = [0] * 26\n        for ch in s:\n            key[ord(ch) - ord('a')] += 1\n        groups[tuple(key)].append(s)\n    return list(groups.values())",
+      "cpp": "#include <vector>\n#include <string>\n#include <unordered_map>\n\nstd::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& strs) {\n    std::unordered_map<std::string, std::vector<std::string>> groups;\n    for (const auto& s : strs) {\n        std::string key(26, '0');\n        for (char c : s) key[c - 'a']++;\n        groups[key].push_back(s);\n    }\n    std::vector<std::vector<std::string>> result;\n    for (auto& [_, v] : groups) result.push_back(std::move(v));\n    return result;\n}",
+      "rust": "use std::collections::HashMap;\n\nfn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {\n    let mut groups: HashMap<[u8; 26], Vec<String>> = HashMap::new();\n    for s in strs {\n        let mut key = [0u8; 26];\n        for b in s.bytes() {\n            key[(b - b'a') as usize] += 1;\n        }\n        groups.entry(key).or_default().push(s);\n    }\n    groups.into_values().collect()\n}"
+    }
+  },
+  {
+    "date": "2026-06-24",
+    "title": "Lowest Common Ancestor of a BST",
+    "category": "tree",
+    "time_complexity": "O(h)",
+    "space_complexity": "O(h)",
+    "explanation": "The dominant cost is the recursive traversal down a single path from the root to the lowest common ancestor node. At each step, the BST property lets you decide to go left, right, or stop — so you never visit more than one branch, and you descend at most h levels where h is the height of the tree. The space complexity is also O(h) because each recursive call adds a frame to the call stack, and you make at most h recursive calls before returning. You might be tempted to say O(log n) for a balanced BST, but that's only a special case — in the worst case (a skewed tree), h equals n, so O(h) is the correct general answer. Similarly, O(1) space is wrong because this recursive implementation uses the call stack proportional to the depth traversed.",
+    "source_url": null,
+    "implementations": {
+      "python": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef lowest_common_ancestor(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:\n    if p.val < root.val and q.val < root.val:\n        return lowest_common_ancestor(root.left, p, q)\n    if p.val > root.val and q.val > root.val:\n        return lowest_common_ancestor(root.right, p, q)\n    return root",
+      "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nTreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {\n    if (p->val < root->val && q->val < root->val)\n        return lowestCommonAncestor(root->left, p, q);\n    if (p->val > root->val && q->val > root->val)\n        return lowestCommonAncestor(root->right, p, q);\n    return root;\n}",
+      "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\ntype Link = Option<Rc<RefCell<TreeNode>>>;\n\nstruct TreeNode { val: i32, left: Link, right: Link }\n\nfn lowest_common_ancestor(root: Link, p: i32, q: i32) -> Link {\n    let node = root.clone()?;\n    let v = node.borrow().val;\n    if p < v && q < v {\n        return lowest_common_ancestor(node.borrow().left.clone(), p, q);\n    }\n    if p > v && q > v {\n        return lowest_common_ancestor(node.borrow().right.clone(), p, q);\n    }\n    root\n}"
+    }
+  },
+  {
+    "date": "2026-06-25",
+    "title": "Rotting Oranges",
+    "category": "graph",
+    "time_complexity": "O(m*n)",
+    "space_complexity": "O(m*n)",
+    "explanation": "The dominant cost is the BFS traversal of the grid, where m and n are the number of rows and columns. Every cell in the grid is visited at most once — rotten oranges are added to the queue exactly once and fresh oranges are converted to rotten (value 2) before being enqueued, preventing re-processing. You might be tempted to say O((m*n)²) because there's a while loop containing a for loop over 4 directions, but the 4-directional check is a constant factor and each cell is enqueued at most once, so the total work across all iterations is proportional to m*n. The space complexity is also O(m*n) because in the worst case (e.g., all cells are rotten from the start) the queue could hold every cell in the grid simultaneously.",
+    "source_url": null,
+    "implementations": {
+      "python": "from collections import deque\n\ndef oranges_rotting(grid: list[list[int]]) -> int:\n    rows, cols = len(grid), len(grid[0])\n    queue = deque()\n    fresh = 0\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == 2: queue.append((r, c, 0))\n            elif grid[r][c] == 1: fresh += 1\n    minutes = 0\n    while queue:\n        r, c, t = queue.popleft()\n        minutes = t\n        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:\n            nr, nc = r + dr, c + dc\n            if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1:\n                grid[nr][nc] = 2\n                fresh -= 1\n                queue.append((nr, nc, t + 1))\n    return minutes if fresh == 0 else -1",
+      "cpp": "#include <vector>\n#include <queue>\n\nint orangesRotting(std::vector<std::vector<int>>& grid) {\n    int rows = grid.size(), cols = grid[0].size();\n    std::queue<std::tuple<int,int,int>> q;\n    int fresh = 0;\n    for (int r = 0; r < rows; r++)\n        for (int c = 0; c < cols; c++) {\n            if (grid[r][c] == 2) q.push({r, c, 0});\n            else if (grid[r][c] == 1) fresh++;\n        }\n    int minutes = 0, dr[] = {1,-1,0,0}, dc[] = {0,0,1,-1};\n    while (!q.empty()) {\n        auto [r, c, t] = q.front(); q.pop();\n        minutes = t;\n        for (int d = 0; d < 4; d++) {\n            int nr = r + dr[d], nc = c + dc[d];\n            if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr][nc] == 1) {\n                grid[nr][nc] = 2;\n                fresh--;\n                q.push({nr, nc, t + 1});\n            }\n        }\n    }\n    return fresh == 0 ? minutes : -1;\n}",
+      "rust": "use std::collections::VecDeque;\n\nfn oranges_rotting(grid: &mut Vec<Vec<i32>>) -> i32 {\n    let (rows, cols) = (grid.len(), grid[0].len());\n    let mut queue: VecDeque<(i32, i32, i32)> = VecDeque::new();\n    let mut fresh = 0;\n    for r in 0..rows {\n        for c in 0..cols {\n            match grid[r][c] {\n                2 => queue.push_back((r as i32, c as i32, 0)),\n                1 => fresh += 1,\n                _ => {}\n            }\n        }\n    }\n    let mut minutes = 0;\n    while let Some((r, c, t)) = queue.pop_front() {\n        minutes = t;\n        for (dr, dc) in [(1,0),(-1,0),(0,1),(0,-1)] {\n            let (nr, nc) = (r + dr, c + dc);\n            if nr >= 0 && (nr as usize) < rows && nc >= 0 && (nc as usize) < cols\n                && grid[nr as usize][nc as usize] == 1 {\n                grid[nr as usize][nc as usize] = 2;\n                fresh -= 1;\n                queue.push_back((nr, nc, t + 1));\n            }\n        }\n    }\n    if fresh == 0 { minutes } else { -1 }\n}"
+    }
+  },
+  {
+    "date": "2026-06-26",
+    "title": "Min Stack",
+    "category": "stack",
+    "time_complexity": "O(1)",
+    "space_complexity": "O(n)",
+    "explanation": "Every operation — push, pop, top, and get_min — performs a fixed number of steps regardless of how many elements are in the stack, so each is O(1) time. The key insight is that Python's list append and pop from the end are both O(1) amortized, and the comparisons done are simple constant-time checks. You might be tempted to say O(n) for time because there are two stacks being maintained, but maintaining two stacks still only does a constant amount of work per call — it never loops over elements. For space, across n push operations you could store up to n elements in both the main stack and the min_stack, giving O(n) total space usage proportional to the number of elements pushed.",
+    "source_url": null,
+    "implementations": {
+      "python": "class MinStack:\n    def __init__(self):\n        self.stack = []\n        self.min_stack = []\n\n    def push(self, val: int) -> None:\n        self.stack.append(val)\n        if not self.min_stack or val <= self.min_stack[-1]:\n            self.min_stack.append(val)\n\n    def pop(self) -> None:\n        v = self.stack.pop()\n        if v == self.min_stack[-1]:\n            self.min_stack.pop()\n\n    def top(self) -> int:\n        return self.stack[-1]\n\n    def get_min(self) -> int:\n        return self.min_stack[-1]",
+      "cpp": "#include <vector>\n\nclass MinStack {\n    std::vector<int> stack, minStack;\npublic:\n    void push(int val) {\n        stack.push_back(val);\n        if (minStack.empty() || val <= minStack.back())\n            minStack.push_back(val);\n    }\n    void pop() {\n        if (stack.back() == minStack.back()) minStack.pop_back();\n        stack.pop_back();\n    }\n    int top() { return stack.back(); }\n    int getMin() { return minStack.back(); }\n};",
+      "rust": "struct MinStack {\n    stack: Vec<i32>,\n    min_stack: Vec<i32>,\n}\n\nimpl MinStack {\n    fn new() -> Self { Self { stack: vec![], min_stack: vec![] } }\n\n    fn push(&mut self, val: i32) {\n        self.stack.push(val);\n        if self.min_stack.last().map_or(true, |&m| val <= m) {\n            self.min_stack.push(val);\n        }\n    }\n\n    fn pop(&mut self) {\n        if let Some(v) = self.stack.pop() {\n            if Some(&v) == self.min_stack.last() {\n                self.min_stack.pop();\n            }\n        }\n    }\n\n    fn top(&self) -> i32 { *self.stack.last().unwrap() }\n    fn get_min(&self) -> i32 { *self.min_stack.last().unwrap() }\n}"
+    }
+  },
+  {
+    "date": "2026-06-27",
+    "title": "Subsets",
+    "category": "backtracking",
+    "time_complexity": "O(n * 2^n)",
+    "space_complexity": "O(n * 2^n)",
+    "explanation": "The dominant cost is the backtracking recursion, which explores every possible subset of the input list. For n elements, there are exactly 2^n subsets, and for each subset the code does a path[:] copy that can take up to O(n) time, giving you O(n * 2^n) total time. The space complexity is also O(n * 2^n) because the result list stores all 2^n subsets and each subset can have up to n elements. You might be tempted to say O(2^n) for time, but that misses the O(n) cost of copying each path into the result at every node of the recursion tree. The recursion stack itself only goes n levels deep, so it contributes just O(n) auxiliary space, which is dominated by the output storage.",
+    "source_url": null,
+    "implementations": {
+      "python": "def subsets(nums: list[int]) -> list[list[int]]:\n    result = []\n    def backtrack(start: int, path: list[int]):\n        result.append(path[:])\n        for i in range(start, len(nums)):\n            path.append(nums[i])\n            backtrack(i + 1, path)\n            path.pop()\n    backtrack(0, [])\n    return result",
+      "cpp": "#include <vector>\n\nvoid backtrack(std::vector<int>& nums, int start,\n               std::vector<int>& path, std::vector<std::vector<int>>& result) {\n    result.push_back(path);\n    for (size_t i = start; i < nums.size(); i++) {\n        path.push_back(nums[i]);\n        backtrack(nums, i + 1, path, result);\n        path.pop_back();\n    }\n}\n\nstd::vector<std::vector<int>> subsets(std::vector<int>& nums) {\n    std::vector<std::vector<int>> result;\n    std::vector<int> path;\n    backtrack(nums, 0, path, result);\n    return result;\n}",
+      "rust": "fn backtrack(nums: &[i32], start: usize,\n             path: &mut Vec<i32>, out: &mut Vec<Vec<i32>>) {\n    out.push(path.clone());\n    for i in start..nums.len() {\n        path.push(nums[i]);\n        backtrack(nums, i + 1, path, out);\n        path.pop();\n    }\n}\n\nfn subsets(nums: &[i32]) -> Vec<Vec<i32>> {\n    let mut out = Vec::new();\n    backtrack(nums, 0, &mut Vec::new(), &mut out);\n    out\n}"
+    }
+  },
+  {
+    "date": "2026-06-28",
+    "title": "Implement Trie",
+    "category": "trie",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "Each operation (insert, search, starts_with) iterates through the characters of the input string one by one, making the dominant cost proportional to the length of the string — O(n) where n is the number of characters. The for-loop in _find and insert drives this cost, visiting exactly one trie node per character. For space, inserting a word of length n creates at most n new Trie nodes in the worst case (when no prefix is shared), so space per insertion is O(n), and total space across all insertions is O(sum of word lengths). You might be tempted to say O(26n) because each node can have up to 26 children (for lowercase letters), but Big-O drops constant factors, so O(26n) simplifies to O(n).",
+    "source_url": null,
+    "implementations": {
+      "python": "class Trie:\n    def __init__(self):\n        self.children = {}\n        self.end = False\n\n    def insert(self, word: str) -> None:\n        node = self\n        for ch in word:\n            if ch not in node.children:\n                node.children[ch] = Trie()\n            node = node.children[ch]\n        node.end = True\n\n    def search(self, word: str) -> bool:\n        node = self._find(word)\n        return node is not None and node.end\n\n    def starts_with(self, prefix: str) -> bool:\n        return self._find(prefix) is not None\n\n    def _find(self, s: str):\n        node = self\n        for ch in s:\n            if ch not in node.children:\n                return None\n            node = node.children[ch]\n        return node",
+      "cpp": "#include <string>\n#include <unordered_map>\n\nclass Trie {\n    std::unordered_map<char, Trie*> children;\n    bool end = false;\npublic:\n    void insert(std::string word) {\n        Trie* node = this;\n        for (char c : word) {\n            if (!node->children.count(c)) node->children[c] = new Trie();\n            node = node->children[c];\n        }\n        node->end = true;\n    }\n    Trie* find(const std::string& s) {\n        Trie* node = this;\n        for (char c : s) {\n            if (!node->children.count(c)) return nullptr;\n            node = node->children[c];\n        }\n        return node;\n    }\n    bool search(std::string word) { Trie* n = find(word); return n && n->end; }\n    bool startsWith(std::string p) { return find(p) != nullptr; }\n};",
+      "rust": "use std::collections::HashMap;\n\nstruct Trie {\n    children: HashMap<char, Trie>,\n    end: bool,\n}\n\nimpl Trie {\n    fn new() -> Self { Self { children: HashMap::new(), end: false } }\n\n    fn insert(&mut self, word: &str) {\n        let mut node = self;\n        for ch in word.chars() {\n            node = node.children.entry(ch).or_insert_with(Trie::new);\n        }\n        node.end = true;\n    }\n\n    fn find(&self, s: &str) -> Option<&Trie> {\n        let mut node = self;\n        for ch in s.chars() {\n            node = node.children.get(&ch)?;\n        }\n        Some(node)\n    }\n\n    fn search(&self, word: &str) -> bool { self.find(word).map_or(false, |n| n.end) }\n    fn starts_with(&self, prefix: &str) -> bool { self.find(prefix).is_some() }\n}"
+    }
+  },
+  {
+    "date": "2026-06-29",
+    "title": "House Robber",
+    "category": "dynamic programming",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single for-loop that iterates over every element in the nums list exactly once, giving you O(n) time. Each iteration does a constant amount of work (one max comparison and two variable assignments), so nothing inside the loop adds extra cost. You might be tempted to say O(n) space thinking a DP array is used, but notice that instead of storing all intermediate results in an array, this solution only keeps two variables (prev1 and prev2) at any time, which is constant O(1) space. The classic House Robber solution using a full dp array would be O(n) space, but this optimized version avoids that entirely.",
+    "source_url": null,
+    "implementations": {
+      "python": "def rob(nums: list[int]) -> int:\n    prev2 = prev1 = 0\n    for n in nums:\n        curr = max(prev1, prev2 + n)\n        prev2 = prev1\n        prev1 = curr\n    return prev1",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nint rob(std::vector<int>& nums) {\n    int prev2 = 0, prev1 = 0;\n    for (int n : nums) {\n        int curr = std::max(prev1, prev2 + n);\n        prev2 = prev1;\n        prev1 = curr;\n    }\n    return prev1;\n}",
+      "rust": "fn rob(nums: &[i32]) -> i32 {\n    let mut prev2 = 0;\n    let mut prev1 = 0;\n    for &n in nums {\n        let curr = prev1.max(prev2 + n);\n        prev2 = prev1;\n        prev1 = curr;\n    }\n    prev1\n}"
+    }
+  },
+  {
+    "date": "2026-06-30",
+    "title": "Best Time to Buy and Sell Stock",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single `for p in prices` loop, which visits every element in the list exactly once. Because each iteration does only constant-time work — two comparisons and two assignments — the total time scales linearly with the number of prices, giving O(n). You might be tempted to guess O(n²) thinking that tracking a running minimum somehow implies a nested scan, but `min_price` is updated in place so no inner loop exists. For space, the algorithm uses only two scalar variables (`min_price` and `best`) regardless of how large the input list is, so extra memory usage is O(1) — it never grows with input size.",
+    "source_url": null,
+    "implementations": {
+      "python": "def max_profit(prices: list[int]) -> int:\n    min_price = float('inf')\n    best = 0\n    for p in prices:\n        min_price = min(min_price, p)\n        best = max(best, p - min_price)\n    return best",
+      "cpp": "#include <vector>\n#include <algorithm>\n#include <limits>\n\nint maxProfit(std::vector<int>& prices) {\n    int minPrice = std::numeric_limits<int>::max();\n    int best = 0;\n    for (int p : prices) {\n        minPrice = std::min(minPrice, p);\n        best = std::max(best, p - minPrice);\n    }\n    return best;\n}",
+      "rust": "fn max_profit(prices: &[i32]) -> i32 {\n    let mut min_price = i32::MAX;\n    let mut best = 0;\n    for &p in prices {\n        min_price = min_price.min(p);\n        best = best.max(p - min_price);\n    }\n    best\n}"
+    }
+  },
+  {
+    "date": "2026-07-01",
+    "title": "Contains Duplicate",
+    "category": "hash map",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the single `for` loop that iterates over every element in `nums`, giving you a linear O(n) time complexity. Each iteration performs a set lookup (`n in seen`) and a set insertion (`seen.add(n)`), both of which are O(1) on average due to hashing, so the loop itself is the bottleneck. The most tempting wrong time answer might be O(1) because you see early returns, but in the worst case (no duplicates), you must visit every element. For space, the `seen` set grows as you add unique elements, and in the worst case it holds all n elements, so space is O(n) — not O(1) as you might assume if you mistakenly think the set stays small.",
+    "source_url": null,
+    "implementations": {
+      "python": "def contains_duplicate(nums: list[int]) -> bool:\n    seen = set()\n    for n in nums:\n        if n in seen:\n            return True\n        seen.add(n)\n    return False",
+      "cpp": "#include <vector>\n#include <unordered_set>\n\nbool containsDuplicate(std::vector<int>& nums) {\n    std::unordered_set<int> seen;\n    for (int n : nums) {\n        if (seen.count(n)) return true;\n        seen.insert(n);\n    }\n    return false;\n}",
+      "rust": "use std::collections::HashSet;\n\nfn contains_duplicate(nums: &[i32]) -> bool {\n    let mut seen = HashSet::new();\n    for &n in nums {\n        if !seen.insert(n) {\n            return true;\n        }\n    }\n    false\n}"
+    }
+  },
+  {
+    "date": "2026-07-02",
+    "title": "Majority Element",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single for-loop that iterates over every element in nums exactly once, giving you O(n) time. Each iteration does a fixed amount of work — just a comparison and an increment or decrement — so nothing inside the loop adds extra complexity. You might be tempted to think this is O(n²) if you imagine some hidden nested scanning, but there is none; the Boyer-Moore Voting Algorithm is specifically designed to find the majority in one linear pass. For space, you only ever allocate two scalar variables (count and candidate) regardless of how large nums is, so space stays O(1).",
+    "source_url": null,
+    "implementations": {
+      "python": "def majority_element(nums: list[int]) -> int:\n    count = 0\n    candidate = None\n    for n in nums:\n        if count == 0:\n            candidate = n\n        count += 1 if n == candidate else -1\n    return candidate",
+      "cpp": "#include <vector>\n\nint majorityElement(std::vector<int>& nums) {\n    int count = 0, candidate = 0;\n    for (int n : nums) {\n        if (count == 0) candidate = n;\n        count += (n == candidate) ? 1 : -1;\n    }\n    return candidate;\n}",
+      "rust": "fn majority_element(nums: &[i32]) -> i32 {\n    let mut count = 0;\n    let mut candidate = 0;\n    for &n in nums {\n        if count == 0 {\n            candidate = n;\n        }\n        count += if n == candidate { 1 } else { -1 };\n    }\n    candidate\n}"
+    }
+  },
+  {
+    "date": "2026-07-03",
+    "title": "Merge Two Sorted Lists",
+    "category": "linked list",
+    "time_complexity": "O(n + m)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the while loop, which advances through both lists one node at a time. Each iteration moves either l1 or l2 forward by one step, so in the worst case you visit every node in both lists — that's O(n + m) where n and m are the lengths of l1 and l2 respectively. After the loop, the remaining tail is attached in O(1) with 'curr.next = l1 or l2'. The most tempting wrong time answer is O(min(n, m)) because the while loop stops when either list is exhausted, but the remaining nodes are still 'processed' via the tail assignment, meaning all nodes are effectively touched. For space, you only allocate a single dummy node and a curr pointer regardless of input size, so no extra space grows with the input — the merged list reuses the existing nodes, making it O(1) auxiliary space.",
+    "source_url": null,
+    "implementations": {
+      "python": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef merge_two_lists(l1: ListNode | None, l2: ListNode | None) -> ListNode | None:\n    dummy = curr = ListNode()\n    while l1 and l2:\n        if l1.val <= l2.val:\n            curr.next, l1 = l1, l1.next\n        else:\n            curr.next, l2 = l2, l2.next\n        curr = curr.next\n    curr.next = l1 or l2\n    return dummy.next",
+      "cpp": "struct ListNode {\n    int val;\n    ListNode* next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n\nListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {\n    ListNode dummy(0);\n    ListNode* curr = &dummy;\n    while (l1 && l2) {\n        if (l1->val <= l2->val) {\n            curr->next = l1;\n            l1 = l1->next;\n        } else {\n            curr->next = l2;\n            l2 = l2->next;\n        }\n        curr = curr->next;\n    }\n    curr->next = l1 ? l1 : l2;\n    return dummy.next;\n}",
+      "rust": "struct ListNode {\n    val: i32,\n    next: Option<Box<ListNode>>,\n}\n\nfn merge_two_lists(\n    mut l1: Option<Box<ListNode>>,\n    mut l2: Option<Box<ListNode>>,\n) -> Option<Box<ListNode>> {\n    let mut dummy = Box::new(ListNode { val: 0, next: None });\n    let mut curr = &mut dummy;\n    while l1.is_some() && l2.is_some() {\n        if l1.as_ref().unwrap().val <= l2.as_ref().unwrap().val {\n            let mut n = l1.take().unwrap();\n            l1 = n.next.take();\n            curr.next = Some(n);\n        } else {\n            let mut n = l2.take().unwrap();\n            l2 = n.next.take();\n            curr.next = Some(n);\n        }\n        curr = curr.next.as_mut().unwrap();\n    }\n    curr.next = l1.or(l2);\n    dummy.next\n}"
+    }
+  },
+  {
+    "date": "2026-07-04",
+    "title": "Linked List Cycle",
+    "category": "cycle detection",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the while loop, which advances two pointers (slow and fast) through the linked list. If there is no cycle, the fast pointer reaches the end in at most n/2 iterations, which simplifies to O(n). If there is a cycle, the fast pointer laps the slow pointer within at most n steps, so the loop still runs O(n) times total. You might be tempted to say O(n²) thinking the two pointers create nested work, but both pointers move forward in a single loop — there is no nested iteration, just two references advancing in tandem. The space complexity is O(1) because you only use two pointer variables (slow and fast) regardless of the size of the list — no extra data structure grows with input.",
+    "source_url": null,
+    "implementations": {
+      "python": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef has_cycle(head: ListNode | None) -> bool:\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n        if slow is fast:\n            return True\n    return False",
+      "cpp": "struct ListNode {\n    int val;\n    ListNode* next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n\nbool hasCycle(ListNode* head) {\n    ListNode* slow = head;\n    ListNode* fast = head;\n    while (fast && fast->next) {\n        slow = slow->next;\n        fast = fast->next->next;\n        if (slow == fast) return true;\n    }\n    return false;\n}",
+      "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\nstruct ListNode {\n    val: i32,\n    next: Option<Rc<RefCell<ListNode>>>,\n}\n\nfn has_cycle(head: Option<Rc<RefCell<ListNode>>>) -> bool {\n    let mut slow = head.clone();\n    let mut fast = head;\n    loop {\n        fast = match fast {\n            Some(node) => node.borrow().next.clone(),\n            None => return false,\n        };\n        fast = match fast {\n            Some(node) => node.borrow().next.clone(),\n            None => return false,\n        };\n        slow = match slow {\n            Some(node) => node.borrow().next.clone(),\n            None => return false,\n        };\n        if let (Some(s), Some(f)) = (&slow, &fast) {\n            if Rc::ptr_eq(s, f) {\n                return true;\n            }\n        }\n    }\n}"
+    }
+  },
+  {
+    "date": "2026-07-05",
+    "title": "Remove Duplicates from Sorted Array",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single `for` loop that iterates through the array once with the `fast` pointer, from index 1 to len(nums)-1, giving you O(n) time. Each element is visited exactly once, and the work done per element (a comparison and at most one assignment) is constant. You might be tempted to think it's O(n²) because there are two pointers (`slow` and `fast`), but both pointers only move forward and never cause nested iteration — they traverse the array in a single pass. For space, the algorithm modifies the array in-place using only two integer variables (`slow` and `fast`) regardless of input size, so the extra space is O(1); you might mistakenly say O(n) thinking the output counts, but the array is given to you and no new data structure is allocated.",
+    "source_url": null,
+    "implementations": {
+      "python": "def remove_duplicates(nums: list[int]) -> int:\n    if not nums:\n        return 0\n    slow = 0\n    for fast in range(1, len(nums)):\n        if nums[fast] != nums[slow]:\n            slow += 1\n            nums[slow] = nums[fast]\n    return slow + 1",
+      "cpp": "#include <vector>\n\nint removeDuplicates(std::vector<int>& nums) {\n    if (nums.empty()) return 0;\n    int slow = 0;\n    for (int fast = 1; fast < (int)nums.size(); fast++) {\n        if (nums[fast] != nums[slow]) {\n            slow++;\n            nums[slow] = nums[fast];\n        }\n    }\n    return slow + 1;\n}",
+      "rust": "fn remove_duplicates(nums: &mut Vec<i32>) -> usize {\n    if nums.is_empty() {\n        return 0;\n    }\n    let mut slow = 0;\n    for fast in 1..nums.len() {\n        if nums[fast] != nums[slow] {\n            slow += 1;\n            nums[slow] = nums[fast];\n        }\n    }\n    slow + 1\n}"
+    }
+  },
+  {
+    "date": "2026-07-06",
+    "title": "Pascal's Triangle",
+    "category": "arrays",
+    "time_complexity": "O(n²)",
+    "space_complexity": "O(n²)",
+    "explanation": "The dominant cost comes from the two nested loops: the outer loop runs n times (once per row), and the inner loop for row i runs roughly i times, giving a total of 1 + 2 + 3 + ... + n = n*(n+1)/2 operations, which is O(n²). The inner loop `for j in range(1, i)` is the specific construct that drives this — it grows linearly with each row index i. For space, you store the entire triangle in `result`, which holds 1 + 2 + ... + n = n*(n+1)/2 integers total, also O(n²). The most tempting wrong answer for both time and space is O(n), because you might only count the outer loop or think only about the number of rows rather than the total number of elements across all rows.",
+    "source_url": null,
+    "implementations": {
+      "python": "def generate_pascals_triangle(num_rows: int) -> list[list[int]]:\n    result = []\n    for i in range(num_rows):\n        row = [1] * (i + 1)\n        for j in range(1, i):\n            row[j] = result[i - 1][j - 1] + result[i - 1][j]\n        result.append(row)\n    return result",
+      "cpp": "#include <vector>\n\nstd::vector<std::vector<int>> generatePascalsTriangle(int numRows) {\n    std::vector<std::vector<int>> result;\n    for (int i = 0; i < numRows; i++) {\n        std::vector<int> row(i + 1, 1);\n        for (int j = 1; j < i; j++) {\n            row[j] = result[i - 1][j - 1] + result[i - 1][j];\n        }\n        result.push_back(row);\n    }\n    return result;\n}",
+      "rust": "fn generate_pascals_triangle(num_rows: usize) -> Vec<Vec<i32>> {\n    let mut result: Vec<Vec<i32>> = Vec::new();\n    for i in 0..num_rows {\n        let mut row = vec![1; i + 1];\n        for j in 1..i {\n            row[j] = result[i - 1][j - 1] + result[i - 1][j];\n        }\n        result.push(row);\n    }\n    result\n}"
+    }
+  },
+  {
+    "date": "2026-07-07",
+    "title": "Symmetric Tree",
+    "category": "tree",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the recursive `mirror` function, which visits each node in the tree exactly once (pairing nodes symmetrically from left and right subtrees). Every node is compared at most one time, so the total work scales linearly with the number of nodes n. The space complexity is also O(n) because the call stack can grow as deep as the height of the tree — in the worst case (a completely skewed tree), that height is n. You might be tempted to say O(log n) space, which would only be true for a perfectly balanced tree where height is log n, but the algorithm must handle unbalanced trees too.",
+    "source_url": null,
+    "implementations": {
+      "python": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef is_symmetric(root: TreeNode | None) -> bool:\n    def mirror(a, b):\n        if a is None and b is None:\n            return True\n        if a is None or b is None or a.val != b.val:\n            return False\n        return mirror(a.left, b.right) and mirror(a.right, b.left)\n    return root is None or mirror(root.left, root.right)",
+      "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nbool mirror(TreeNode* a, TreeNode* b) {\n    if (!a && !b) return true;\n    if (!a || !b || a->val != b->val) return false;\n    return mirror(a->left, b->right) && mirror(a->right, b->left);\n}\n\nbool isSymmetric(TreeNode* root) {\n    return !root || mirror(root->left, root->right);\n}",
+      "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\nstruct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn mirror(a: Option<Rc<RefCell<TreeNode>>>, b: Option<Rc<RefCell<TreeNode>>>) -> bool {\n    match (a, b) {\n        (None, None) => true,\n        (Some(a), Some(b)) => {\n            let (a, b) = (a.borrow(), b.borrow());\n            a.val == b.val\n                && mirror(a.left.clone(), b.right.clone())\n                && mirror(a.right.clone(), b.left.clone())\n        }\n        _ => false,\n    }\n}\n\nfn is_symmetric(root: Option<Rc<RefCell<TreeNode>>>) -> bool {\n    match root {\n        None => true,\n        Some(node) => {\n            let n = node.borrow();\n            mirror(n.left.clone(), n.right.clone())\n        }\n    }\n}"
+    }
+  },
+  {
+    "date": "2026-07-08",
+    "title": "Invert Binary Tree",
+    "category": "tree",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(h)",
+    "explanation": "The dominant cost is the recursive traversal of every node in the tree. Each call to invert_tree visits exactly one node and makes two recursive calls, so the function is called once per node — giving you O(n) time where n is the total number of nodes. The space complexity is driven by the call stack depth, which equals the height h of the tree; in the worst case (a completely skewed tree), h = n, but for a balanced tree h = log n, so we write O(h) to be precise. You might be tempted to say O(log n) for space, but that only holds for a perfectly balanced tree — a skewed tree pushes the call stack to O(n) depth, so O(h) is the correct general answer. Similarly, O(1) space is wrong because the recursive calls do consume stack frames proportional to the tree's height.",
+    "source_url": null,
+    "implementations": {
+      "python": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef invert_tree(root: TreeNode | None) -> TreeNode | None:\n    if root is None:\n        return None\n    root.left, root.right = invert_tree(root.right), invert_tree(root.left)\n    return root",
+      "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nTreeNode* invertTree(TreeNode* root) {\n    if (!root) return nullptr;\n    TreeNode* left = invertTree(root->left);\n    TreeNode* right = invertTree(root->right);\n    root->left = right;\n    root->right = left;\n    return root;\n}",
+      "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\nstruct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn invert_tree(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {\n    if let Some(node) = &root {\n        let (left, right) = {\n            let n = node.borrow();\n            (n.left.clone(), n.right.clone())\n        };\n        node.borrow_mut().left = invert_tree(right);\n        node.borrow_mut().right = invert_tree(left);\n    }\n    root\n}"
+    }
+  },
+  {
+    "date": "2026-07-09",
+    "title": "Diameter of Binary Tree",
+    "category": "tree",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the recursive `height` function, which visits every node in the tree exactly once. Each node triggers a constant amount of work (two recursive calls, a max operation, and an addition), so the total time grows linearly with the number of nodes n. You might be tempted to say O(log n) because binary trees are involved, but that only applies to balanced trees — in the worst case (a completely skewed tree), the recursion goes n levels deep, not log n. The space complexity is also O(n) because the call stack can grow as deep as the height of the tree, which in the worst case (a linear chain of nodes) equals n frames.",
+    "source_url": null,
+    "implementations": {
+      "python": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef diameter_of_binary_tree(root: TreeNode | None) -> int:\n    diameter = 0\n    def height(node):\n        nonlocal diameter\n        if node is None:\n            return 0\n        left = height(node.left)\n        right = height(node.right)\n        diameter = max(diameter, left + right)\n        return 1 + max(left, right)\n    height(root)\n    return diameter",
+      "cpp": "#include <algorithm>\n\nstruct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nint height(TreeNode* node, int& diameter) {\n    if (!node) return 0;\n    int left = height(node->left, diameter);\n    int right = height(node->right, diameter);\n    diameter = std::max(diameter, left + right);\n    return 1 + std::max(left, right);\n}\n\nint diameterOfBinaryTree(TreeNode* root) {\n    int diameter = 0;\n    height(root, diameter);\n    return diameter;\n}",
+      "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\nstruct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn height(node: &Option<Rc<RefCell<TreeNode>>>, diameter: &mut i32) -> i32 {\n    match node {\n        None => 0,\n        Some(n) => {\n            let n = n.borrow();\n            let left = height(&n.left, diameter);\n            let right = height(&n.right, diameter);\n            *diameter = (*diameter).max(left + right);\n            1 + left.max(right)\n        }\n    }\n}\n\nfn diameter_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {\n    let mut diameter = 0;\n    height(&root, &mut diameter);\n    diameter\n}"
+    }
+  },
+  {
+    "date": "2026-07-10",
+    "title": "Validate Binary Search Tree",
+    "category": "tree",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the recursive `valid` function, which visits every node in the tree exactly once to check whether it satisfies the BST property. Each call does O(1) work (a comparison and two recursive calls), so the total time grows linearly with the number of nodes n. For space, the recursion stack is the key factor — in the worst case (a completely skewed/linear tree), you stack up n frames before hitting a base case, giving O(n) space. You might be tempted to say O(log n) space because a balanced BST has height log n, but the problem makes no guarantee about balance, so you must account for the worst-case skewed tree.",
+    "source_url": null,
+    "implementations": {
+      "python": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef is_valid_bst(root: TreeNode | None) -> bool:\n    def valid(node, low, high):\n        if node is None:\n            return True\n        if not (low < node.val < high):\n            return False\n        return valid(node.left, low, node.val) and valid(node.right, node.val, high)\n    return valid(root, float('-inf'), float('inf'))",
+      "cpp": "#include <limits>\n\nstruct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nbool valid(TreeNode* node, long low, long high) {\n    if (!node) return true;\n    if (!(low < node->val && node->val < high)) return false;\n    return valid(node->left, low, node->val) && valid(node->right, node->val, high);\n}\n\nbool isValidBST(TreeNode* root) {\n    return valid(root, std::numeric_limits<long>::min(), std::numeric_limits<long>::max());\n}",
+      "rust": "use std::cell::RefCell;\nuse std::rc::Rc;\n\nstruct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn valid(node: &Option<Rc<RefCell<TreeNode>>>, low: i64, high: i64) -> bool {\n    match node {\n        None => true,\n        Some(n) => {\n            let n = n.borrow();\n            let v = n.val as i64;\n            if !(low < v && v < high) {\n                return false;\n            }\n            valid(&n.left, low, v) && valid(&n.right, v, high)\n        }\n    }\n}\n\nfn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {\n    valid(&root, i64::MIN, i64::MAX)\n}"
+    }
+  },
+  {
+    "date": "2026-07-11",
+    "title": "Jump Game",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single for-loop that iterates over every element in the nums list exactly once. Each iteration does only constant-time work: a comparison, a max call, and an update to the 'reachable' variable. You might be tempted to think this is O(n²) because of the max() call inside the loop, but max() here compares exactly two values, making it O(1) per iteration. The only extra memory used is the single integer variable 'reachable', which does not grow with input size, giving O(1) space.",
+    "source_url": null,
+    "implementations": {
+      "python": "def can_jump(nums: list[int]) -> bool:\n    reachable = 0\n    for i, n in enumerate(nums):\n        if i > reachable:\n            return False\n        reachable = max(reachable, i + n)\n    return True",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nbool canJump(std::vector<int>& nums) {\n    int reachable = 0;\n    for (int i = 0; i < (int)nums.size(); i++) {\n        if (i > reachable) return false;\n        reachable = std::max(reachable, i + nums[i]);\n    }\n    return true;\n}",
+      "rust": "fn can_jump(nums: &[i32]) -> bool {\n    let mut reachable = 0i32;\n    for (i, &n) in nums.iter().enumerate() {\n        if i as i32 > reachable {\n            return false;\n        }\n        reachable = reachable.max(i as i32 + n);\n    }\n    true\n}"
+    }
+  },
+  {
+    "date": "2026-07-12",
+    "title": "Spiral Matrix",
+    "category": "arrays",
+    "time_complexity": "O(m*n)",
+    "space_complexity": "O(m*n)",
+    "explanation": "The dominant cost is the set of for-loops inside the while loop, which together visit every element in the matrix exactly once. Because each cell is appended to the result exactly one time regardless of the spiral path taken, the total work is proportional to the total number of elements, m*n (rows times columns). You might be tempted to say O((m+n)²) because the while loop runs roughly (m+n)/2 times and each iteration does O(m+n) work, but that product still simplifies to O(m*n), not a larger expression. For space, the result list stores every element of the matrix, so it grows to size m*n; the boundary variables (top, bottom, left, right) are O(1) extra, making the output list the dominant space cost.",
+    "source_url": null,
+    "implementations": {
+      "python": "def spiral_order(matrix: list[list[int]]) -> list[int]:\n    result = []\n    if not matrix:\n        return result\n    top, bottom = 0, len(matrix) - 1\n    left, right = 0, len(matrix[0]) - 1\n    while top <= bottom and left <= right:\n        for j in range(left, right + 1):\n            result.append(matrix[top][j])\n        top += 1\n        for i in range(top, bottom + 1):\n            result.append(matrix[i][right])\n        right -= 1\n        if top <= bottom:\n            for j in range(right, left - 1, -1):\n                result.append(matrix[bottom][j])\n            bottom -= 1\n        if left <= right:\n            for i in range(bottom, top - 1, -1):\n                result.append(matrix[i][left])\n            left += 1\n    return result",
+      "cpp": "#include <vector>\n\nstd::vector<int> spiralOrder(std::vector<std::vector<int>>& matrix) {\n    std::vector<int> result;\n    if (matrix.empty()) return result;\n    int top = 0, bottom = matrix.size() - 1;\n    int left = 0, right = matrix[0].size() - 1;\n    while (top <= bottom && left <= right) {\n        for (int j = left; j <= right; j++) result.push_back(matrix[top][j]);\n        top++;\n        for (int i = top; i <= bottom; i++) result.push_back(matrix[i][right]);\n        right--;\n        if (top <= bottom) {\n            for (int j = right; j >= left; j--) result.push_back(matrix[bottom][j]);\n            bottom--;\n        }\n        if (left <= right) {\n            for (int i = bottom; i >= top; i--) result.push_back(matrix[i][left]);\n            left++;\n        }\n    }\n    return result;\n}",
+      "rust": "fn spiral_order(matrix: Vec<Vec<i32>>) -> Vec<i32> {\n    let mut result = Vec::new();\n    if matrix.is_empty() {\n        return result;\n    }\n    let (mut top, mut bottom) = (0i32, matrix.len() as i32 - 1);\n    let (mut left, mut right) = (0i32, matrix[0].len() as i32 - 1);\n    while top <= bottom && left <= right {\n        for j in left..=right {\n            result.push(matrix[top as usize][j as usize]);\n        }\n        top += 1;\n        for i in top..=bottom {\n            result.push(matrix[i as usize][right as usize]);\n        }\n        right -= 1;\n        if top <= bottom {\n            for j in (left..=right).rev() {\n                result.push(matrix[bottom as usize][j as usize]);\n            }\n            bottom -= 1;\n        }\n        if left <= right {\n            for i in (top..=bottom).rev() {\n                result.push(matrix[i as usize][left as usize]);\n            }\n            left += 1;\n        }\n    }\n    result\n}"
+    }
+  },
+  {
+    "date": "2026-07-13",
+    "title": "Daily Temperatures",
+    "category": "stack",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the single for-loop that iterates over all n temperatures, combined with the while-loop that pops from the stack. Although you see a nested while-loop inside the for-loop, each index is pushed onto the stack exactly once and popped at most once, so the total number of stack operations across the entire run is at most 2n — giving you O(n) overall. The most tempting wrong answer is O(n²), because the nested while-loop looks like it could run n times for each of the n iterations, but that would require each element to be popped multiple times, which is impossible since each element is pushed only once. For space, the result array and the stack each hold at most n elements, so space is O(n); O(1) is wrong because the stack can grow up to size n in the worst case (e.g., a strictly decreasing temperature list).",
+    "source_url": null,
+    "implementations": {
+      "python": "def daily_temperatures(temperatures: list[int]) -> list[int]:\n    result = [0] * len(temperatures)\n    stack = []\n    for i, t in enumerate(temperatures):\n        while stack and temperatures[stack[-1]] < t:\n            j = stack.pop()\n            result[j] = i - j\n        stack.append(i)\n    return result",
+      "cpp": "#include <vector>\n#include <stack>\n\nstd::vector<int> dailyTemperatures(std::vector<int>& temperatures) {\n    std::vector<int> result(temperatures.size(), 0);\n    std::stack<int> stk;\n    for (int i = 0; i < (int)temperatures.size(); i++) {\n        while (!stk.empty() && temperatures[stk.top()] < temperatures[i]) {\n            int j = stk.top(); stk.pop();\n            result[j] = i - j;\n        }\n        stk.push(i);\n    }\n    return result;\n}",
+      "rust": "fn daily_temperatures(temperatures: &[i32]) -> Vec<i32> {\n    let mut result = vec![0; temperatures.len()];\n    let mut stack: Vec<usize> = Vec::new();\n    for (i, &t) in temperatures.iter().enumerate() {\n        while let Some(&j) = stack.last() {\n            if temperatures[j] < t {\n                result[j] = (i - j) as i32;\n                stack.pop();\n            } else {\n                break;\n            }\n        }\n        stack.push(i);\n    }\n    result\n}"
+    }
+  },
+  {
+    "date": "2026-07-14",
+    "title": "Longest Increasing Subsequence",
+    "category": "dynamic programming",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the outer for-loop that iterates over all n elements of nums, and inside each iteration you call bisect.bisect_left on the tails list, which performs a binary search in O(log n) time. Multiplying these together gives O(n log n) overall. The tails list grows at most to length n (in the worst case when the input is strictly increasing), so the space complexity is O(n). You might be tempted to say O(n²) because maintaining a list inside a loop can sometimes involve shifting elements, but here tails[i] = n is a single index assignment — no shifting occurs — so the per-iteration work is truly O(log n), not O(n).",
+    "source_url": null,
+    "implementations": {
+      "python": "import bisect\n\ndef length_of_lis(nums: list[int]) -> int:\n    tails = []\n    for n in nums:\n        i = bisect.bisect_left(tails, n)\n        if i == len(tails):\n            tails.append(n)\n        else:\n            tails[i] = n\n    return len(tails)",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nint lengthOfLIS(std::vector<int>& nums) {\n    std::vector<int> tails;\n    for (int n : nums) {\n        auto it = std::lower_bound(tails.begin(), tails.end(), n);\n        if (it == tails.end()) tails.push_back(n);\n        else *it = n;\n    }\n    return tails.size();\n}",
+      "rust": "fn length_of_lis(nums: &[i32]) -> usize {\n    let mut tails: Vec<i32> = Vec::new();\n    for &n in nums {\n        match tails.binary_search(&n) {\n            Ok(i) => tails[i] = n,\n            Err(i) => {\n                if i == tails.len() {\n                    tails.push(n);\n                } else {\n                    tails[i] = n;\n                }\n            }\n        }\n    }\n    tails.len()\n}"
+    }
+  },
+  {
+    "date": "2026-07-15",
+    "title": "Longest Palindromic Substring",
+    "category": "two pointers",
+    "time_complexity": "O(n²)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost comes from the outer for-loop iterating over each of the n characters, and for each character calling expand() which can itself expand outward up to O(n) steps in the worst case (e.g., a string of all identical characters). This gives you O(n) * O(n) = O(n²) total work. The most tempting wrong answer is O(n) — you might think expand() is cheap on average, but in the worst case every expansion touches the full string. For space, the algorithm only uses a fixed number of variables (start, end, l, r) regardless of input size, so it is O(1) extra space; the O(n) distractor is tempting because of the output string slice, but that is typically not counted as auxiliary space.",
+    "source_url": null,
+    "implementations": {
+      "python": "def longest_palindrome(s: str) -> str:\n    if not s:\n        return \"\"\n    start, end = 0, 0\n    def expand(l, r):\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            l -= 1\n            r += 1\n        return l + 1, r - 1\n    for i in range(len(s)):\n        l1, r1 = expand(i, i)\n        if r1 - l1 > end - start:\n            start, end = l1, r1\n        l2, r2 = expand(i, i + 1)\n        if r2 - l2 > end - start:\n            start, end = l2, r2\n    return s[start:end + 1]",
+      "cpp": "#include <string>\n#include <utility>\n\nstd::pair<int, int> expand(const std::string& s, int l, int r) {\n    while (l >= 0 && r < (int)s.size() && s[l] == s[r]) {\n        l--; r++;\n    }\n    return {l + 1, r - 1};\n}\n\nstd::string longestPalindrome(std::string s) {\n    if (s.empty()) return \"\";\n    int start = 0, end = 0;\n    for (int i = 0; i < (int)s.size(); i++) {\n        auto [l1, r1] = expand(s, i, i);\n        if (r1 - l1 > end - start) { start = l1; end = r1; }\n        auto [l2, r2] = expand(s, i, i + 1);\n        if (r2 - l2 > end - start) { start = l2; end = r2; }\n    }\n    return s.substr(start, end - start + 1);\n}",
+      "rust": "fn expand(s: &[u8], mut l: i32, mut r: i32) -> (i32, i32) {\n    while l >= 0 && (r as usize) < s.len() && s[l as usize] == s[r as usize] {\n        l -= 1;\n        r += 1;\n    }\n    (l + 1, r - 1)\n}\n\nfn longest_palindrome(s: &str) -> &str {\n    let bytes = s.as_bytes();\n    if bytes.is_empty() {\n        return \"\";\n    }\n    let (mut start, mut end) = (0i32, 0i32);\n    for i in 0..bytes.len() as i32 {\n        let (l1, r1) = expand(bytes, i, i);\n        if r1 - l1 > end - start {\n            start = l1;\n            end = r1;\n        }\n        let (l2, r2) = expand(bytes, i, i + 1);\n        if r2 - l2 > end - start {\n            start = l2;\n            end = r2;\n        }\n    }\n    &s[start as usize..=end as usize]\n}"
+    }
+  },
+  {
+    "date": "2026-07-16",
+    "title": "Maximum Product Subarray",
+    "category": "dynamic programming",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single for-loop that iterates over nums[1:], visiting each element exactly once. Inside the loop, every operation — the swap, the max/min calls, and the result update — runs in constant time, so the total work scales linearly with the length of the input array. You might be tempted to think the max() and min() calls add extra complexity, but they each compare only two values, making them O(1) regardless of n. For space, you only maintain a fixed set of scalar variables (result, cur_max, cur_min) no matter how large the input is, so no additional memory proportional to n is ever allocated.",
+    "source_url": null,
+    "implementations": {
+      "python": "def max_product(nums: list[int]) -> int:\n    result = nums[0]\n    cur_max = cur_min = nums[0]\n    for n in nums[1:]:\n        if n < 0:\n            cur_max, cur_min = cur_min, cur_max\n        cur_max = max(n, cur_max * n)\n        cur_min = min(n, cur_min * n)\n        result = max(result, cur_max)\n    return result",
+      "cpp": "#include <vector>\n#include <algorithm>\n#include <utility>\n\nint maxProduct(std::vector<int>& nums) {\n    int result = nums[0];\n    int curMax = nums[0], curMin = nums[0];\n    for (size_t i = 1; i < nums.size(); i++) {\n        int n = nums[i];\n        if (n < 0) std::swap(curMax, curMin);\n        curMax = std::max(n, curMax * n);\n        curMin = std::min(n, curMin * n);\n        result = std::max(result, curMax);\n    }\n    return result;\n}",
+      "rust": "fn max_product(nums: &[i32]) -> i32 {\n    let mut result = nums[0];\n    let (mut cur_max, mut cur_min) = (nums[0], nums[0]);\n    for &n in &nums[1..] {\n        if n < 0 {\n            std::mem::swap(&mut cur_max, &mut cur_min);\n        }\n        cur_max = n.max(cur_max * n);\n        cur_min = n.min(cur_min * n);\n        result = result.max(cur_max);\n    }\n    result\n}"
+    }
+  },
+  {
+    "date": "2026-07-17",
+    "title": "Top K Frequent Elements",
+    "category": "heap",
+    "time_complexity": "O(n log k)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the loop over all unique elements in 'counts', where each iteration performs a heap push and occasionally a heap pop — both costing O(log k) since the heap is kept at most size k. You iterate over at most n unique elements (in the worst case all elements are distinct), giving O(n log k) total. The Counter construction is O(n) which is dominated by the heap operations when k is not trivially small. You might be tempted to say O(n log n) because sorting-based solutions are common for this problem, but this heap-based approach caps heap size at k, making each operation O(log k) rather than O(log n). For space, the Counter can hold up to n entries in the worst case (all elements distinct), making it O(n), which dominates the O(k) heap; choosing O(k) ignores the space used by the frequency map.",
+    "source_url": null,
+    "implementations": {
+      "python": "import heapq\nfrom collections import Counter\n\ndef top_k_frequent(nums: list[int], k: int) -> list[int]:\n    counts = Counter(nums)\n    heap = []\n    for num, freq in counts.items():\n        heapq.heappush(heap, (freq, num))\n        if len(heap) > k:\n            heapq.heappop(heap)\n    return [num for freq, num in heap]",
+      "cpp": "#include <vector>\n#include <queue>\n#include <unordered_map>\n#include <functional>\n\nstd::vector<int> topKFrequent(std::vector<int>& nums, int k) {\n    std::unordered_map<int, int> counts;\n    for (int n : nums) counts[n]++;\n    std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<>> minHeap;\n    for (auto& [num, freq] : counts) {\n        minHeap.push({freq, num});\n        if ((int)minHeap.size() > k) minHeap.pop();\n    }\n    std::vector<int> result;\n    while (!minHeap.empty()) {\n        result.push_back(minHeap.top().second);\n        minHeap.pop();\n    }\n    return result;\n}",
+      "rust": "use std::cmp::Reverse;\nuse std::collections::{BinaryHeap, HashMap};\n\nfn top_k_frequent(nums: &[i32], k: usize) -> Vec<i32> {\n    let mut counts: HashMap<i32, i32> = HashMap::new();\n    for &n in nums {\n        *counts.entry(n).or_insert(0) += 1;\n    }\n    let mut heap: BinaryHeap<Reverse<(i32, i32)>> = BinaryHeap::new();\n    for (&num, &freq) in counts.iter() {\n        heap.push(Reverse((freq, num)));\n        if heap.len() > k {\n            heap.pop();\n        }\n    }\n    heap.into_iter().map(|Reverse((_, num))| num).collect()\n}"
+    }
+  },
+  {
+    "date": "2026-07-18",
+    "title": "Merge Intervals",
+    "category": "sorting",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the sort at the start of the function, which takes O(n log n) time for n intervals. After sorting, the single for-loop runs through all intervals exactly once, giving O(n) work — but since O(n log n) grows faster, the sort dominates the overall time complexity. You might be tempted to say O(n) because the loop is so simple and linear, but you cannot ignore the sort that happens before it. For space, the result list can hold up to n intervals in the worst case (when no intervals overlap), giving O(n) auxiliary space; the sort itself may also use O(log n) stack space, but O(n) dominates.",
+    "source_url": null,
+    "implementations": {
+      "python": "def merge_intervals(intervals: list[list[int]]) -> list[list[int]]:\n    intervals.sort(key=lambda x: x[0])\n    result = []\n    for start, end in intervals:\n        if result and start <= result[-1][1]:\n            result[-1][1] = max(result[-1][1], end)\n        else:\n            result.append([start, end])\n    return result",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nstd::vector<std::vector<int>> mergeIntervals(std::vector<std::vector<int>>& intervals) {\n    std::sort(intervals.begin(), intervals.end());\n    std::vector<std::vector<int>> result;\n    for (auto& interval : intervals) {\n        if (!result.empty() && interval[0] <= result.back()[1]) {\n            result.back()[1] = std::max(result.back()[1], interval[1]);\n        } else {\n            result.push_back(interval);\n        }\n    }\n    return result;\n}",
+      "rust": "fn merge_intervals(mut intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n    intervals.sort_by_key(|iv| iv[0]);\n    let mut result: Vec<Vec<i32>> = Vec::new();\n    for interval in intervals {\n        if let Some(last) = result.last_mut() {\n            if interval[0] <= last[1] {\n                last[1] = last[1].max(interval[1]);\n                continue;\n            }\n        }\n        result.push(interval);\n    }\n    result\n}"
+    }
+  },
+  {
+    "date": "2026-07-19",
+    "title": "Valid Anagram",
+    "category": "hash map",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost comes from the two sequential for-loops, one over string s and one over string t, each running in O(n) where n is the length of the strings. Since these loops run one after the other (not nested), the total time is O(n) + O(n) = O(n). You might be tempted to say O(26n) because of the fixed-size counts array, but the constant factor of 26 is dropped in Big-O notation, keeping it O(n). The space complexity is O(1) because the counts array is always exactly 26 integers regardless of the input size — it does not grow with n, making it constant space even though you allocate an array.",
+    "source_url": null,
+    "implementations": {
+      "python": "def is_anagram(s: str, t: str) -> bool:\n    # s and t consist of lowercase English letters only.\n    if len(s) != len(t):\n        return False\n    counts = [0] * 26\n    for c in s:\n        counts[ord(c) - ord('a')] += 1\n    for c in t:\n        i = ord(c) - ord('a')\n        counts[i] -= 1\n        if counts[i] < 0:\n            return False\n    return True",
+      "cpp": "#include <string>\n#include <array>\n\n// s and t consist of lowercase English letters only.\nbool isAnagram(std::string s, std::string t) {\n    if (s.size() != t.size()) return false;\n    std::array<int, 26> counts{};\n    for (char c : s) counts[c - 'a']++;\n    for (char c : t) {\n        if (--counts[c - 'a'] < 0) return false;\n    }\n    return true;\n}",
+      "rust": "// s and t consist of lowercase English letters only.\nfn is_anagram(s: &str, t: &str) -> bool {\n    if s.len() != t.len() {\n        return false;\n    }\n    let mut counts = [0i32; 26];\n    for c in s.bytes() {\n        counts[(c - b'a') as usize] += 1;\n    }\n    for c in t.bytes() {\n        let i = (c - b'a') as usize;\n        counts[i] -= 1;\n        if counts[i] < 0 {\n            return false;\n        }\n    }\n    true\n}"
+    }
+  },
+  {
+    "date": "2026-08-20",
+    "title": "First Missing Positive",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost comes from the cyclic-sort style while loop that swaps each number into its correct index position. Although it looks nested inside a for loop, each swap places at least one value into its final correct slot permanently, so across the entire array at most n swaps can ever happen in total, making the whole first loop O(n) amortized rather than O(n²). The second loop is a simple single pass over the array, also O(n), so the overall time stays linear. The most tempting wrong answer is O(n²) because of the nested while-inside-for structure, but that ignores the fact that swaps are bounded by n total, not n per outer iteration. Space is O(1) because the algorithm rearranges numbers in place using only a few index variables, without allocating any extra arrays or data structures that scale with input size.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/first-missing-positive.py",
+    "implementations": {
+      "python": "def first_missing_positive(nums: list[int]) -> int:\n    n = len(nums)\n    for i in range(n):\n        while 1 <= nums[i] <= n and nums[nums[i] - 1] != nums[i]:\n            nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]\n    for i in range(n):\n        if nums[i] != i + 1:\n            return i + 1\n    return n + 1\n",
+      "cpp": "#include <vector>\n#include <utility>\n\nint firstMissingPositive(std::vector<int>& nums) {\n    int n = nums.size();\n    for (int i = 0; i < n; i++) {\n        while (nums[i] >= 1 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {\n            std::swap(nums[nums[i] - 1], nums[i]);\n        }\n    }\n    for (int i = 0; i < n; i++) {\n        if (nums[i] != i + 1) {\n            return i + 1;\n        }\n    }\n    return n + 1;\n}\n",
+      "rust": "fn first_missing_positive(nums: &mut Vec<i32>) -> i32 {\n    let n = nums.len() as i32;\n    for i in 0..nums.len() {\n        while nums[i] >= 1 && nums[i] <= n && nums[(nums[i] - 1) as usize] != nums[i] {\n            let j = (nums[i] - 1) as usize;\n            nums.swap(i, j);\n        }\n    }\n    for i in 0..nums.len() {\n        if nums[i] != (i as i32 + 1) {\n            return i as i32 + 1;\n        }\n    }\n    n + 1\n}\n"
+    }
+  },
+  {
+    "date": "2026-08-21",
+    "title": "Rotate Image",
+    "category": "arrays",
+    "time_complexity": "O(n^2)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost comes from the two nested loops that iterate over the n x n matrix: the anti-diagonal mirror loop touches roughly half the cells and the horizontal mirror loop touches all cells, both giving work proportional to n^2 since n is the matrix side length. You might be tempted to think it's O(n) because the outer loop only runs n times, but you have to remember the inner loop also runs on the order of n times, multiplying out to n^2 total swaps. Space stays O(1) because the rotation is done in place using only temporary variables for swapping, with no extra arrays or lists sized by n created. A common mistake is assuming O(n) or O(n^2) space because a matrix of that size is involved, but that memory belongs to the input, not to any additional space your code allocates.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/rotate-image.py",
+    "implementations": {
+      "python": "def rotate(matrix: list[list[int]]) -> list[list[int]]:\n    n = len(matrix)\n\n    # anti-diagonal mirror\n    for i in range(n):\n        for j in range(n - i):\n            matrix[i][j], matrix[n-1-j][n-1-i] = matrix[n-1-j][n-1-i], matrix[i][j]\n\n    # horizontal mirror\n    for i in range(n // 2):\n        for j in range(n):\n            matrix[i][j], matrix[n-1-i][j] = matrix[n-1-i][j], matrix[i][j]\n\n    return matrix\n",
+      "cpp": "#include <vector>\n#include <utility>\n\nstd::vector<std::vector<int>> rotate(std::vector<std::vector<int>>& matrix) {\n    int n = matrix.size();\n\n    // anti-diagonal mirror\n    for (int i = 0; i < n; ++i) {\n        for (int j = 0; j < n - i; ++j) {\n            std::swap(matrix[i][j], matrix[n-1-j][n-1-i]);\n        }\n    }\n\n    // horizontal mirror\n    for (int i = 0; i < n / 2; ++i) {\n        for (int j = 0; j < n; ++j) {\n            std::swap(matrix[i][j], matrix[n-1-i][j]);\n        }\n    }\n\n    return matrix;\n}\n",
+      "rust": "fn rotate(mut matrix: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n    let n = matrix.len();\n\n    // anti-diagonal mirror\n    for i in 0..n {\n        for j in 0..(n - i) {\n            let tmp = matrix[i][j];\n            matrix[i][j] = matrix[n-1-j][n-1-i];\n            matrix[n-1-j][n-1-i] = tmp;\n        }\n    }\n\n    // horizontal mirror\n    for i in 0..(n / 2) {\n        for j in 0..n {\n            let tmp = matrix[i][j];\n            matrix[i][j] = matrix[n-1-i][j];\n            matrix[n-1-i][j] = tmp;\n        }\n    }\n\n    matrix\n}\n"
+    }
+  },
+  {
+    "date": "2026-08-22",
+    "title": "Insert Interval",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost comes from the two while loops and the final extend, which together walk through the intervals list exactly once from start to end. You never revisit an element or sort anything, so each of the n intervals is processed with constant work, giving you a single linear pass. A tempting wrong answer is O(n log n), which people guess because interval problems often involve sorting, but this code assumes intervals are already sorted and never calls sort. For space, the result list can end up holding all n original intervals plus the merged one, so you need O(n) extra space rather than O(1), since the output isn't built in place.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/insert-interval.py",
+    "implementations": {
+      "python": "def insert(intervals: list[list[int]], new_interval: list[int]) -> list[list[int]]:\n    result = []\n    i = 0\n    n = len(intervals)\n    while i < n and new_interval[0] > intervals[i][1]:\n        result.append(intervals[i])\n        i += 1\n    while i < n and new_interval[1] >= intervals[i][0]:\n        new_interval = [min(new_interval[0], intervals[i][0]),\n                        max(new_interval[1], intervals[i][1])]\n        i += 1\n    result.append(new_interval)\n    result.extend(intervals[i:])\n    return result\n",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nstd::vector<std::vector<int>> insert(std::vector<std::vector<int>>& intervals, std::vector<int>& newInterval) {\n    size_t i = 0;\n    std::vector<std::vector<int>> result;\n    while (i < intervals.size() && newInterval[0] > intervals[i][1]) {\n        result.push_back(intervals[i]);\n        i++;\n    }\n    while (i < intervals.size() && newInterval[1] >= intervals[i][0]) {\n        newInterval = {std::min(newInterval[0], intervals[i][0]),\n                       std::max(newInterval[1], intervals[i][1])};\n        i++;\n    }\n    result.push_back(newInterval);\n    for (; i < intervals.size(); i++) {\n        result.push_back(intervals[i]);\n    }\n    return result;\n}\n",
+      "rust": "fn insert(intervals: &[Vec<i32>], new_interval: &[i32]) -> Vec<Vec<i32>> {\n    let mut result = Vec::new();\n    let mut i = 0;\n    let n = intervals.len();\n    let mut new_interval = new_interval.to_vec();\n    while i < n && new_interval[0] > intervals[i][1] {\n        result.push(intervals[i].clone());\n        i += 1;\n    }\n    while i < n && new_interval[1] >= intervals[i][0] {\n        new_interval = vec![\n            new_interval[0].min(intervals[i][0]),\n            new_interval[1].max(intervals[i][1]),\n        ];\n        i += 1;\n    }\n    result.push(new_interval);\n    while i < n {\n        result.push(intervals[i].clone());\n        i += 1;\n    }\n    result\n}\n"
+    }
+  },
+  {
+    "date": "2026-08-23",
+    "title": "Single Number II",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The single for loop iterates once over each element in nums, and inside the loop only constant-time bitwise operations are performed to update one and two. Since the work per element doesn't depend on the size of the list and there's no nested iteration or sorting, the total cost scales linearly with n, giving O(n) time. You might be tempted to say O(1) since the operations look trivial, but that ignores that you still have to visit every element of the input at least once. For space, only two integer variables (one and two) are used regardless of how large nums is, so no additional memory grows with input size, making it O(1) space rather than O(n), which would apply if you were storing extra data structures like a hash set.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/single-number-ii.py",
+    "implementations": {
+      "python": "def single_number(nums: list[int]) -> int:\n    one, two = 0, 0\n    for x in nums:\n        one, two = (~x & one) | (x & ~one & ~two), (~x & two) | (x & one)\n    return one\n",
+      "cpp": "#include <vector>\n\nint singleNumber(std::vector<int>& nums) {\n    int one = 0, two = 0;\n    for (int i : nums) {\n        int new_one = (~i & one) | (i & ~one & ~two);\n        int new_two = (~i & two) | (i & one);\n        one = new_one;\n        two = new_two;\n    }\n    return one;\n}\n",
+      "rust": "fn single_number(nums: &[i32]) -> i32 {\n    let mut one: i32 = 0;\n    let mut two: i32 = 0;\n    for &x in nums {\n        let new_one = (!x & one) | (x & !one & !two);\n        let new_two = (!x & two) | (x & one);\n        one = new_one;\n        two = new_two;\n    }\n    one\n}\n"
+    }
+  },
+  {
+    "date": "2026-08-24",
+    "title": "Max Consecutive Ones",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The single for loop that walks through nums is what drives the cost here, since you touch each element exactly once to update local_max and result. Because there's no nesting, recursion, or repeated scanning of the list, the work grows in direct proportion to the number of elements, giving you O(n) time. A tempting wrong answer is O(n²), but that would only apply if you had a nested loop or repeated inner scan for each element, which this code does not do. For space, you only ever store two integer variables, result and local_max, regardless of how large nums is, so the space stays constant at O(1) instead of growing with input size.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/max-consecutive-ones.py",
+    "implementations": {
+      "python": "def find_max_consecutive_ones(nums: list[int]) -> int:\n    result, local_max = 0, 0\n    for n in nums:\n        local_max = local_max + 1 if n else 0\n        result = max(result, local_max)\n    return result",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nint findMaxConsecutiveOnes(std::vector<int>& nums) {\n    int result = 0, local_max = 0;\n    for (const auto& n : nums) {\n        local_max = n ? local_max + 1 : 0;\n        result = std::max(result, local_max);\n    }\n    return result;\n}",
+      "rust": "fn find_max_consecutive_ones(nums: &[i32]) -> i32 {\n    let mut result = 0;\n    let mut local_max = 0;\n    for &n in nums.iter() {\n        local_max = if n != 0 { local_max + 1 } else { 0 };\n        result = std::cmp::max(result, local_max);\n    }\n    result\n}"
+    }
+  },
+  {
+    "date": "2026-08-25",
+    "title": "3Sum",
+    "category": "arrays",
+    "time_complexity": "O(n^2)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost comes from the outer loop over each index i combined with the inner two-pointer while loop scanning left and right across the remaining array. Even though sorting takes O(n log n), the outer loop runs O(n) times and for each iteration the two-pointer scan does up to O(n) work, giving O(n^2) overall, which dominates the sort. A tempting wrong answer is O(n^3), which would apply if you used three nested loops instead of the two-pointer technique, but here the sorted array lets the inner two pointers replace the third loop. For space, the sort itself (or the result list construction) uses O(n) auxiliary space beyond the output, not counting the result list which is considered output storage.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/3sum.py",
+    "implementations": {
+      "python": "def three_sum(nums: list[int]) -> list[list[int]]:\n    result = []\n    nums = sorted(nums)\n    n = len(nums)\n    for i in range(n - 1, 1, -1):\n        if i + 1 < n and nums[i] == nums[i + 1]:\n            continue\n        target = -nums[i]\n        left, right = 0, i - 1\n        while left < right:\n            if nums[left] + nums[right] < target:\n                left += 1\n            elif nums[left] + nums[right] > target:\n                right -= 1\n            else:\n                result.append([nums[left], nums[right], nums[i]])\n                left += 1\n                right -= 1\n                while left < right and nums[left] == nums[left - 1]:\n                    left += 1\n                while left < right and nums[right] == nums[right + 1]:\n                    right -= 1\n    return result\n",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nstd::vector<std::vector<int>> threeSum(std::vector<int>& nums) {\n    std::sort(nums.begin(), nums.end());\n    std::vector<std::vector<int>> result;\n    int n = static_cast<int>(nums.size());\n    for (int i = n - 1; i >= 2; --i) {\n        if (i + 1 < n && nums[i] == nums[i + 1]) {\n            continue;\n        }\n        int target = -nums[i];\n        int left = 0, right = i - 1;\n        while (left < right) {\n            if (nums[left] + nums[right] < target) {\n                ++left;\n            } else if (nums[left] + nums[right] > target) {\n                --right;\n            } else {\n                result.push_back({nums[left], nums[right], nums[i]});\n                ++left; --right;\n                while (left < right && nums[left] == nums[left - 1]) {\n                    ++left;\n                }\n                while (left < right && nums[right] == nums[right + 1]) {\n                    --right;\n                }\n            }\n        }\n    }\n    return result;\n}\n",
+      "rust": "fn three_sum(nums: &[i32]) -> Vec<Vec<i32>> {\n    let mut nums = nums.to_vec();\n    nums.sort();\n    let n = nums.len();\n    let mut result = Vec::new();\n    let mut i: i32 = n as i32 - 1;\n    while i >= 2 {\n        let iu = i as usize;\n        if iu + 1 < n && nums[iu] == nums[iu + 1] {\n            i -= 1;\n            continue;\n        }\n        let target = -nums[iu];\n        let mut left: i32 = 0;\n        let mut right: i32 = i - 1;\n        while left < right {\n            let l = left as usize;\n            let r = right as usize;\n            if nums[l] + nums[r] < target {\n                left += 1;\n            } else if nums[l] + nums[r] > target {\n                right -= 1;\n            } else {\n                result.push(vec![nums[l], nums[r], nums[iu]]);\n                left += 1;\n                right -= 1;\n                while left < right && nums[left as usize] == nums[(left - 1) as usize] {\n                    left += 1;\n                }\n                while left < right && nums[right as usize] == nums[(right + 1) as usize] {\n                    right -= 1;\n                }\n            }\n        }\n        i -= 1;\n    }\n    result\n}\n"
+    }
+  },
+  {
+    "date": "2026-08-26",
+    "title": "4Sum",
+    "category": "arrays",
+    "time_complexity": "O(n^3)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost comes from the nested structure: the outer two loops over i and j give O(n^2) pairs, and for each pair the inner while loop with left/right pointers scans the remaining array in O(n) time, giving O(n^3) overall. The sort at the start only costs O(n log n), which is dominated by the triple-nested scanning. A tempting wrong answer is O(n^2), which would be true if the two-pointer inner loop were O(1), but it actually scans up to n elements for every (i, j) pair, so you need that extra factor of n. Space is O(n) because sort typically uses O(log n) to O(n) auxiliary space depending on implementation, and the result list can grow with output, but the algorithm itself doesn't use extra data structures scaling faster than linear in the input size, aside from output storage which is not counted as auxiliary space in the standard analysis.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/4sum.py",
+    "implementations": {
+      "python": "def four_sum(nums: list[int], target: int) -> list[list[int]]:\n    nums.sort()\n    n = len(nums)\n    result = []\n    for i in range(n - 3):\n        if i and nums[i] == nums[i - 1]:\n            continue\n        for j in range(i + 1, n - 2):\n            if j != i + 1 and nums[j] == nums[j - 1]:\n                continue\n            total = target - nums[i] - nums[j]\n            left, right = j + 1, n - 1\n            while left < right:\n                if nums[left] + nums[right] == total:\n                    result.append([nums[i], nums[j], nums[left], nums[right]])\n                    left += 1\n                    right -= 1\n                    while left < right and nums[left] == nums[left - 1]:\n                        left += 1\n                    while left < right and nums[right] == nums[right + 1]:\n                        right -= 1\n                elif nums[left] + nums[right] > total:\n                    right -= 1\n                else:\n                    left += 1\n    return result\n",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nstd::vector<std::vector<int>> fourSum(std::vector<int>& nums, int target) {\n    std::sort(nums.begin(), nums.end());\n    int n = (int)nums.size();\n    std::vector<std::vector<int>> result;\n    for (int i = 0; i + 3 < n; i++) {\n        if (i && nums[i] == nums[i - 1]) continue;\n        for (int j = i + 1; j + 2 < n; j++) {\n            if (j != i + 1 && nums[j] == nums[j - 1]) continue;\n            long long total = (long long)target - nums[i] - nums[j];\n            int left = j + 1, right = n - 1;\n            while (left < right) {\n                long long sum = (long long)nums[left] + nums[right];\n                if (sum == total) {\n                    result.push_back({nums[i], nums[j], nums[left], nums[right]});\n                    left++;\n                    right--;\n                    while (left < right && nums[left] == nums[left - 1]) left++;\n                    while (left < right && nums[right] == nums[right + 1]) right--;\n                } else if (sum > total) {\n                    right--;\n                } else {\n                    left++;\n                }\n            }\n        }\n    }\n    return result;\n}\n",
+      "rust": "fn four_sum(nums: &[i32], target: i32) -> Vec<Vec<i32>> {\n    let mut nums = nums.to_vec();\n    nums.sort();\n    let n = nums.len();\n    let mut result = Vec::new();\n    if n < 4 {\n        return result;\n    }\n    for i in 0..n - 3 {\n        if i > 0 && nums[i] == nums[i - 1] {\n            continue;\n        }\n        for j in i + 1..n - 2 {\n            if j != i + 1 && nums[j] == nums[j - 1] {\n                continue;\n            }\n            let total = target as i64 - nums[i] as i64 - nums[j] as i64;\n            let mut left = j + 1;\n            let mut right = n - 1;\n            while left < right {\n                let sum = nums[left] as i64 + nums[right] as i64;\n                if sum == total {\n                    result.push(vec![nums[i], nums[j], nums[left], nums[right]]);\n                    left += 1;\n                    right -= 1;\n                    while left < right && nums[left] == nums[left - 1] {\n                        left += 1;\n                    }\n                    while left < right && nums[right] == nums[right + 1] {\n                        right -= 1;\n                    }\n                } else if sum > total {\n                    right -= 1;\n                } else {\n                    left += 1;\n                }\n            }\n        }\n    }\n    result\n}\n"
+    }
+  },
+  {
+    "date": "2026-08-27",
+    "title": "Can Place Flowers",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The single for loop iterates once over the flowerbed array, checking each position for a valid planting spot, so the dominant cost is that one pass through the list of length n. Each check inside the loop (comparing neighbors) is constant time, so the total work scales linearly with the size of the input array. You might be tempted to say O(1) because the function can return early once n reaches zero, but early exits only improve the best case, not the worst-case bound, which still requires scanning up to all n elements. The space complexity is O(n) because the code makes a full copy of the flowerbed list with 'bed = flowerbed[:]' rather than modifying the input in place, so extra memory proportional to the input size is allocated.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/can-place-flowers.py",
+    "implementations": {
+      "python": "def can_place_flowers(flowerbed: list[int], n: int) -> bool:\n    bed = flowerbed[:]\n    for i in range(len(bed)):\n        if bed[i] == 0 and (i == 0 or bed[i - 1] == 0) and \\\n           (i == len(bed) - 1 or bed[i + 1] == 0):\n            bed[i] = 1\n            n -= 1\n        if n <= 0:\n            return True\n    return False",
+      "cpp": "#include <vector>\n\nbool canPlaceFlowers(std::vector<int>& flowerbed, int n) {\n    for (size_t i = 0; i < flowerbed.size(); ++i) {\n        if (flowerbed[i] == 0 && (i == 0 || flowerbed[i - 1] == 0) &&\n            (i == flowerbed.size() - 1 || flowerbed[i + 1] == 0)) {\n            flowerbed[i] = 1;\n            --n;\n        }\n        if (n <= 0) {\n            return true;\n        }\n    }\n    return false;\n}",
+      "rust": "fn can_place_flowers(flowerbed: &[i32], n: i32) -> bool {\n    let mut bed = flowerbed.to_vec();\n    let mut n = n;\n    for i in 0..bed.len() {\n        if bed[i] == 0 && (i == 0 || bed[i - 1] == 0) &&\n           (i == bed.len() - 1 || bed[i + 1] == 0) {\n            bed[i] = 1;\n            n -= 1;\n        }\n        if n <= 0 {\n            return true;\n        }\n    }\n    false\n}"
+    }
+  },
+  {
+    "date": "2026-08-28",
+    "title": "Pascal's Triangle II",
+    "category": "arrays",
+    "time_complexity": "O(n²)",
+    "space_complexity": "O(n)",
+    "explanation": "You should look at the two nested loops here: the outer loop runs row_index+1 times, and for each outer step i, the inner loop runs i times. That means the total number of inner-loop operations adds up like 1+2+3+...+n, which is a triangular number and simplifies to O(n²). It's tempting to call this O(n) because there's only one array being built, but that ignores the fact that the inner loop's work grows with each outer iteration rather than staying constant. For space, the algorithm only allocates one list of size row_index+1 to store the result, so the extra space used (beyond the required output) is O(n), not O(n²) or O(1), since the array size scales directly with n.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/pascals-triangle-ii.py",
+    "implementations": {
+      "python": "def get_row(row_index: int) -> list[int]:\n    result = [0] * (row_index + 1)\n    for i in range(row_index + 1):\n        old = result[0] = 1\n        for j in range(1, i + 1):\n            old, result[j] = result[j], old + result[j]\n    return result",
+      "cpp": "#include <vector>\n\nstd::vector<int> getRow(int rowIndex) {\n    std::vector<int> result(rowIndex + 1);\n    for (int i = 0; i < (int)result.size(); ++i) {\n        int prev_result = result[0] = 1;\n        for (int j = 1; j <= i; ++j) {\n            int tmp = result[j];\n            result[j] += prev_result;\n            prev_result = tmp;\n        }\n    }\n    return result;\n}",
+      "rust": "fn get_row(row_index: i32) -> Vec<i32> {\n    let n = (row_index + 1) as usize;\n    let mut result = vec![0i32; n];\n    for i in 0..n {\n        result[0] = 1;\n        let mut old = 1;\n        for j in 1..=i {\n            let tmp = result[j];\n            result[j] = old + tmp;\n            old = tmp;\n        }\n    }\n    result\n}"
+    }
+  },
+  {
+    "date": "2026-08-29",
+    "title": "Meeting Rooms II",
+    "category": "arrays",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost here is the sort call on the 'line' list, which contains 2n entries (one start and one end event per interval). Sorting dominates because building the list and the final loop over it are both O(n), but comparison sorting takes O(n log n), and that term wins for large n. You might be tempted to say O(n) since the loop that computes 'result' only walks through the list once, but that overlooks the sort step that happens before it, which is the real bottleneck. For space, you need O(n) extra memory because the 'line' list stores two entries for every interval, proportional to the input size, plus whatever the sort algorithm uses internally. O(1) would be wrong because you're explicitly creating a new list of size 2n rather than working in place on the original intervals.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/meeting-rooms-ii.py",
+    "implementations": {
+      "python": "def min_meeting_rooms(intervals: list[list[int]]) -> int:\n    line = [x for i, j in intervals for x in [[i, 1], [j, -1]]]\n    line.sort()\n    result, curr = 0, 0\n    for _, num in line:\n        curr += num\n        result = max(result, curr)\n    return result",
+      "cpp": "#include <vector>\n#include <algorithm>\n#include <utility>\n\nint minMeetingRooms(std::vector<std::vector<int>>& intervals) {\n    std::vector<std::pair<int,int>> line;\n    for (auto& iv : intervals) {\n        line.push_back({iv[0], 1});\n        line.push_back({iv[1], -1});\n    }\n    std::sort(line.begin(), line.end());\n    int result = 0, curr = 0;\n    for (auto& p : line) {\n        curr += p.second;\n        result = std::max(result, curr);\n    }\n    return result;\n}",
+      "rust": "fn min_meeting_rooms(intervals: &[Vec<i32>]) -> i32 {\n    let mut line: Vec<(i32, i32)> = Vec::new();\n    for iv in intervals {\n        line.push((iv[0], 1));\n        line.push((iv[1], -1));\n    }\n    line.sort();\n    let mut result = 0;\n    let mut curr = 0;\n    for (_, num) in line {\n        curr += num;\n        result = result.max(curr);\n    }\n    result\n}"
+    }
+  },
+  {
+    "date": "2026-08-30",
+    "title": "Plus One",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost here is the single reversed loop over the digits array, which in the worst case (all 9s, like [9,9,9]) runs through every element once before falling through to the append step. Since each iteration does constant work (a comparison and either a reset or increment), the total work scales linearly with the number of digits, giving you O(n) time. You might be tempted to say O(1) because many inputs return early on the first non-9 digit, but Big-O accounts for the worst case, not the best case. For space, the function modifies the digits list in place and only uses a few extra variables (the loop index), so it needs O(1) extra space regardless of input size; the possible append at the end grows the same list rather than allocating a separate new structure proportional to n.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/plus-one.py",
+    "implementations": {
+      "python": "def plus_one(digits: list[int]) -> list[int]:\n    for i in reversed(range(len(digits))):\n        if digits[i] == 9:\n            digits[i] = 0\n        else:\n            digits[i] += 1\n            return digits\n    digits[0] = 1\n    digits.append(0)\n    return digits\n",
+      "cpp": "#include <vector>\n\nstd::vector<int> plusOne(std::vector<int>& digits) {\n    for (int i = (int)digits.size() - 1; i >= 0; --i) {\n        if (digits[i] == 9) {\n            digits[i] = 0;\n        } else {\n            ++digits[i];\n            return digits;\n        }\n    }\n    digits[0] = 1;\n    digits.emplace_back(0);\n    return digits;\n}\n",
+      "rust": "fn plus_one(digits: &[i32]) -> Vec<i32> {\n    let mut digits = digits.to_vec();\n    for i in (0..digits.len()).rev() {\n        if digits[i] == 9 {\n            digits[i] = 0;\n        } else {\n            digits[i] += 1;\n            return digits;\n        }\n    }\n    digits[0] = 1;\n    digits.push(0);\n    digits\n}\n"
+    }
+  },
+  {
+    "date": "2026-08-31",
+    "title": "Majority Element II",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost comes from the two separate passes over the nums list, each of which is O(n), plus a small inner loop over the keys of cnts. That inner loop looks like it could add extra cost, but the algorithm's logic (the Boyer-Moore style k=3 majority vote) guarantees cnts never holds more than k-1, i.e. 2, keys at any time, since the moment a third key would be added, every counter gets decremented and empties out. So that inner loop is bounded by a constant, not by n, and the overall time stays O(n). A tempting wrong answer is O(n^2), assuming the inner 'for j in list(cnts.keys())' loop scales with the outer loop, but since cnts is capped at a fixed small size regardless of n, it contributes only a constant factor. Space is O(1) because the dictionary size stays bounded by k (a fixed constant of 3) throughout the algorithm, independent of how large nums grows, and the final result list also holds at most k-1 elements.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/majority-element-ii.py",
+    "implementations": {
+      "python": "def majority_element(nums: list[int]) -> list[int]:\n    k = 3\n    n = len(nums)\n    cnts: dict[int, int] = {}\n\n    for i in nums:\n        cnts[i] = cnts.get(i, 0) + 1\n        if len(cnts) == k:\n            for j in list(cnts.keys()):\n                cnts[j] -= 1\n                if cnts[j] == 0:\n                    del cnts[j]\n\n    for i in cnts.keys():\n        cnts[i] = 0\n\n    for i in nums:\n        if i in cnts:\n            cnts[i] += 1\n\n    result = [i for i in cnts.keys() if cnts[i] > n / k]\n    return sorted(result)\n",
+      "cpp": "#include <vector>\n#include <unordered_map>\n#include <algorithm>\n\nstd::vector<int> majorityElement(std::vector<int>& nums) {\n    int k = 3;\n    int n = nums.size();\n    std::unordered_map<int, int> hash;\n\n    for (int i : nums) {\n        hash[i]++;\n        if ((int)hash.size() == k) {\n            for (auto it = hash.begin(); it != hash.end(); ) {\n                if (--(it->second) == 0) {\n                    it = hash.erase(it);\n                } else {\n                    ++it;\n                }\n            }\n        }\n    }\n\n    for (auto& it : hash) {\n        it.second = 0;\n    }\n\n    for (int i : nums) {\n        auto it = hash.find(i);\n        if (it != hash.end()) {\n            it->second++;\n        }\n    }\n\n    std::vector<int> ret;\n    for (auto& it : hash) {\n        if (it.second > n / k) {\n            ret.push_back(it.first);\n        }\n    }\n    std::sort(ret.begin(), ret.end());\n    return ret;\n}\n",
+      "rust": "use std::collections::HashMap;\n\nfn majority_element(nums: &[i32]) -> Vec<i32> {\n    let k = 3usize;\n    let n = nums.len();\n    let mut cnts: HashMap<i32, i32> = HashMap::new();\n\n    for &i in nums {\n        *cnts.entry(i).or_insert(0) += 1;\n        if cnts.len() == k {\n            let keys: Vec<i32> = cnts.keys().cloned().collect();\n            for j in keys {\n                if let Some(val) = cnts.get_mut(&j) {\n                    *val -= 1;\n                    if *val == 0 {\n                        cnts.remove(&j);\n                    }\n                }\n            }\n        }\n    }\n\n    for val in cnts.values_mut() {\n        *val = 0;\n    }\n\n    for &i in nums {\n        if let Some(val) = cnts.get_mut(&i) {\n            *val += 1;\n        }\n    }\n\n    let mut result: Vec<i32> = cnts\n        .into_iter()\n        .filter(|&(_, v)| (v as usize) > n / k)\n        .map(|(key, _)| key)\n        .collect();\n    result.sort();\n    result\n}\n"
+    }
+  },
+  {
+    "date": "2026-09-01",
+    "title": "Two Sum II - Input Array Is Sorted",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The while loop uses two pointers, start and end, that move toward each other, and in the worst case they traverse the array once before meeting, so the dominant cost is that single pass through nums. Each iteration does constant work (a comparison and pointer update), so the total work scales linearly with n, giving you O(n) time. You might be tempted to think O(n log n) because two-pointer techniques sometimes follow sorting, but here the array is already sorted and no sorting or extra searching happens. Space-wise, you only ever use a few variables like start, end, and total, none of which grow with input size, so the space stays constant at O(1) regardless of how big nums is.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/two-sum-ii-input-array-is-sorted.py",
+    "implementations": {
+      "python": "def two_sum(nums: list[int], target: int) -> list[int]:\n    start, end = 0, len(nums) - 1\n    while start != end:\n        total = nums[start] + nums[end]\n        if total > target:\n            end -= 1\n        elif total < target:\n            start += 1\n        else:\n            return [start + 1, end + 1]\n    return []\n",
+      "cpp": "#include <vector>\n\nstd::vector<int> twoSum(std::vector<int>& numbers, int target) {\n    int left = 0, right = static_cast<int>(numbers.size()) - 1;\n    while (left != right) {\n        int sum = numbers[left] + numbers[right];\n        if (sum > target) {\n            --right;\n        } else if (sum < target) {\n            ++left;\n        } else {\n            return {left + 1, right + 1};\n        }\n    }\n    return {};\n}\n",
+      "rust": "fn two_sum(numbers: &[i32], target: i32) -> Vec<i32> {\n    let mut left: i32 = 0;\n    let mut right: i32 = numbers.len() as i32 - 1;\n    while left != right {\n        let sum = numbers[left as usize] + numbers[right as usize];\n        if sum > target {\n            right -= 1;\n        } else if sum < target {\n            left += 1;\n        } else {\n            return vec![left + 1, right + 1];\n        }\n    }\n    vec![]\n}\n"
+    }
+  },
+  {
+    "date": "2026-09-02",
+    "title": "Wiggle Subsequence",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The single for loop runs from index 1 to len(nums)-1, doing constant-time comparisons and updates each iteration, so the dominant cost is that one pass through the list, giving you O(n) time. There's no nested loop, recursion, or sorting involved, so you don't get any multiplicative or logarithmic factors. The most tempting wrong answer is O(n log n), which people often guess when they assume some sorting or divide-and-conquer step is hidden in the logic, but here it's just simple sequential scanning. For space, you only use a few scalar variables like length and up regardless of input size, so it's O(1) constant space, not O(n) which would apply if you stored an array or list proportional to the input.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/wiggle-subsequence.py",
+    "implementations": {
+      "python": "def wiggle_max_length(nums: list[int]) -> int:\n    if len(nums) < 2:\n        return len(nums)\n\n    length = 1\n    up: bool | None = None\n\n    for i in range(1, len(nums)):\n        if nums[i - 1] < nums[i] and (up is None or up is False):\n            length += 1\n            up = True\n        elif nums[i - 1] > nums[i] and (up is None or up is True):\n            length += 1\n            up = False\n\n    return length\n",
+      "cpp": "#include <vector>\n\nint wiggleMaxLength(std::vector<int>& nums) {\n    if (nums.size() < 2) {\n        return static_cast<int>(nums.size());\n    }\n\n    int length = 1;\n    int up = 0; // 0 = none, 1 = true (up), -1 = false (down)\n\n    for (int i = 1; i < static_cast<int>(nums.size()); ++i) {\n        if (nums[i - 1] < nums[i] && (up == 0 || up == -1)) {\n            ++length;\n            up = 1;\n        } else if (nums[i - 1] > nums[i] && (up == 0 || up == 1)) {\n            ++length;\n            up = -1;\n        }\n    }\n\n    return length;\n}\n",
+      "rust": "fn wiggle_max_length(nums: &[i32]) -> i32 {\n    if nums.len() < 2 {\n        return nums.len() as i32;\n    }\n\n    let mut length = 1;\n    let mut up: Option<bool> = None;\n\n    for i in 1..nums.len() {\n        if nums[i - 1] < nums[i] && (up.is_none() || up == Some(false)) {\n            length += 1;\n            up = Some(true);\n        } else if nums[i - 1] > nums[i] && (up.is_none() || up == Some(true)) {\n            length += 1;\n            up = Some(false);\n        }\n    }\n\n    length\n}\n"
+    }
+  },
+  {
+    "date": "2026-09-03",
+    "title": "Rotate Array",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost comes from the three calls to reverse, each of which swaps elements in place using a while loop that runs about half the length of its segment. Since the three reversed segments together cover the array exactly (once fully, then split into two parts), the total number of swap operations is proportional to n, giving you O(n) time overall. You might be tempted to think this is O(n log n) because reverse is called multiple times, but each call's cost is linear and they are called a constant number of times (three), so the total stays linear rather than compounding. Space-wise, the algorithm only swaps elements directly within the input list using a few index variables, without allocating any new arrays or recursive stack frames, so the space complexity is O(1).",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/rotate-array.py",
+    "implementations": {
+      "python": "def rotate(nums: list[int], k: int) -> list[int]:\n    def reverse(nums: list[int], start: int, end: int) -> None:\n        while start < end:\n            nums[start], nums[end - 1] = nums[end - 1], nums[start]\n            start += 1\n            end -= 1\n\n    k %= len(nums)\n    reverse(nums, 0, len(nums))\n    reverse(nums, 0, k)\n    reverse(nums, k, len(nums))\n    return nums",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nstd::vector<int> rotate(std::vector<int>& nums, int k) {\n    if (!nums.empty()) {\n        k %= (int)nums.size();\n        std::reverse(nums.begin(), nums.end());\n        std::reverse(nums.begin(), nums.begin() + k);\n        std::reverse(nums.begin() + k, nums.end());\n    }\n    return nums;\n}",
+      "rust": "fn rotate(nums: &mut Vec<i32>, k: i32) -> Vec<i32> {\n    fn reverse(nums: &mut [i32], start: usize, end: usize) {\n        let mut s = start;\n        let mut e = end;\n        while s < e {\n            nums.swap(s, e - 1);\n            s += 1;\n            e -= 1;\n        }\n    }\n\n    let n = nums.len();\n    let k = (k as usize) % n;\n    reverse(nums, 0, n);\n    reverse(nums, 0, k);\n    reverse(nums, k, n);\n    nums.clone()\n}"
+    }
+  },
+  {
+    "date": "2026-09-04",
+    "title": "3Sum Closest",
+    "category": "two pointers",
+    "time_complexity": "O(n^2)",
+    "space_complexity": "O(1)",
+    "explanation": "You have an outer loop over the array combined with an inner two-pointer loop, and this nested structure is what drives the cost. The sort takes O(n log n), but the outer for-loop runs O(n) times, and for each iteration the inner while loop with left/right pointers can also run up to O(n) times, giving O(n^2) total work which dominates the sort. A tempting wrong answer is O(n log n) because of the sort call, but that cost is dwarfed by the nested two-pointer scan that happens for every outer index. Space-wise, aside from the in-place sort, you only use a fixed number of variables like result, min_diff, left, and right, so the extra space used doesn't grow with input size, making it O(1).",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/3sum-closest.py",
+    "implementations": {
+      "python": "def three_sum_closest(nums: list[int], target: int) -> int:\n    result, min_diff = 0, float(\"inf\")\n    nums.sort()\n    for i in reversed(range(2, len(nums))):\n        if i + 1 < len(nums) and nums[i] == nums[i + 1]:\n            continue\n        left, right = 0, i - 1\n        while left < right:\n            total = nums[left] + nums[right] + nums[i]\n            if total < target:\n                left += 1\n            elif total > target:\n                right -= 1\n            else:\n                return target\n            if abs(total - target) < min_diff:\n                min_diff = abs(total - target)\n                result = total\n    return result\n",
+      "cpp": "#include <vector>\n#include <algorithm>\n#include <climits>\n#include <cmath>\n\nint threeSumClosest(std::vector<int>& nums, int target) {\n    std::sort(nums.begin(), nums.end());\n    int result = 0;\n    int min_diff = INT_MAX;\n    for (int i = (int)nums.size() - 1; i >= 2; --i) {\n        if (i + 1 < (int)nums.size() && nums[i] == nums[i + 1]) {\n            continue;\n        }\n        int left = 0, right = i - 1;\n        while (left < right) {\n            int total = nums[left] + nums[right] + nums[i];\n            if (total < target) {\n                ++left;\n            } else if (total > target) {\n                --right;\n            } else {\n                return target;\n            }\n            if (std::abs(total - target) < min_diff) {\n                min_diff = std::abs(total - target);\n                result = total;\n            }\n        }\n    }\n    return result;\n}\n",
+      "rust": "fn three_sum_closest(nums: &[i32], target: i32) -> i32 {\n    let mut nums = nums.to_vec();\n    nums.sort();\n    let mut result = 0;\n    let mut min_diff = i32::MAX;\n    let n = nums.len();\n    let mut i = n as i32 - 1;\n    while i >= 2 {\n        let ui = i as usize;\n        if ui + 1 < n && nums[ui] == nums[ui + 1] {\n            i -= 1;\n            continue;\n        }\n        let mut left = 0usize;\n        let mut right = ui - 1;\n        while left < right {\n            let total = nums[left] + nums[right] + nums[ui];\n            if total < target {\n                left += 1;\n            } else if total > target {\n                right -= 1;\n            } else {\n                return target;\n            }\n            if (total - target).abs() < min_diff {\n                min_diff = (total - target).abs();\n                result = total;\n            }\n        }\n        i -= 1;\n    }\n    result\n}\n"
+    }
+  },
+  {
+    "date": "2026-09-05",
+    "title": "Sort Colors",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost here is the single while loop in tri_partition, where the pointer i moves from 0 up to right, and right can only decrease, so the loop body runs a bounded number of times proportional to the length of nums, giving you O(n). You might be tempted to think of this like a sorting algorithm and assume O(n log n), but this isn't a comparison sort over the whole range of values—it's a one-pass Dutch national flag partition that only ever compares each element to a fixed target and swaps it into place, so no nested loops or recursive splitting occur. Space-wise, the function only uses a few integer variables (i, left, right) and swaps elements in place within the original list, so no extra data structures that scale with n are created, making space O(1). The n distractor for space is tempting because sorting algorithms sometimes need auxiliary arrays or recursion stacks, but this in-place swap-based approach avoids that entirely.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/sort-colors.py",
+    "implementations": {
+      "python": "def sort_colors(nums: list[int]) -> list[int]:\n    def tri_partition(nums: list[int], target: int) -> None:\n        i, left, right = 0, 0, len(nums) - 1\n        while i <= right:\n            if nums[i] > target:\n                nums[i], nums[right] = nums[right], nums[i]\n                right -= 1\n            else:\n                if nums[i] < target:\n                    nums[left], nums[i] = nums[i], nums[left]\n                    left += 1\n                i += 1\n\n    tri_partition(nums, 1)\n    return nums\n",
+      "cpp": "#include <vector>\n#include <utility>\n\nstd::vector<int> sortColors(std::vector<int>& nums) {\n    const int target = 1;\n    int right = static_cast<int>(nums.size()) - 1;\n    for (int i = 0, left = 0; i <= right;) {\n        if (nums[i] > target) {\n            std::swap(nums[i], nums[right--]);\n        } else {\n            if (nums[i] < target) {\n                std::swap(nums[left++], nums[i]);\n            }\n            ++i;\n        }\n    }\n    return nums;\n}\n",
+      "rust": "fn sort_colors(nums: &mut [i32]) -> Vec<i32> {\n    let target = 1;\n    let mut i: isize = 0;\n    let mut left: isize = 0;\n    let mut right: isize = nums.len() as isize - 1;\n    while i <= right {\n        let ui = i as usize;\n        if nums[ui] > target {\n            nums.swap(ui, right as usize);\n            right -= 1;\n        } else {\n            if nums[ui] < target {\n                nums.swap(left as usize, ui);\n                left += 1;\n            }\n            i += 1;\n        }\n    }\n    nums.to_vec()\n}\n"
+    }
+  },
+  {
+    "date": "2026-09-06",
+    "title": "Valid Palindrome",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The two pointers i and j move toward each other using a single while loop with two nested skip-loops, but together the inner loops only advance the pointers, never resetting them, so the total number of pointer movements across the whole run is bounded by n. This means every character is visited at most once overall, giving you O(n) time even though it looks like nested loops. The tempting O(n²) answer comes from seeing loops inside a loop, but since i and j only increase and decrease respectively without ever backtracking, the work doesn't multiply—it just adds up linearly. Space-wise, the algorithm only uses a fixed number of integer variables (i and j) and doesn't build any new strings or data structures, so it stays at O(1) regardless of input size.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/valid-palindrome.py",
+    "implementations": {
+      "python": "def is_palindrome(s: str) -> bool:\n    i, j = 0, len(s) - 1\n    while i < j:\n        while i < j and not s[i].isalnum():\n            i += 1\n        while i < j and not s[j].isalnum():\n            j -= 1\n        if s[i].lower() != s[j].lower():\n            return False\n        i, j = i + 1, j - 1\n    return True\n",
+      "cpp": "#include <string>\n#include <cctype>\n\nbool isPalindrome(std::string s) {\n    int i = 0, j = (int)s.length() - 1;\n    while (i < j) {\n        while (i < j && !isalnum((unsigned char)s[i])) i++;\n        while (i < j && !isalnum((unsigned char)s[j])) j--;\n        if (tolower((unsigned char)s[i]) != tolower((unsigned char)s[j])) return false;\n        i++; j--;\n    }\n    return true;\n}\n",
+      "rust": "fn is_palindrome(s: &str) -> bool {\n    let chars: Vec<char> = s.chars().collect();\n    let mut i: i32 = 0;\n    let mut j: i32 = chars.len() as i32 - 1;\n    while i < j {\n        while i < j && !chars[i as usize].is_alphanumeric() {\n            i += 1;\n        }\n        while i < j && !chars[j as usize].is_alphanumeric() {\n            j -= 1;\n        }\n        if chars[i as usize].to_ascii_lowercase() != chars[j as usize].to_ascii_lowercase() {\n            return false;\n        }\n        i += 1;\n        j -= 1;\n    }\n    true\n}\n"
+    }
+  },
+  {
+    "date": "2026-09-07",
+    "title": "Squares of a Sorted Array",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the while loop that merges the negative and non-negative portions of the array, and each iteration does constant work while advancing either the left or right pointer by one. Since the two pointers together traverse every element of nums exactly once, the loop runs O(n) times, and the initial bisect_left call only costs O(log n) which is dwarfed by the linear merge. You might be tempted to say O(log n) because of the bisect call, but that only finds the split point—it does not account for building the full result array. The result list you build and return holds n squared values, so space is O(n), not O(1), even though you only use a couple of extra pointer variables besides that list.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/squares-of-a-sorted-array.py",
+    "implementations": {
+      "python": "import bisect\n\ndef sorted_squares(nums: list[int]) -> list[int]:\n    right = bisect.bisect_left(nums, 0)\n    left = right - 1\n    result = []\n    while left >= 0 or right < len(nums):\n        if right == len(nums) or (left >= 0 and nums[left] ** 2 < nums[right] ** 2):\n            result.append(nums[left] ** 2)\n            left -= 1\n        else:\n            result.append(nums[right] ** 2)\n            right += 1\n    return result\n",
+      "cpp": "#include <vector>\n#include <algorithm>\n\nstd::vector<int> sortedSquares(std::vector<int>& nums) {\n    int right = std::distance(nums.cbegin(), std::lower_bound(nums.cbegin(), nums.cend(), 0));\n    int left = right - 1;\n    std::vector<int> result;\n    while (left >= 0 || right < (int)nums.size()) {\n        if (right == (int)nums.size() || (left >= 0 && nums[left] * nums[left] < nums[right] * nums[right])) {\n            result.push_back(nums[left] * nums[left]);\n            left--;\n        } else {\n            result.push_back(nums[right] * nums[right]);\n            right++;\n        }\n    }\n    return result;\n}\n",
+      "rust": "fn sorted_squares(nums: &[i32]) -> Vec<i32> {\n    let right0 = nums.partition_point(|&x| x < 0);\n    let mut right: i64 = right0 as i64;\n    let mut left: i64 = right - 1;\n    let n = nums.len() as i64;\n    let mut result = Vec::new();\n    while left >= 0 || right < n {\n        if right == n || (left >= 0 && nums[left as usize] * nums[left as usize] < nums[right as usize] * nums[right as usize]) {\n            result.push(nums[left as usize] * nums[left as usize]);\n            left -= 1;\n        } else {\n            result.push(nums[right as usize] * nums[right as usize]);\n            right += 1;\n        }\n    }\n    result\n}\n"
+    }
+  },
+  {
+    "date": "2026-09-08",
+    "title": "Partition Labels",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost comes from two separate single passes over the string: one to build the lookup dictionary mapping each character to its last index, and one to scan through and determine partition boundaries. Both loops run exactly n times where n is the length of the string, and all operations inside them (dictionary lookups, max, comparisons) are O(1), so the total time is O(n). You might be tempted to think it's O(n²) because there's a nested-looking structure with 'last' tracking, but there's no actual inner loop scanning back through characters—the max update happens in constant time per character. The space complexity is O(n) because the lookup dictionary can store up to one entry per unique character, which in the worst case (all distinct characters) scales linearly with the input size, plus the result list also grows with input size in the worst case.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/partition-labels.py",
+    "implementations": {
+      "python": "def partition_labels(s: str) -> list[int]:\n    lookup = {c: i for i, c in enumerate(s)}\n    first, last = 0, 0\n    result = []\n    for i, c in enumerate(s):\n        last = max(last, lookup[c])\n        if i == last:\n            result.append(i - first + 1)\n            first = i + 1\n    return result",
+      "cpp": "#include <vector>\n#include <string>\n#include <unordered_map>\n#include <algorithm>\n\nstd::vector<int> partitionLabels(std::string s) {\n    std::unordered_map<char, int> lookup;\n    for (int i = 0; i < (int)s.length(); ++i) {\n        lookup[s[i]] = i;\n    }\n    int first = 0, last = 0;\n    std::vector<int> result;\n    for (int i = 0; i < (int)s.length(); ++i) {\n        last = std::max(last, lookup[s[i]]);\n        if (i == last) {\n            result.push_back(i - first + 1);\n            first = i + 1;\n        }\n    }\n    return result;\n}",
+      "rust": "use std::collections::HashMap;\n\nfn partition_labels(s: &str) -> Vec<i32> {\n    let chars: Vec<char> = s.chars().collect();\n    let mut lookup: HashMap<char, usize> = HashMap::new();\n    for (i, &c) in chars.iter().enumerate() {\n        lookup.insert(c, i);\n    }\n    let mut first = 0usize;\n    let mut last = 0usize;\n    let mut result = Vec::new();\n    for (i, &c) in chars.iter().enumerate() {\n        last = last.max(lookup[&c]);\n        if i == last {\n            result.push((i - first + 1) as i32);\n            first = i + 1;\n        }\n    }\n    result\n}"
+    }
+  },
+  {
+    "date": "2026-09-09",
+    "title": "Reverse String",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost here is the while loop, which moves two pointers (i and j) toward each other from opposite ends of the list. Since each iteration swaps one pair of elements and the pointers meet in the middle after about n/2 steps, the loop runs a number of times proportional to n, giving you O(n) time. You might be tempted to think O(n²) because it swaps elements, but there's no nested loop or repeated scanning happening — each element is touched exactly once. For space, the function only uses a constant number of extra variables (i, j, and a temporary swap), and it modifies the list in place rather than creating a new one, so the space complexity stays at O(1) regardless of how large the input list is.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/reverse-string.py",
+    "implementations": {
+      "python": "def reverse_string(s: list[str]) -> None:\n    i, j = 0, len(s) - 1\n    while i < j:\n        s[i], s[j] = s[j], s[i]\n        i += 1\n        j -= 1",
+      "cpp": "#include <vector>\n\nvoid reverseString(std::vector<char>& s) {\n    for (int i = 0, j = (int)s.size() - 1; i < j; ++i, --j) {\n        std::swap(s[i], s[j]);\n    }\n}",
+      "rust": "fn reverse_string(s: &mut Vec<char>) {\n    if s.is_empty() {\n        return;\n    }\n    let mut i = 0;\n    let mut j = s.len() - 1;\n    while i < j {\n        s.swap(i, j);\n        i += 1;\n        j -= 1;\n    }\n}"
+    }
+  },
+  {
+    "date": "2026-09-10",
+    "title": "Move Zeroes",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The single for loop iterates through the list once, and inside the loop you only do a constant-time check and a swap, so the dominant cost is that one pass over n elements, giving O(n) time. There's no nested loop or recursion adding extra factors, which is why O(n log n) or O(n²) would overstate the work. The swap happens in place using existing indices, so no new lists, arrays, or recursive stacks are created, meaning space stays O(1) regardless of input size. The most tempting wrong answer, O(n) space, is incorrect because the function modifies the input list directly instead of allocating a new one proportional to n.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/move-zeroes.py",
+    "implementations": {
+      "python": "def move_zeroes(nums: list[int]) -> list[int]:\n    pos = 0\n    for i in range(len(nums)):\n        if nums[i]:\n            nums[i], nums[pos] = nums[pos], nums[i]\n            pos += 1\n    return nums\n",
+      "cpp": "#include <vector>\n#include <utility>\n\nstd::vector<int> moveZeroes(std::vector<int>& nums) {\n    int pos = 0;\n    for (auto& num : nums) {\n        if (num) {\n            std::swap(nums[pos++], num);\n        }\n    }\n    return nums;\n}\n",
+      "rust": "fn move_zeroes(nums: &mut Vec<i32>) -> Vec<i32> {\n    let mut pos = 0;\n    for i in 0..nums.len() {\n        if nums[i] != 0 {\n            nums.swap(i, pos);\n            pos += 1;\n        }\n    }\n    nums.clone()\n}\n"
+    }
+  }
+]
