@@ -13,11 +13,14 @@ Updated daily, automatically, as each puzzle retires.
 ## Contents
 
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
-- [`problems/`](problems/) — one Markdown page per puzzle
+- [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
 **51 puzzles** archived, from 2026-06-01 to 2026-09-10.
 
-## Index
+## Recent puzzles
+
+Showing the 30 most recent. For the full archive, browse
+[`problems/`](problems/) or query [`problems.json`](problems.json).
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
@@ -51,27 +54,6 @@ Updated daily, automatically, as each puzzle retires.
 | 2026-06-24 | [Lowest Common Ancestor of a BST](problems/2026-06-24-lowest-common-ancestor-of-a-bst.md) | tree | `O(h)` | `O(h)` |
 | 2026-06-23 | [Group Anagrams](problems/2026-06-23-group-anagrams.md) | hash map | `O(n * k)` | `O(n * k)` |
 | 2026-06-22 | [Search in Rotated Sorted Array](problems/2026-06-22-search-in-rotated-sorted-array.md) | binary search | `O(log n)` | `O(1)` |
-| 2026-06-21 | [Find the Duplicate Number](problems/2026-06-21-find-the-duplicate-number.md) | cycle detection | `O(n)` | `O(1)` |
-| 2026-06-20 | [Coin Change](problems/2026-06-20-coin-change.md) | dynamic programming | `O(amount * n)` | `O(amount)` |
-| 2026-06-19 | [Product of Array Except Self](problems/2026-06-19-product-of-array-except-self.md) | arrays | `O(n)` | `O(1)` |
-| 2026-06-18 | [Container With Most Water](problems/2026-06-18-container-with-most-water.md) | two pointers | `O(n)` | `O(1)` |
-| 2026-06-17 | [Maximum Subarray](problems/2026-06-17-maximum-subarray.md) | dynamic programming | `O(n)` | `O(1)` |
-| 2026-06-16 | [Reverse Linked List](problems/2026-06-16-reverse-linked-list.md) | linked list | `O(n)` | `O(1)` |
-| 2026-06-15 | [Sliding Window Maximum](problems/2026-06-15-sliding-window-maximum.md) | sliding window | `O(n)` | `O(k)` |
-| 2026-06-14 | [Serialize and Deserialize Binary Tree](problems/2026-06-14-serialize-and-deserialize-binary-tree.md) | tree | `O(n)` | `O(n)` |
-| 2026-06-13 | [Median of Two Sorted Arrays](problems/2026-06-13-median-of-two-sorted-arrays.md) | binary search | `O(log(min(m,n)))` | `O(1)` |
-| 2026-06-12 | [Trapping Rain Water](problems/2026-06-12-trapping-rain-water.md) | two pointers | `O(n)` | `O(1)` |
-| 2026-06-11 | [Course Schedule (Topological Sort)](problems/2026-06-11-course-schedule-topological-sort.md) | graph | `O(V + E)` | `O(V + E)` |
-| 2026-06-10 | [Word Break](problems/2026-06-10-word-break.md) | dynamic programming | `O(n³)` | `O(n + m)` |
-| 2026-06-09 | [Kth Largest Element](problems/2026-06-09-kth-largest-element.md) | heap | `O(n log k)` | `O(k)` |
-| 2026-06-08 | [Number of Islands](problems/2026-06-08-number-of-islands.md) | graph | `O(m*n)` | `O(m*n)` |
-| 2026-06-07 | [Longest Common Subsequence](problems/2026-06-07-longest-common-subsequence.md) | dynamic programming | `O(m*n)` | `O(m*n)` |
-| 2026-06-06 | [Maximum Depth of Binary Tree](problems/2026-06-06-maximum-depth-of-binary-tree.md) | tree | `O(n)` | `O(n)` |
-| 2026-06-05 | [Valid Parentheses](problems/2026-06-05-valid-parentheses.md) | stack | `O(n)` | `O(n)` |
-| 2026-06-04 | [Climbing Stairs](problems/2026-06-04-climbing-stairs.md) | dynamic programming | `O(n)` | `O(1)` |
-| 2026-06-03 | [Merge Sort](problems/2026-06-03-merge-sort.md) | sorting | `O(n log n)` | `O(n log n)` |
-| 2026-06-02 | [Binary Search](problems/2026-06-02-binary-search.md) | binary search | `O(log n)` | `O(1)` |
-| 2026-06-01 | [Two Sum](problems/2026-06-01-two-sum.md) | hash map | `O(n)` | `O(n)` |
 
 ## License & attribution
 
