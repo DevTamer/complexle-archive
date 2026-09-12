@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**51 puzzles** archived, from 2026-06-01 to 2026-09-10.
+**52 puzzles** archived, from 2026-06-01 to 2026-09-11.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-09-11 | [Remove Element](problems/2026-09-11-remove-element.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-09-10 | [Move Zeroes](problems/2026-09-10-move-zeroes.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-09-09 | [Reverse String](problems/2026-09-09-reverse-string.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-09-08 | [Partition Labels](problems/2026-09-08-partition-labels.md) | two pointers | `O(n)` | `O(n)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-06-25 | [Rotting Oranges](problems/2026-06-25-rotting-oranges.md) | graph | `O(m*n)` | `O(m*n)` |
 | 2026-06-24 | [Lowest Common Ancestor of a BST](problems/2026-06-24-lowest-common-ancestor-of-a-bst.md) | tree | `O(h)` | `O(h)` |
 | 2026-06-23 | [Group Anagrams](problems/2026-06-23-group-anagrams.md) | hash map | `O(n * k)` | `O(n * k)` |
-| 2026-06-22 | [Search in Rotated Sorted Array](problems/2026-06-22-search-in-rotated-sorted-array.md) | binary search | `O(log n)` | `O(1)` |
 
 ## License & attribution
 

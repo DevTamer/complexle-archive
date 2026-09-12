@@ -712,5 +712,19 @@
       "cpp": "std::vector<int> moveZeroes(std::vector<int>& nums) {\n    int pos = 0;\n    for (auto& num : nums) {\n        if (num) {\n            std::swap(nums[pos++], num);\n        }\n    }\n    return nums;\n}\n",
       "rust": "fn move_zeroes(nums: &mut Vec<i32>) -> Vec<i32> {\n    let mut pos = 0;\n    for i in 0..nums.len() {\n        if nums[i] != 0 {\n            nums.swap(i, pos);\n            pos += 1;\n        }\n    }\n    nums.clone()\n}\n"
     }
+  },
+  {
+    "date": "2026-09-11",
+    "title": "Remove Element",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost here is the single while loop, where two pointers 'i' and 'last' move toward each other, each element being visited at most once before the loop ends. You might think swapping counts as extra nested work like a sort would, but each swap is a constant-time operation, so it doesn't add another loop layer, ruling out O(n²). Since there's no recursion or nested iteration, and the array is modified in place using only a couple of integer variables, the space usage stays constant regardless of input size. The O(n) space distractor might tempt you if you assume a new array is created, but this code swaps values directly in the original list without allocating extra storage.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/remove-element.py",
+    "implementations": {
+      "python": "def remove_element(nums: list[int], val: int) -> int:\n    i, last = 0, len(nums) - 1\n    while i <= last:\n        if nums[i] == val:\n            nums[i], nums[last] = nums[last], nums[i]\n            last -= 1\n        else:\n            i += 1\n    return last + 1\n",
+      "cpp": "int removeElement(std::vector<int>& nums, int val) {\n    int left = 0, right = static_cast<int>(nums.size()) - 1;\n    while (left <= right) {\n        if (nums[left] == val) {\n            std::swap(nums[left], nums[right]);\n            --right;\n        } else {\n            ++left;\n        }\n    }\n    return right + 1;\n}\n",
+      "rust": "fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {\n    let mut i: i32 = 0;\n    let mut last: i32 = nums.len() as i32 - 1;\n    while i <= last {\n        if nums[i as usize] == val {\n            nums.swap(i as usize, last as usize);\n            last -= 1;\n        } else {\n            i += 1;\n        }\n    }\n    last + 1\n}\n"
+    }
   }
 ]
