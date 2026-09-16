@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**55 puzzles** archived, from 2026-06-01 to 2026-09-14.
+**56 puzzles** archived, from 2026-06-01 to 2026-09-15.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-09-15 | [Longest Substring Without Repeating Characters](problems/2026-09-15-longest-substring-without-repeating-characters.md) | sliding window | `O(n)` | `O(min(n, m))` |
 | 2026-09-14 | [Is Subsequence](problems/2026-09-14-is-subsequence.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-09-13 | [Valid Sudoku](problems/2026-09-13-valid-sudoku.md) | arrays | `O(1)` | `O(1)` |
 | 2026-09-12 | [Backspace String Compare](problems/2026-09-12-backspace-string-compare.md) | two pointers | `O(n)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-06-29 | [House Robber](problems/2026-06-29-house-robber.md) | dynamic programming | `O(n)` | `O(1)` |
 | 2026-06-28 | [Implement Trie](problems/2026-06-28-implement-trie.md) | trie | `O(n)` | `O(n)` |
 | 2026-06-27 | [Subsets](problems/2026-06-27-subsets.md) | backtracking | `O(n * 2^n)` | `O(n * 2^n)` |
-| 2026-06-26 | [Min Stack](problems/2026-06-26-min-stack.md) | stack | `O(1)` | `O(n)` |
 
 ## License & attribution
 

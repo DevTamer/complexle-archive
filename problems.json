@@ -768,5 +768,19 @@
       "cpp": "bool isSubsequence(std::string s, std::string t) {\n    if (s.empty()) {\n        return true;\n    }\n\n    int i = 0;\n    for (char c : t) {\n        if (c == s[i]) {\n            ++i;\n        }\n        if (i == (int)s.length()) {\n            break;\n        }\n    }\n    return i == (int)s.length();\n}",
       "rust": "fn is_subsequence(s: &str, t: &str) -> bool {\n    if s.is_empty() {\n        return true;\n    }\n\n    let sb = s.as_bytes();\n    let mut i = 0usize;\n    for &c in t.as_bytes() {\n        if c == sb[i] {\n            i += 1;\n        }\n        if i == sb.len() {\n            break;\n        }\n    }\n    i == sb.len()\n}"
     }
+  },
+  {
+    "date": "2026-09-15",
+    "title": "Longest Substring Without Repeating Characters",
+    "category": "sliding window",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(min(n, m))",
+    "explanation": "The single for loop iterates through the string once, and each iteration does constant-time work (a dictionary lookup and update, plus a couple of comparisons), so the dominant cost is that one pass over the n characters, giving you O(n) time. It's tempting to think O(n²) because sliding window problems often look like they need nested loops to check substrings, but here the 'left' pointer only moves forward and never rescans characters, avoiding that extra cost. For space, the lookup dictionary can grow to hold one entry per distinct character seen, so its size is bounded by either the string length n or the size of the character set m, whichever is smaller, giving O(min(n, m)). Thinking the space is O(1) is a common mistake since the code has no obvious large structure, but the dictionary does scale with unique input characters, so it's not truly constant.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/longest-substring-without-repeating-characters.py",
+    "implementations": {
+      "python": "def length_of_longest_substring(s: str) -> int:\n    result, left = 0, 0\n    lookup: dict[str, int] = {}\n    for right, ch in enumerate(s):\n        if ch in lookup:\n            left = max(left, lookup[ch] + 1)\n        lookup[ch] = right\n        result = max(result, right - left + 1)\n    return result",
+      "cpp": "int lengthOfLongestSubstring(std::string s) {\n    int result = 0;\n    std::unordered_map<char, int> lookup;\n    for (int left = 0, right = 0; right < (int)s.length(); ++right) {\n        if (lookup.count(s[right])) {\n            left = std::max(left, lookup[s[right]] + 1);\n        }\n        lookup[s[right]] = right;\n        result = std::max(result, right - left + 1);\n    }\n    return result;\n}",
+      "rust": "fn length_of_longest_substring(s: &str) -> i32 {\n    let chars: Vec<char> = s.chars().collect();\n    let mut result: i32 = 0;\n    let mut left: i32 = 0;\n    let mut lookup: HashMap<char, i32> = HashMap::new();\n    for right in 0..chars.len() {\n        let c = chars[right];\n        if let Some(&idx) = lookup.get(&c) {\n            left = left.max(idx + 1);\n        }\n        lookup.insert(c, right as i32);\n        result = result.max(right as i32 - left + 1);\n    }\n    result\n}"
+    }
   }
 ]
