@@ -796,5 +796,19 @@
       "cpp": "int characterReplacement(std::string s, int k) {\n    int result = 0, max_count = 0;\n    std::unordered_map<char, int> count;\n    for (int i = 0; i < (int)s.length(); ++i) {\n        ++count[s[i]];\n        max_count = std::max(max_count, count[s[i]]);\n        if (result - max_count >= k) {\n            --count[s[i - result]];\n        } else {\n            ++result;\n        }\n    }\n    return result;\n}\n",
       "rust": "fn character_replacement(s: &str, k: i32) -> i32 {\n    let chars: Vec<char> = s.chars().collect();\n    let mut result: i32 = 0;\n    let mut max_count: i32 = 0;\n    let mut count: HashMap<char, i32> = HashMap::new();\n    for i in 0..chars.len() {\n        let c = chars[i];\n        let entry = count.entry(c).or_insert(0);\n        *entry += 1;\n        max_count = max_count.max(*entry);\n        if result - max_count >= k {\n            let idx = (i as i32 - result) as usize;\n            let rc = chars[idx];\n            if let Some(e) = count.get_mut(&rc) {\n                *e -= 1;\n            }\n        } else {\n            result += 1;\n        }\n    }\n    result\n}\n"
     }
+  },
+  {
+    "date": "2026-09-17",
+    "title": "Max Consecutive Ones III",
+    "category": "sliding window",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "You should focus on the two pointers i and j moving through the array. The outer for-loop advances j once per element, and the inner while-loop only advances i, which never resets and never exceeds n total steps across the whole run. Because both pointers together make at most 2n moves, the total work is linear, giving O(n) time. It's tempting to see the nested while inside the for-loop and assume O(n²), but that ignores that i only moves forward monotonically, so its total movement across all iterations is bounded by n, not n per outer iteration. Space stays O(1) since you only use a few scalar variables (result, i, k) and no extra data structures that scale with input size.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/max-consecutive-ones-iii.py",
+    "implementations": {
+      "python": "def longest_ones(nums: list[int], k: int) -> int:\n    result, i = 0, 0\n    for j, n in enumerate(nums):\n        k -= int(n == 0)\n        while k < 0:\n            k += int(nums[i] == 0)\n            i += 1\n        result = max(result, j - i + 1)\n    return result",
+      "cpp": "int longestOnes(std::vector<int>& nums, int k) {\n    int result = 0, i = 0;\n    for (int j = 0; j < (int)nums.size(); ++j) {\n        k -= (nums[j] == 0) ? 1 : 0;\n        while (k < 0) {\n            k += (nums[i] == 0) ? 1 : 0;\n            ++i;\n        }\n        result = std::max(result, j - i + 1);\n    }\n    return result;\n}",
+      "rust": "fn longest_ones(nums: &[i32], k: i32) -> i32 {\n    let mut k = k;\n    let mut result: i32 = 0;\n    let mut i: usize = 0;\n    for j in 0..nums.len() {\n        if nums[j] == 0 {\n            k -= 1;\n        }\n        while k < 0 {\n            if nums[i] == 0 {\n                k += 1;\n            }\n            i += 1;\n        }\n        let len = (j - i + 1) as i32;\n        if len > result {\n            result = len;\n        }\n    }\n    result\n}"
+    }
   }
 ]
