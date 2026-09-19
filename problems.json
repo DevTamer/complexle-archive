@@ -810,5 +810,19 @@
       "cpp": "int longestOnes(std::vector<int>& nums, int k) {\n    int result = 0, i = 0;\n    for (int j = 0; j < (int)nums.size(); ++j) {\n        k -= (nums[j] == 0) ? 1 : 0;\n        while (k < 0) {\n            k += (nums[i] == 0) ? 1 : 0;\n            ++i;\n        }\n        result = std::max(result, j - i + 1);\n    }\n    return result;\n}",
       "rust": "fn longest_ones(nums: &[i32], k: i32) -> i32 {\n    let mut k = k;\n    let mut result: i32 = 0;\n    let mut i: usize = 0;\n    for j in 0..nums.len() {\n        if nums[j] == 0 {\n            k -= 1;\n        }\n        while k < 0 {\n            if nums[i] == 0 {\n                k += 1;\n            }\n            i += 1;\n        }\n        let len = (j - i + 1) as i32;\n        if len > result {\n            result = len;\n        }\n    }\n    result\n}"
     }
+  },
+  {
+    "date": "2026-09-18",
+    "title": "Fruit Into Baskets",
+    "category": "sliding window",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost here comes from the two pointers i and j moving through the tree list. Even though there's a while loop nested inside the for loop, you should notice that i only ever increases and never resets, so across the whole run it can advance at most n times total, not n times per outer iteration. That means the combined work of the for loop and the while loop is still bounded by O(n), not O(n^2), which is the most tempting wrong answer since nested loops often signal quadratic time. For space, the count dictionary is capped at holding at most 3 distinct fruit types at any moment (since the while loop shrinks it back down once it exceeds 2), so it uses constant space regardless of how large the input list gets, giving you O(1) rather than something that grows with n.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/fruit-into-baskets.py",
+    "implementations": {
+      "python": "def total_fruit(tree: list[int]) -> int:\n    count: dict[int, int] = defaultdict(int)\n    result, i = 0, 0\n    for j, v in enumerate(tree):\n        count[v] += 1\n        while len(count) > 2:\n            count[tree[i]] -= 1\n            if count[tree[i]] == 0:\n                del count[tree[i]]\n            i += 1\n        result = max(result, j - i + 1)\n    return result\n",
+      "cpp": "int totalFruit(std::vector<int>& tree) {\n    std::unordered_map<int, int> count;\n    int result = 0;\n    for (int i = 0, j = 0; j < (int)tree.size(); ++j) {\n        ++count[tree[j]];\n        while (count.size() > 2) {\n            --count[tree[i]];\n            if (count[tree[i]] == 0) {\n                count.erase(tree[i]);\n            }\n            ++i;\n        }\n        result = std::max(result, j - i + 1);\n    }\n    return result;\n}\n",
+      "rust": "fn total_fruit(tree: &[i32]) -> i32 {\n    let mut count: HashMap<i32, i32> = HashMap::new();\n    let mut result: i32 = 0;\n    let mut i: usize = 0;\n    for j in 0..tree.len() {\n        *count.entry(tree[j]).or_insert(0) += 1;\n        while count.len() > 2 {\n            let c = count.get_mut(&tree[i]).unwrap();\n            *c -= 1;\n            if *c == 0 {\n                count.remove(&tree[i]);\n            }\n            i += 1;\n        }\n        result = result.max((j - i + 1) as i32);\n    }\n    result\n}\n"
+    }
   }
 ]
