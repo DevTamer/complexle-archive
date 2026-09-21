@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**60 puzzles** archived, from 2026-06-01 to 2026-09-19.
+**61 puzzles** archived, from 2026-06-01 to 2026-09-20.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-09-20 | [Subarray Product Less Than K](problems/2026-09-20-subarray-product-less-than-k.md) | sliding window | `O(n)` | `O(1)` |
 | 2026-09-19 | [Minimum Window Substring](problems/2026-09-19-minimum-window-substring.md) | sliding window | `O(n + m)` | `O(m)` |
 | 2026-09-18 | [Fruit Into Baskets](problems/2026-09-18-fruit-into-baskets.md) | sliding window | `O(n)` | `O(1)` |
 | 2026-09-17 | [Max Consecutive Ones III](problems/2026-09-17-max-consecutive-ones-iii.md) | sliding window | `O(n)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-08-24 | [Max Consecutive Ones](problems/2026-08-24-max-consecutive-ones.md) | arrays | `O(n)` | `O(1)` |
 | 2026-08-23 | [Single Number II](problems/2026-08-23-single-number-ii.md) | arrays | `O(n)` | `O(1)` |
 | 2026-08-22 | [Insert Interval](problems/2026-08-22-insert-interval.md) | arrays | `O(n)` | `O(n)` |
-| 2026-08-21 | [Rotate Image](problems/2026-08-21-rotate-image.md) | arrays | `O(n^2)` | `O(1)` |
 
 ## License & attribution
 
