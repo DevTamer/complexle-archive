@@ -852,5 +852,19 @@
       "cpp": "int numSubarrayProductLessThanK(std::vector<int>& nums, int k) {\n    if (k <= 1) return 0;\n    int result = 0, start = 0, prod = 1;\n    for (int i = 0; i < (int)nums.size(); ++i) {\n        prod *= nums[i];\n        while (prod >= k) {\n            prod /= nums[start];\n            ++start;\n        }\n        result += i - start + 1;\n    }\n    return result;\n}\n",
       "rust": "fn num_subarray_product_less_than_k(nums: &[i32], k: i32) -> i32 {\n    if k <= 1 {\n        return 0;\n    }\n    let mut result: i32 = 0;\n    let mut start: usize = 0;\n    let mut prod: i32 = 1;\n    for i in 0..nums.len() {\n        prod *= nums[i];\n        while prod >= k {\n            prod /= nums[start];\n            start += 1;\n        }\n        result += (i as i32) - (start as i32) + 1;\n    }\n    result\n}\n"
     }
+  },
+  {
+    "date": "2026-09-21",
+    "title": "Search Insert Position",
+    "category": "binary search",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost here is the while loop that performs binary search, cutting the search range roughly in half each iteration by adjusting left and right. This halving behavior means the loop runs about log2(n) times before left exceeds right, giving you O(log n) time. You might be tempted to say O(n) because you're scanning an array, but this code never checks every element sequentially—it jumps to the middle and discards half the remaining range each time, unlike a linear scan. Space-wise, only a few variables (left, right, mid) are used regardless of input size, and no extra data structures or recursive call stacks are created, so the space complexity stays constant at O(1).",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/search-insert-position.py",
+    "implementations": {
+      "python": "def search_insert(nums: list[int], target: int) -> int:\n    left, right = 0, len(nums) - 1\n    while left <= right:\n        mid = left + (right - left) // 2\n        if nums[mid] >= target:\n            right = mid - 1\n        else:\n            left = mid + 1\n    return left\n",
+      "cpp": "int searchInsert(std::vector<int>& nums, int target) {\n    int left = 0;\n    int right = static_cast<int>(nums.size()) - 1;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        if (nums[mid] >= target) {\n            right = mid - 1;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    return left;\n}\n",
+      "rust": "fn search_insert(nums: &[i32], target: i32) -> i32 {\n    let mut left: i32 = 0;\n    let mut right: i32 = nums.len() as i32 - 1;\n\n    while left <= right {\n        let mid = left + (right - left) / 2;\n        if nums[mid as usize] >= target {\n            right = mid - 1;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    left\n}\n"
+    }
   }
 ]
