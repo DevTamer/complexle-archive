@@ -866,5 +866,19 @@
       "cpp": "int searchInsert(std::vector<int>& nums, int target) {\n    int left = 0;\n    int right = static_cast<int>(nums.size()) - 1;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        if (nums[mid] >= target) {\n            right = mid - 1;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    return left;\n}\n",
       "rust": "fn search_insert(nums: &[i32], target: i32) -> i32 {\n    let mut left: i32 = 0;\n    let mut right: i32 = nums.len() as i32 - 1;\n\n    while left <= right {\n        let mid = left + (right - left) / 2;\n        if nums[mid as usize] >= target {\n            right = mid - 1;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    left\n}\n"
     }
+  },
+  {
+    "date": "2026-09-22",
+    "title": "Find Peak Element",
+    "category": "binary search",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost here is the binary search loop that halves the search range (right - left) every iteration by comparing nums[mid] to nums[mid+1]. Because the range shrinks by half each time instead of moving one step at a time, you only need about log n iterations to converge on a peak, giving O(log n) time. The tempting wrong answer O(n) comes from assuming you scan every element like a linear search, but this code never does that since it discards half the remaining candidates each step. Space stays O(1) because the function only tracks a handful of integer variables (left, right, mid) and never allocates any extra arrays or recursive call stacks that would grow with input size.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/find-peak-element.py",
+    "implementations": {
+      "python": "def find_peak_element(nums: list[int]) -> int:\n    left, right = 0, len(nums) - 1\n    while left < right:\n        mid = left + (right - left) // 2\n        if nums[mid] > nums[mid + 1]:\n            right = mid\n        else:\n            left = mid + 1\n    return left\n",
+      "cpp": "int findPeakElement(std::vector<int>& nums) {\n    int left = 0, right = static_cast<int>(nums.size()) - 1;\n\n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        if (nums[mid] > nums[mid + 1]) {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    return left;\n}\n",
+      "rust": "fn find_peak_element(nums: &[i32]) -> i32 {\n    let mut left: i32 = 0;\n    let mut right: i32 = nums.len() as i32 - 1;\n\n    while left < right {\n        let mid = left + (right - left) / 2;\n        if nums[mid as usize] > nums[(mid + 1) as usize] {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    left\n}\n"
+    }
   }
 ]
