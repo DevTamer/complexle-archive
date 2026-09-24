@@ -880,5 +880,19 @@
       "cpp": "int findPeakElement(std::vector<int>& nums) {\n    int left = 0, right = static_cast<int>(nums.size()) - 1;\n\n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        if (nums[mid] > nums[mid + 1]) {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    return left;\n}\n",
       "rust": "fn find_peak_element(nums: &[i32]) -> i32 {\n    let mut left: i32 = 0;\n    let mut right: i32 = nums.len() as i32 - 1;\n\n    while left < right {\n        let mid = left + (right - left) / 2;\n        if nums[mid as usize] > nums[(mid + 1) as usize] {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    left\n}\n"
     }
+  },
+  {
+    "date": "2026-09-23",
+    "title": "Longest Subarray of 1's After Deleting One Element",
+    "category": "sliding window",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The single for loop drives the cost here, and it runs once through the array with the 'right' pointer, while 'left' only moves forward and never resets, so each index is touched a constant number of times overall. This sliding window pattern means the total work is proportional to the length of nums, giving you O(n) time. You might be tempted to think nested-loop behavior (O(n^2)) is happening because there's a pointer adjustment inside the loop, but since 'left' never goes backward, it doesn't restart or nest another full pass over the array. Space-wise, you only use a fixed number of scalar variables (count, left, right) regardless of input size, so no extra memory grows with n, making it O(1) space.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/longest-subarray-of-1s-after-deleting-one-element.py",
+    "implementations": {
+      "python": "def longest_subarray(nums: list[int]) -> int:\n    count, left = 0, 0\n    right = 0\n    for right in range(len(nums)):\n        count += (nums[right] == 0)\n        if count >= 2:\n            count -= (nums[left] == 0)\n            left += 1\n    return (right - left + 1) - 1\n",
+      "cpp": "int longestSubarray(std::vector<int>& nums) {\n    int count = 0, left = 0, right = 0;\n    for (; right < (int)nums.size(); ++right) {\n        count += (nums[right] == 0);\n        if (count >= 2) {\n            count -= (nums[left++] == 0);\n        }\n    }\n    return (right - left) - 1;\n}\n",
+      "rust": "fn longest_subarray(nums: &[i32]) -> i32 {\n    let mut count: i32 = 0;\n    let mut left: usize = 0;\n    let mut right: usize = 0;\n    for r in 0..nums.len() {\n        right = r;\n        count += (nums[r] == 0) as i32;\n        if count >= 2 {\n            count -= (nums[left] == 0) as i32;\n            left += 1;\n        }\n    }\n    (right as i32 - left as i32 + 1) - 1\n}\n"
+    }
   }
 ]

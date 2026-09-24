@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**63 puzzles** archived, from 2026-06-01 to 2026-09-22.
+**64 puzzles** archived, from 2026-06-01 to 2026-09-23.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-09-23 | [Longest Subarray of 1's After Deleting One Element](problems/2026-09-23-longest-subarray-of-1s-after-deleting-one-element.md) | sliding window | `O(n)` | `O(1)` |
 | 2026-09-22 | [Find Peak Element](problems/2026-09-22-find-peak-element.md) | binary search | `O(log n)` | `O(1)` |
 | 2026-09-21 | [Search Insert Position](problems/2026-09-21-search-insert-position.md) | binary search | `O(log n)` | `O(1)` |
 | 2026-09-20 | [Subarray Product Less Than K](problems/2026-09-20-subarray-product-less-than-k.md) | sliding window | `O(n)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-08-27 | [Can Place Flowers](problems/2026-08-27-can-place-flowers.md) | arrays | `O(n)` | `O(n)` |
 | 2026-08-26 | [4Sum](problems/2026-08-26-4sum.md) | arrays | `O(n^3)` | `O(n)` |
 | 2026-08-25 | [3Sum](problems/2026-08-25-3sum.md) | arrays | `O(n^2)` | `O(n)` |
-| 2026-08-24 | [Max Consecutive Ones](problems/2026-08-24-max-consecutive-ones.md) | arrays | `O(n)` | `O(1)` |
 
 ## License & attribution
 
