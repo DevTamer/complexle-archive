@@ -894,5 +894,19 @@
       "cpp": "int longestSubarray(std::vector<int>& nums) {\n    int count = 0, left = 0, right = 0;\n    for (; right < (int)nums.size(); ++right) {\n        count += (nums[right] == 0);\n        if (count >= 2) {\n            count -= (nums[left++] == 0);\n        }\n    }\n    return (right - left) - 1;\n}\n",
       "rust": "fn longest_subarray(nums: &[i32]) -> i32 {\n    let mut count: i32 = 0;\n    let mut left: usize = 0;\n    let mut right: usize = 0;\n    for r in 0..nums.len() {\n        right = r;\n        count += (nums[r] == 0) as i32;\n        if count >= 2 {\n            count -= (nums[left] == 0) as i32;\n            left += 1;\n        }\n    }\n    (right as i32 - left as i32 + 1) - 1\n}\n"
     }
+  },
+  {
+    "date": "2026-09-24",
+    "title": "Minimum Size Subarray Sum",
+    "category": "sliding window",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "You have a sliding window here: the outer for-loop advances i once per element, and the inner while-loop advances start, but start only ever moves forward and never resets. That means across the whole run, start can only increment n times total, so the two loops together do at most 2n steps, giving you O(n) overall. This is why it's not O(n²): even though there's a loop inside a loop, the inner loop's total work is bounded by n across all outer iterations, not n per outer iteration, since both pointers only move in one direction. For space, you're only tracking a few scalar variables (start, total, min_size, i, n), not any structure that grows with input size, so space stays O(1) regardless of how big nums is.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/minimum-size-subarray-sum.py",
+    "implementations": {
+      "python": "def min_sub_array_len(s: int, nums: list[int]) -> int:\n    start = 0\n    total = 0\n    min_size = float(\"inf\")\n    for i, n in enumerate(nums):\n        total += n\n        while total >= s:\n            min_size = min(min_size, i - start + 1)\n            total -= nums[start]\n            start += 1\n    return min_size if min_size != float(\"inf\") else 0\n",
+      "cpp": "int minSubArrayLen(int s, std::vector<int>& nums) {\n    int start = -1, sum = 0, min_size = std::numeric_limits<int>::max();\n    for (int i = 0; i < (int)nums.size(); ++i) {\n        sum += nums[i];\n        while (sum >= s) {\n            min_size = std::min(min_size, i - start);\n            sum -= nums[++start];\n        }\n    }\n    if (min_size == std::numeric_limits<int>::max()) {\n        return 0;\n    }\n    return min_size;\n}\n",
+      "rust": "fn min_sub_array_len(s: i32, nums: &[i32]) -> i32 {\n    let mut start: i32 = 0;\n    let mut sum: i32 = 0;\n    let mut min_size = i32::MAX;\n    for i in 0..nums.len() {\n        sum += nums[i];\n        while sum >= s {\n            min_size = min_size.min(i as i32 - start + 1);\n            sum -= nums[start as usize];\n            start += 1;\n        }\n    }\n    if min_size == i32::MAX { 0 } else { min_size }\n}\n"
+    }
   }
 ]
