@@ -922,5 +922,19 @@
       "cpp": "std::vector<int> searchRange(std::vector<int>& nums, int target) {\n    auto binarySearch = [&](int n, std::function<bool(int)> check) -> int {\n        int left = 0, right = n - 1;\n        while (left <= right) {\n            int mid = left + (right - left) / 2;\n            if (check(mid)) right = mid - 1;\n            else left = mid + 1;\n        }\n        return left;\n    };\n\n    int left = binarySearch((int)nums.size(), [&](int i) { return nums[i] >= target; });\n    if (left == (int)nums.size() || nums[left] != target) return {-1, -1};\n    int right = binarySearch((int)nums.size(), [&](int i) { return nums[i] > target; });\n    return {left, right - 1};\n}\n",
       "rust": "fn search_range(nums: &[i32], target: i32) -> Vec<i32> {\n    fn binary_search<F: Fn(i32) -> bool>(n: i32, check: F) -> i32 {\n        let mut left = 0;\n        let mut right = n - 1;\n        while left <= right {\n            let mid = left + (right - left) / 2;\n            if check(mid) {\n                right = mid - 1;\n            } else {\n                left = mid + 1;\n            }\n        }\n        left\n    }\n\n    let n = nums.len() as i32;\n    let left = binary_search(n, |i| nums[i as usize] >= target);\n    if left == n || nums[left as usize] != target {\n        return vec![-1, -1];\n    }\n    let right = binary_search(n, |i| nums[i as usize] > target);\n    vec![left, right - 1]\n}\n"
     }
+  },
+  {
+    "date": "2026-09-26",
+    "title": "Single Number",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost here is the single for loop that iterates once over every element in nums, applying an XOR operation to combine it with result. Since each element is visited exactly once and the XOR operation itself takes constant time, the total work scales linearly with the size of the input, giving you O(n) time. You might be tempted to think this is O(1) because the operation per element looks trivial, but that ignores the fact that you still have to touch every item in the list at least once. For space, the function only uses a single integer variable, result, regardless of how large nums is, so no additional memory grows with input size, making the space complexity O(1).",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/single-number.py",
+    "implementations": {
+      "python": "def single_number(nums: list[int]) -> int:\n    result = 0\n    for n in nums:\n        result ^= n\n    return result",
+      "cpp": "int singleNumber(std::vector<int>& nums) {\n    return std::accumulate(nums.cbegin(), nums.cend(),\n                            0, std::bit_xor<int>());\n}",
+      "rust": "fn single_number(nums: &[i32]) -> i32 {\n    nums.iter().fold(0, |acc, &n| acc ^ n)\n}"
+    }
   }
 ]
