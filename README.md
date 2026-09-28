@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**67 puzzles** archived, from 2026-06-01 to 2026-09-26.
+**68 puzzles** archived, from 2026-06-01 to 2026-09-27.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-09-27 | [Missing Number](problems/2026-09-27-missing-number.md) | arrays | `O(n)` | `O(1)` |
 | 2026-09-26 | [Single Number](problems/2026-09-26-single-number.md) | arrays | `O(n)` | `O(1)` |
 | 2026-09-25 | [Find First and Last Position of Element in Sorted Array](problems/2026-09-25-find-first-and-last-position-of-element-in-sorted-array.md) | binary search | `O(log n)` | `O(1)` |
 | 2026-09-24 | [Minimum Size Subarray Sum](problems/2026-09-24-minimum-size-subarray-sum.md) | sliding window | `O(n)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-08-31 | [Majority Element II](problems/2026-08-31-majority-element-ii.md) | arrays | `O(n)` | `O(1)` |
 | 2026-08-30 | [Plus One](problems/2026-08-30-plus-one.md) | arrays | `O(n)` | `O(1)` |
 | 2026-08-29 | [Meeting Rooms II](problems/2026-08-29-meeting-rooms-ii.md) | arrays | `O(n log n)` | `O(n)` |
-| 2026-08-28 | [Pascal's Triangle II](problems/2026-08-28-pascals-triangle-ii.md) | arrays | `O(n²)` | `O(n)` |
 
 ## License & attribution
 
