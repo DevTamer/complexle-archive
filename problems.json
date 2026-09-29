@@ -950,5 +950,19 @@
       "cpp": "int missingNumber(std::vector<int>& nums) {\n    int num = 0;\n    for (int i = 0; i < (int)nums.size(); ++i) {\n        num ^= nums[i] ^ (i + 1);\n    }\n    return num;\n}\n",
       "rust": "fn missing_number(nums: &[i32]) -> i32 {\n    let mut num = nums.len() as i32;\n    for (i, &n) in nums.iter().enumerate() {\n        num ^= (i as i32) ^ n;\n    }\n    num\n}\n"
     }
+  },
+  {
+    "date": "2026-09-28",
+    "title": "Summary Ranges",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The single for loop iterates once through the array (n+1 times total, but that's still linear), and each iteration does constant-time work like comparisons and appending to a list, so the dominant cost is that one pass over nums, giving you O(n) time. You might be tempted to think O(n log n) because ranges sound like they need sorting, but there's no sorting or divide-and-conquer step here, just a straightforward scan. For space, the output list 'ranges' can grow to hold up to n separate range strings in the worst case (when no numbers are consecutive), so the space used to store the result scales linearly with n, making it O(n) rather than O(1). It's easy to mistakenly call this O(1) space if you only count the few extra variables like start and end and forget that the returned list itself counts toward space complexity.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/summary-ranges.py",
+    "implementations": {
+      "python": "def summary_ranges(nums: list[int]) -> list[str]:\n    ranges = []\n    if not nums:\n        return ranges\n\n    start = end = nums[0]\n    for i in range(1, len(nums) + 1):\n        if i < len(nums) and nums[i] == end + 1:\n            end = nums[i]\n        else:\n            interval = str(start)\n            if start != end:\n                interval += \"->\" + str(end)\n            ranges.append(interval)\n            if i < len(nums):\n                start = end = nums[i]\n\n    return ranges\n",
+      "cpp": "std::vector<std::string> summaryRanges(std::vector<int>& nums) {\n    std::vector<std::string> ranges;\n    if (nums.empty()) {\n        return ranges;\n    }\n\n    int start = nums[0], end = nums[0];\n    for (int i = 1; i <= (int)nums.size(); ++i) {\n        if (i < (int)nums.size() && nums[i] == end + 1) {\n            end = nums[i];\n        } else {\n            std::string range = std::to_string(start);\n            if (start != end) {\n                range += \"->\" + std::to_string(end);\n            }\n            ranges.push_back(range);\n            if (i < (int)nums.size()) {\n                start = end = nums[i];\n            }\n        }\n    }\n\n    return ranges;\n}\n",
+      "rust": "fn summary_ranges(nums: &[i32]) -> Vec<String> {\n    let mut ranges = Vec::new();\n    if nums.is_empty() {\n        return ranges;\n    }\n\n    let mut start = nums[0];\n    let mut end = nums[0];\n    for i in 1..=nums.len() {\n        if i < nums.len() && nums[i] == end + 1 {\n            end = nums[i];\n        } else {\n            let mut interval = start.to_string();\n            if start != end {\n                interval.push_str(&format!(\"->{}\", end));\n            }\n            ranges.push(interval);\n            if i < nums.len() {\n                start = nums[i];\n                end = nums[i];\n            }\n        }\n    }\n\n    ranges\n}\n"
+    }
   }
 ]
