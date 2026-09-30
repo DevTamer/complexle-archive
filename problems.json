@@ -964,5 +964,19 @@
       "cpp": "std::vector<std::string> summaryRanges(std::vector<int>& nums) {\n    std::vector<std::string> ranges;\n    if (nums.empty()) {\n        return ranges;\n    }\n\n    int start = nums[0], end = nums[0];\n    for (int i = 1; i <= (int)nums.size(); ++i) {\n        if (i < (int)nums.size() && nums[i] == end + 1) {\n            end = nums[i];\n        } else {\n            std::string range = std::to_string(start);\n            if (start != end) {\n                range += \"->\" + std::to_string(end);\n            }\n            ranges.push_back(range);\n            if (i < (int)nums.size()) {\n                start = end = nums[i];\n            }\n        }\n    }\n\n    return ranges;\n}\n",
       "rust": "fn summary_ranges(nums: &[i32]) -> Vec<String> {\n    let mut ranges = Vec::new();\n    if nums.is_empty() {\n        return ranges;\n    }\n\n    let mut start = nums[0];\n    let mut end = nums[0];\n    for i in 1..=nums.len() {\n        if i < nums.len() && nums[i] == end + 1 {\n            end = nums[i];\n        } else {\n            let mut interval = start.to_string();\n            if start != end {\n                interval.push_str(&format!(\"->{}\", end));\n            }\n            ranges.push(interval);\n            if i < nums.len() {\n                start = nums[i];\n                end = nums[i];\n            }\n        }\n    }\n\n    ranges\n}\n"
     }
+  },
+  {
+    "date": "2026-09-29",
+    "title": "Candy",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost here comes from the two separate linear scans over the ratings list, plus the initial list creation, all of which run in a single pass proportional to n. You might be tempted to think this is O(n^2) because there are two loops, but they run sequentially rather than nested, so their costs add rather than multiply, giving O(n) + O(n) = O(n). Each loop only touches each index once and does constant-time work per index, so there is no hidden nested iteration. For space, the candies list itself takes O(n) memory since it stores one integer per rating, and no other data structures grow with input size. Someone might guess O(1) space thinking only a few variables are used, but that overlooks the array allocated at the start that scales directly with the input length.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/candy.py",
+    "implementations": {
+      "python": "def candy(ratings: list[int]) -> int:\n    candies = [1 for _ in range(len(ratings))]\n    for i in range(1, len(ratings)):\n        if ratings[i] > ratings[i - 1]:\n            candies[i] = candies[i - 1] + 1\n\n    for i in reversed(range(1, len(ratings))):\n        if ratings[i - 1] > ratings[i] and candies[i - 1] <= candies[i]:\n            candies[i - 1] = candies[i] + 1\n\n    return sum(candies)\n",
+      "cpp": "int candy(std::vector<int>& ratings) {\n    std::vector<int> candies(ratings.size(), 1);\n    for (size_t i = 1; i < ratings.size(); ++i) {\n        if (ratings[i] > ratings[i - 1]) {\n            candies[i] = candies[i - 1] + 1;\n        }\n    }\n    for (int i = (int)ratings.size() - 2; i >= 0; --i) {\n        if (ratings[i] > ratings[i + 1] && candies[i] <= candies[i + 1]) {\n            candies[i] = candies[i + 1] + 1;\n        }\n    }\n    return std::accumulate(candies.cbegin(), candies.cend(), 0);\n}\n",
+      "rust": "fn candy(ratings: &[i32]) -> i32 {\n    let n = ratings.len();\n    let mut candies = vec![1; n];\n    for i in 1..n {\n        if ratings[i] > ratings[i - 1] {\n            candies[i] = candies[i - 1] + 1;\n        }\n    }\n    for i in (0..n.saturating_sub(1)).rev() {\n        if ratings[i] > ratings[i + 1] && candies[i] <= candies[i + 1] {\n            candies[i] = candies[i + 1] + 1;\n        }\n    }\n    candies.iter().sum()\n}\n"
+    }
   }
 ]

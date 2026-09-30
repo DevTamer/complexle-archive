@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**69 puzzles** archived, from 2026-06-01 to 2026-09-28.
+**70 puzzles** archived, from 2026-06-01 to 2026-09-29.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-09-29 | [Candy](problems/2026-09-29-candy.md) | arrays | `O(n)` | `O(n)` |
 | 2026-09-28 | [Summary Ranges](problems/2026-09-28-summary-ranges.md) | arrays | `O(n)` | `O(n)` |
 | 2026-09-27 | [Missing Number](problems/2026-09-27-missing-number.md) | arrays | `O(n)` | `O(1)` |
 | 2026-09-26 | [Single Number](problems/2026-09-26-single-number.md) | arrays | `O(n)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-09-02 | [Wiggle Subsequence](problems/2026-09-02-wiggle-subsequence.md) | arrays | `O(n)` | `O(1)` |
 | 2026-09-01 | [Two Sum II - Input Array Is Sorted](problems/2026-09-01-two-sum-ii---input-array-is-sorted.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-08-31 | [Majority Element II](problems/2026-08-31-majority-element-ii.md) | arrays | `O(n)` | `O(1)` |
-| 2026-08-30 | [Plus One](problems/2026-08-30-plus-one.md) | arrays | `O(n)` | `O(1)` |
 
 ## License & attribution
 
