@@ -992,5 +992,19 @@
       "cpp": "int eraseOverlapIntervals(std::vector<std::vector<int>>& intervals) {\n    std::sort(intervals.begin(), intervals.end(), [](const std::vector<int>& a, const std::vector<int>& b) { return a[1] < b[1]; });\n    int result = 0, right = std::numeric_limits<int>::min();\n    for (const auto& x : intervals) {\n        if (x[0] < right) {\n            ++result;\n        } else {\n            right = x[1];\n        }\n    }\n    return result;\n}\n",
       "rust": "fn erase_overlap_intervals(intervals: &mut Vec<Vec<i32>>) -> i32 {\n    intervals.sort_by_key(|iv| iv[1]);\n    let mut result = 0;\n    let mut right = i32::MIN;\n    for iv in intervals.iter() {\n        if iv[0] < right {\n            result += 1;\n        } else {\n            right = iv[1];\n        }\n    }\n    result\n}\n"
     }
+  },
+  {
+    "date": "2026-10-01",
+    "title": "Gas Station",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost here is the single for loop that runs through every index of the gas array exactly once, doing constant-time arithmetic (subtraction, addition, comparison) on each pass. Since there's no nested loop or recursive call, the work grows linearly with the size of the input, giving you O(n) time. You might be tempted to think O(n²) because gas station problems often get brute-forced by checking every starting point with an inner loop, but this greedy single-pass version avoids that by tracking running sums instead of retesting each start. For space, only a few scalar variables (start, total_sum, current_sum, diff) are used regardless of input size, so no extra memory scales with n, making it O(1) space rather than something like O(n) that would suggest an auxiliary array or list was created.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/gas-station.py",
+    "implementations": {
+      "python": "def can_complete_circuit(gas: list[int], cost: list[int]) -> int:\n    start, total_sum, current_sum = 0, 0, 0\n    for i in range(len(gas)):\n        diff = gas[i] - cost[i]\n        current_sum += diff\n        total_sum += diff\n        if current_sum < 0:\n            start = i + 1\n            current_sum = 0\n    if total_sum >= 0:\n        return start\n    return -1\n",
+      "cpp": "int canCompleteCircuit(std::vector<int>& gas, std::vector<int>& cost) {\n    int start = 0, total_sum = 0, current_sum = 0;\n    for (int i = 0; i < (int)gas.size(); i++) {\n        int diff = gas[i] - cost[i];\n        current_sum += diff;\n        total_sum += diff;\n        if (current_sum < 0) {\n            start = i + 1;\n            current_sum = 0;\n        }\n    }\n    if (total_sum >= 0) return start;\n    return -1;\n}\n",
+      "rust": "fn can_complete_circuit(gas: &[i32], cost: &[i32]) -> i32 {\n    let mut start: i32 = 0;\n    let mut total_sum: i32 = 0;\n    let mut current_sum: i32 = 0;\n    for i in 0..gas.len() {\n        let diff = gas[i] - cost[i];\n        current_sum += diff;\n        total_sum += diff;\n        if current_sum < 0 {\n            start = i as i32 + 1;\n            current_sum = 0;\n        }\n    }\n    if total_sum >= 0 {\n        start\n    } else {\n        -1\n    }\n}\n"
+    }
   }
 ]
