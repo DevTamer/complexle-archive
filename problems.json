@@ -1006,5 +1006,19 @@
       "cpp": "int canCompleteCircuit(std::vector<int>& gas, std::vector<int>& cost) {\n    int start = 0, total_sum = 0, current_sum = 0;\n    for (int i = 0; i < (int)gas.size(); i++) {\n        int diff = gas[i] - cost[i];\n        current_sum += diff;\n        total_sum += diff;\n        if (current_sum < 0) {\n            start = i + 1;\n            current_sum = 0;\n        }\n    }\n    if (total_sum >= 0) return start;\n    return -1;\n}\n",
       "rust": "fn can_complete_circuit(gas: &[i32], cost: &[i32]) -> i32 {\n    let mut start: i32 = 0;\n    let mut total_sum: i32 = 0;\n    let mut current_sum: i32 = 0;\n    for i in 0..gas.len() {\n        let diff = gas[i] - cost[i];\n        current_sum += diff;\n        total_sum += diff;\n        if current_sum < 0 {\n            start = i as i32 + 1;\n            current_sum = 0;\n        }\n    }\n    if total_sum >= 0 {\n        start\n    } else {\n        -1\n    }\n}\n"
     }
+  },
+  {
+    "date": "2026-10-02",
+    "title": "H-Index",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "You first loop through all n citations once to fill the count array, then loop through the count array (of size n+1) once more to find the h-index, so the dominant cost is two sequential linear passes over data of size n. Since both loops scale directly with n and there's no nested iteration or sorting involved, the total work is O(n). A tempting wrong answer is O(n log n), which people often guess because the classic h-index solution sorts the citations first, but this bucket-counting approach avoids sorting entirely by using counting sort logic instead. The space complexity is O(n) because you allocate a new list 'count' of size n+1, which grows linearly with the input size regardless of the values in citations.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/h-index.py",
+    "implementations": {
+      "python": "def h_index(citations: list[int]) -> int:\n    n = len(citations)\n    count = [0] * (n + 1)\n    for x in citations:\n        # Put all x >= n in the same bucket.\n        if x >= n:\n            count[n] += 1\n        else:\n            count[x] += 1\n\n    h = 0\n    for i in reversed(range(n + 1)):\n        h += count[i]\n        if h >= i:\n            return i\n    return h\n",
+      "cpp": "int hIndex(std::vector<int>& citations) {\n    int n = static_cast<int>(citations.size());\n    std::vector<int> count(n + 1, 0);\n    for (int x : citations) {\n        // Put all x >= n in the same bucket.\n        if (x >= n) {\n            count[n]++;\n        } else {\n            count[x]++;\n        }\n    }\n\n    int h = 0;\n    for (int i = n; i >= 0; i--) {\n        h += count[i];\n        if (h >= i) {\n            return i;\n        }\n    }\n    return h;\n}\n",
+      "rust": "fn h_index(citations: &[i32]) -> i32 {\n    let n = citations.len() as i32;\n    let mut count = vec![0; (n + 1) as usize];\n    for &x in citations {\n        // Put all x >= n in the same bucket.\n        if x >= n {\n            count[n as usize] += 1;\n        } else {\n            count[x as usize] += 1;\n        }\n    }\n\n    let mut h = 0;\n    for i in (0..=n).rev() {\n        h += count[i as usize];\n        if h >= i {\n            return i;\n        }\n    }\n    h\n}\n"
+    }
   }
 ]
