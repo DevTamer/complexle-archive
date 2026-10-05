@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**74 puzzles** archived, from 2026-06-01 to 2026-10-03.
+**75 puzzles** archived, from 2026-06-01 to 2026-10-04.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-10-04 | [Game of Life](problems/2026-10-04-game-of-life.md) | arrays | `O(m*n)` | `O(1)` |
 | 2026-10-03 | [Set Matrix Zeroes](problems/2026-10-03-set-matrix-zeroes.md) | arrays | `O(m*n)` | `O(1)` |
 | 2026-10-02 | [H-Index](problems/2026-10-02-h-index.md) | arrays | `O(n)` | `O(n)` |
 | 2026-10-01 | [Gas Station](problems/2026-10-01-gas-station.md) | arrays | `O(n)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-09-07 | [Squares of a Sorted Array](problems/2026-09-07-squares-of-a-sorted-array.md) | two pointers | `O(n)` | `O(n)` |
 | 2026-09-06 | [Valid Palindrome](problems/2026-09-06-valid-palindrome.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-09-05 | [Sort Colors](problems/2026-09-05-sort-colors.md) | two pointers | `O(n)` | `O(1)` |
-| 2026-09-04 | [3Sum Closest](problems/2026-09-04-3sum-closest.md) | two pointers | `O(n^2)` | `O(1)` |
 
 ## License & attribution
 
