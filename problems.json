@@ -1048,5 +1048,19 @@
       "cpp": "std::vector<std::vector<int>> gameOfLife(std::vector<std::vector<int>>& board) {\n    int m = static_cast<int>(board.size());\n    int n = m ? static_cast<int>(board[0].size()) : 0;\n    for (int i = 0; i < m; ++i) {\n        for (int j = 0; j < n; ++j) {\n            int count = 0;\n            for (int I = std::max(i - 1, 0); I < std::min(i + 2, m); ++I) {\n                for (int J = std::max(j - 1, 0); J < std::min(j + 2, n); ++J) {\n                    count += board[I][J] & 1;\n                }\n            }\n            if ((count == 4 && board[i][j]) || count == 3) {\n                board[i][j] |= 2;\n            }\n        }\n    }\n    for (int i = 0; i < m; ++i) {\n        for (int j = 0; j < n; ++j) {\n            board[i][j] >>= 1;\n        }\n    }\n    return board;\n}\n",
       "rust": "fn game_of_life(board: &mut Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n    let m = board.len();\n    let n = if m > 0 { board[0].len() } else { 0 };\n    for i in 0..m {\n        for j in 0..n {\n            let mut count = 0;\n            let i_start = if i > 0 { i - 1 } else { 0 };\n            let i_end = std::cmp::min(i + 2, m);\n            let j_start = if j > 0 { j - 1 } else { 0 };\n            let j_end = std::cmp::min(j + 2, n);\n            for ii in i_start..i_end {\n                for jj in j_start..j_end {\n                    count += board[ii][jj] & 1;\n                }\n            }\n            if (count == 4 && board[i][j] != 0) || count == 3 {\n                board[i][j] |= 2;\n            }\n        }\n    }\n    for i in 0..m {\n        for j in 0..n {\n            board[i][j] >>= 1;\n        }\n    }\n    board.clone()\n}\n"
     }
+  },
+  {
+    "date": "2026-10-05",
+    "title": "Best Time to Buy and Sell Stock",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single `for p in prices` loop, which visits every element in the list exactly once. Because each iteration does only constant-time work — two comparisons and two assignments — the total time scales linearly with the number of prices, giving O(n). You might be tempted to guess O(n²) thinking that tracking a running minimum somehow implies a nested scan, but `min_price` is updated in place so no inner loop exists. For space, the algorithm uses only two scalar variables (`min_price` and `best`) regardless of how large the input list is, so extra memory usage is O(1) — it never grows with input size.",
+    "source_url": null,
+    "implementations": {
+      "python": "def max_profit(prices: list[int]) -> int:\n    min_price = float('inf')\n    best = 0\n    for p in prices:\n        min_price = min(min_price, p)\n        best = max(best, p - min_price)\n    return best",
+      "cpp": "int maxProfit(std::vector<int>& prices) {\n    int minPrice = std::numeric_limits<int>::max();\n    int best = 0;\n    for (int p : prices) {\n        minPrice = std::min(minPrice, p);\n        best = std::max(best, p - minPrice);\n    }\n    return best;\n}",
+      "rust": "fn max_profit(prices: &[i32]) -> i32 {\n    let mut min_price = i32::MAX;\n    let mut best = 0;\n    for &p in prices {\n        min_price = min_price.min(p);\n        best = best.max(p - min_price);\n    }\n    best\n}"
+    }
   }
 ]
