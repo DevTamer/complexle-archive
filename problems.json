@@ -1062,5 +1062,19 @@
       "cpp": "int maxProfit(std::vector<int>& prices) {\n    int minPrice = std::numeric_limits<int>::max();\n    int best = 0;\n    for (int p : prices) {\n        minPrice = std::min(minPrice, p);\n        best = std::max(best, p - minPrice);\n    }\n    return best;\n}",
       "rust": "fn max_profit(prices: &[i32]) -> i32 {\n    let mut min_price = i32::MAX;\n    let mut best = 0;\n    for &p in prices {\n        min_price = min_price.min(p);\n        best = best.max(p - min_price);\n    }\n    best\n}"
     }
+  },
+  {
+    "date": "2026-10-06",
+    "title": "Contains Duplicate",
+    "category": "hash map",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the single `for` loop that iterates over every element in `nums`, giving you a linear O(n) time complexity. Each iteration performs a set lookup (`n in seen`) and a set insertion (`seen.add(n)`), both of which are O(1) on average due to hashing, so the loop itself is the bottleneck. The most tempting wrong time answer might be O(1) because you see early returns, but in the worst case (no duplicates), you must visit every element. For space, the `seen` set grows as you add unique elements, and in the worst case it holds all n elements, so space is O(n) — not O(1) as you might assume if you mistakenly think the set stays small.",
+    "source_url": null,
+    "implementations": {
+      "python": "def contains_duplicate(nums: list[int]) -> bool:\n    seen = set()\n    for n in nums:\n        if n in seen:\n            return True\n        seen.add(n)\n    return False",
+      "cpp": "bool containsDuplicate(std::vector<int>& nums) {\n    std::unordered_set<int> seen;\n    for (int n : nums) {\n        if (seen.count(n)) return true;\n        seen.insert(n);\n    }\n    return false;\n}",
+      "rust": "fn contains_duplicate(nums: &[i32]) -> bool {\n    let mut seen = HashSet::new();\n    for &n in nums {\n        if !seen.insert(n) {\n            return true;\n        }\n    }\n    false\n}"
+    }
   }
 ]
