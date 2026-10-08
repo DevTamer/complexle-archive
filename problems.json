@@ -1076,5 +1076,19 @@
       "cpp": "bool containsDuplicate(std::vector<int>& nums) {\n    std::unordered_set<int> seen;\n    for (int n : nums) {\n        if (seen.count(n)) return true;\n        seen.insert(n);\n    }\n    return false;\n}",
       "rust": "fn contains_duplicate(nums: &[i32]) -> bool {\n    let mut seen = HashSet::new();\n    for &n in nums {\n        if !seen.insert(n) {\n            return true;\n        }\n    }\n    false\n}"
     }
+  },
+  {
+    "date": "2026-10-07",
+    "title": "Majority Element",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single for-loop that iterates over every element in nums exactly once, giving you O(n) time. Each iteration does a fixed amount of work — just a comparison and an increment or decrement — so nothing inside the loop adds extra complexity. You might be tempted to think this is O(n²) if you imagine some hidden nested scanning, but there is none; the Boyer-Moore Voting Algorithm is specifically designed to find the majority in one linear pass. For space, you only ever allocate two scalar variables (count and candidate) regardless of how large nums is, so space stays O(1).",
+    "source_url": null,
+    "implementations": {
+      "python": "def majority_element(nums: list[int]) -> int:\n    count = 0\n    candidate = None\n    for n in nums:\n        if count == 0:\n            candidate = n\n        count += 1 if n == candidate else -1\n    return candidate",
+      "cpp": "int majorityElement(std::vector<int>& nums) {\n    int count = 0, candidate = 0;\n    for (int n : nums) {\n        if (count == 0) candidate = n;\n        count += (n == candidate) ? 1 : -1;\n    }\n    return candidate;\n}",
+      "rust": "fn majority_element(nums: &[i32]) -> i32 {\n    let mut count = 0;\n    let mut candidate = 0;\n    for &n in nums {\n        if count == 0 {\n            candidate = n;\n        }\n        count += if n == candidate { 1 } else { -1 };\n    }\n    candidate\n}"
+    }
   }
 ]
