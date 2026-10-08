@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**77 puzzles** archived, from 2026-06-01 to 2026-10-06.
+**78 puzzles** archived, from 2026-06-01 to 2026-10-07.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-10-07 | [Majority Element](problems/2026-10-07-majority-element.md) | arrays | `O(n)` | `O(1)` |
 | 2026-10-06 | [Contains Duplicate](problems/2026-10-06-contains-duplicate.md) | hash map | `O(n)` | `O(n)` |
 | 2026-10-05 | [Best Time to Buy and Sell Stock](problems/2026-10-05-best-time-to-buy-and-sell-stock.md) | arrays | `O(n)` | `O(1)` |
 | 2026-10-04 | [Game of Life](problems/2026-10-04-game-of-life.md) | arrays | `O(m*n)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-09-10 | [Move Zeroes](problems/2026-09-10-move-zeroes.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-09-09 | [Reverse String](problems/2026-09-09-reverse-string.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-09-08 | [Partition Labels](problems/2026-09-08-partition-labels.md) | two pointers | `O(n)` | `O(n)` |
-| 2026-09-07 | [Squares of a Sorted Array](problems/2026-09-07-squares-of-a-sorted-array.md) | two pointers | `O(n)` | `O(n)` |
 
 ## License & attribution
 
