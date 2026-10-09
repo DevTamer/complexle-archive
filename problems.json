@@ -1090,5 +1090,19 @@
       "cpp": "int majorityElement(std::vector<int>& nums) {\n    int count = 0, candidate = 0;\n    for (int n : nums) {\n        if (count == 0) candidate = n;\n        count += (n == candidate) ? 1 : -1;\n    }\n    return candidate;\n}",
       "rust": "fn majority_element(nums: &[i32]) -> i32 {\n    let mut count = 0;\n    let mut candidate = 0;\n    for &n in nums {\n        if count == 0 {\n            candidate = n;\n        }\n        count += if n == candidate { 1 } else { -1 };\n    }\n    candidate\n}"
     }
+  },
+  {
+    "date": "2026-10-08",
+    "title": "Merge Two Sorted Lists",
+    "category": "linked list",
+    "time_complexity": "O(n + m)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the while loop, which advances through both lists one node at a time. Each iteration moves either l1 or l2 forward by one step, so in the worst case you visit every node in both lists — that's O(n + m) where n and m are the lengths of l1 and l2 respectively. After the loop, the remaining tail is attached in O(1) with 'curr.next = l1 or l2'. The most tempting wrong time answer is O(min(n, m)) because the while loop stops when either list is exhausted, but the remaining nodes are still 'processed' via the tail assignment, meaning all nodes are effectively touched. For space, you only allocate a single dummy node and a curr pointer regardless of input size, so no extra space grows with the input — the merged list reuses the existing nodes, making it O(1) auxiliary space.",
+    "source_url": null,
+    "implementations": {
+      "python": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef merge_two_lists(l1: ListNode | None, l2: ListNode | None) -> ListNode | None:\n    dummy = curr = ListNode()\n    while l1 and l2:\n        if l1.val <= l2.val:\n            curr.next, l1 = l1, l1.next\n        else:\n            curr.next, l2 = l2, l2.next\n        curr = curr.next\n    curr.next = l1 or l2\n    return dummy.next",
+      "cpp": "struct ListNode {\n    int val;\n    ListNode* next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n\nListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {\n    ListNode dummy(0);\n    ListNode* curr = &dummy;\n    while (l1 && l2) {\n        if (l1->val <= l2->val) {\n            curr->next = l1;\n            l1 = l1->next;\n        } else {\n            curr->next = l2;\n            l2 = l2->next;\n        }\n        curr = curr->next;\n    }\n    curr->next = l1 ? l1 : l2;\n    return dummy.next;\n}",
+      "rust": "struct ListNode {\n    val: i32,\n    next: Option<Box<ListNode>>,\n}\n\nfn merge_two_lists(\n    mut l1: Option<Box<ListNode>>,\n    mut l2: Option<Box<ListNode>>,\n) -> Option<Box<ListNode>> {\n    let mut dummy = Box::new(ListNode { val: 0, next: None });\n    let mut curr = &mut dummy;\n    while l1.is_some() && l2.is_some() {\n        if l1.as_ref().unwrap().val <= l2.as_ref().unwrap().val {\n            let mut n = l1.take().unwrap();\n            l1 = n.next.take();\n            curr.next = Some(n);\n        } else {\n            let mut n = l2.take().unwrap();\n            l2 = n.next.take();\n            curr.next = Some(n);\n        }\n        curr = curr.next.as_mut().unwrap();\n    }\n    curr.next = l1.or(l2);\n    dummy.next\n}"
+    }
   }
 ]
