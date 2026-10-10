@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**79 puzzles** archived, from 2026-06-01 to 2026-10-08.
+**80 puzzles** archived, from 2026-06-01 to 2026-10-09.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-10-09 | [Linked List Cycle](problems/2026-10-09-linked-list-cycle.md) | cycle detection | `O(n)` | `O(1)` |
 | 2026-10-08 | [Merge Two Sorted Lists](problems/2026-10-08-merge-two-sorted-lists.md) | linked list | `O(n + m)` | `O(1)` |
 | 2026-10-07 | [Majority Element](problems/2026-10-07-majority-element.md) | arrays | `O(n)` | `O(1)` |
 | 2026-10-06 | [Contains Duplicate](problems/2026-10-06-contains-duplicate.md) | hash map | `O(n)` | `O(n)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-09-12 | [Backspace String Compare](problems/2026-09-12-backspace-string-compare.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-09-11 | [Remove Element](problems/2026-09-11-remove-element.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-09-10 | [Move Zeroes](problems/2026-09-10-move-zeroes.md) | two pointers | `O(n)` | `O(1)` |
-| 2026-09-09 | [Reverse String](problems/2026-09-09-reverse-string.md) | two pointers | `O(n)` | `O(1)` |
 
 ## License & attribution
 
