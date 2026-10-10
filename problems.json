@@ -1104,5 +1104,19 @@
       "cpp": "struct ListNode {\n    int val;\n    ListNode* next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n\nListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {\n    ListNode dummy(0);\n    ListNode* curr = &dummy;\n    while (l1 && l2) {\n        if (l1->val <= l2->val) {\n            curr->next = l1;\n            l1 = l1->next;\n        } else {\n            curr->next = l2;\n            l2 = l2->next;\n        }\n        curr = curr->next;\n    }\n    curr->next = l1 ? l1 : l2;\n    return dummy.next;\n}",
       "rust": "struct ListNode {\n    val: i32,\n    next: Option<Box<ListNode>>,\n}\n\nfn merge_two_lists(\n    mut l1: Option<Box<ListNode>>,\n    mut l2: Option<Box<ListNode>>,\n) -> Option<Box<ListNode>> {\n    let mut dummy = Box::new(ListNode { val: 0, next: None });\n    let mut curr = &mut dummy;\n    while l1.is_some() && l2.is_some() {\n        if l1.as_ref().unwrap().val <= l2.as_ref().unwrap().val {\n            let mut n = l1.take().unwrap();\n            l1 = n.next.take();\n            curr.next = Some(n);\n        } else {\n            let mut n = l2.take().unwrap();\n            l2 = n.next.take();\n            curr.next = Some(n);\n        }\n        curr = curr.next.as_mut().unwrap();\n    }\n    curr.next = l1.or(l2);\n    dummy.next\n}"
     }
+  },
+  {
+    "date": "2026-10-09",
+    "title": "Linked List Cycle",
+    "category": "cycle detection",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the while loop, which advances two pointers (slow and fast) through the linked list. If there is no cycle, the fast pointer reaches the end in at most n/2 iterations, which simplifies to O(n). If there is a cycle, the fast pointer laps the slow pointer within at most n steps, so the loop still runs O(n) times total. You might be tempted to say O(n²) thinking the two pointers create nested work, but both pointers move forward in a single loop — there is no nested iteration, just two references advancing in tandem. The space complexity is O(1) because you only use two pointer variables (slow and fast) regardless of the size of the list — no extra data structure grows with input.",
+    "source_url": null,
+    "implementations": {
+      "python": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef has_cycle(head: ListNode | None) -> bool:\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n        if slow is fast:\n            return True\n    return False",
+      "cpp": "struct ListNode {\n    int val;\n    ListNode* next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n\nbool hasCycle(ListNode* head) {\n    ListNode* slow = head;\n    ListNode* fast = head;\n    while (fast && fast->next) {\n        slow = slow->next;\n        fast = fast->next->next;\n        if (slow == fast) return true;\n    }\n    return false;\n}",
+      "rust": "struct ListNode {\n    val: i32,\n    next: Option<Rc<RefCell<ListNode>>>,\n}\n\nfn has_cycle(head: Option<Rc<RefCell<ListNode>>>) -> bool {\n    let mut slow = head.clone();\n    let mut fast = head;\n    loop {\n        fast = match fast {\n            Some(node) => node.borrow().next.clone(),\n            None => return false,\n        };\n        fast = match fast {\n            Some(node) => node.borrow().next.clone(),\n            None => return false,\n        };\n        slow = match slow {\n            Some(node) => node.borrow().next.clone(),\n            None => return false,\n        };\n        if let (Some(s), Some(f)) = (&slow, &fast) {\n            if Rc::ptr_eq(s, f) {\n                return true;\n            }\n        }\n    }\n}"
+    }
   }
 ]
