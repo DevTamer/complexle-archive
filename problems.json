@@ -1118,5 +1118,19 @@
       "cpp": "struct ListNode {\n    int val;\n    ListNode* next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n\nbool hasCycle(ListNode* head) {\n    ListNode* slow = head;\n    ListNode* fast = head;\n    while (fast && fast->next) {\n        slow = slow->next;\n        fast = fast->next->next;\n        if (slow == fast) return true;\n    }\n    return false;\n}",
       "rust": "struct ListNode {\n    val: i32,\n    next: Option<Rc<RefCell<ListNode>>>,\n}\n\nfn has_cycle(head: Option<Rc<RefCell<ListNode>>>) -> bool {\n    let mut slow = head.clone();\n    let mut fast = head;\n    loop {\n        fast = match fast {\n            Some(node) => node.borrow().next.clone(),\n            None => return false,\n        };\n        fast = match fast {\n            Some(node) => node.borrow().next.clone(),\n            None => return false,\n        };\n        slow = match slow {\n            Some(node) => node.borrow().next.clone(),\n            None => return false,\n        };\n        if let (Some(s), Some(f)) = (&slow, &fast) {\n            if Rc::ptr_eq(s, f) {\n                return true;\n            }\n        }\n    }\n}"
     }
+  },
+  {
+    "date": "2026-10-10",
+    "title": "Remove Duplicates from Sorted Array",
+    "category": "two pointers",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single `for` loop that iterates through the array once with the `fast` pointer, from index 1 to len(nums)-1, giving you O(n) time. Each element is visited exactly once, and the work done per element (a comparison and at most one assignment) is constant. You might be tempted to think it's O(n²) because there are two pointers (`slow` and `fast`), but both pointers only move forward and never cause nested iteration — they traverse the array in a single pass. For space, the algorithm modifies the array in-place using only two integer variables (`slow` and `fast`) regardless of input size, so the extra space is O(1); you might mistakenly say O(n) thinking the output counts, but the array is given to you and no new data structure is allocated.",
+    "source_url": null,
+    "implementations": {
+      "python": "def remove_duplicates(nums: list[int]) -> int:\n    if not nums:\n        return 0\n    slow = 0\n    for fast in range(1, len(nums)):\n        if nums[fast] != nums[slow]:\n            slow += 1\n            nums[slow] = nums[fast]\n    return slow + 1",
+      "cpp": "int removeDuplicates(std::vector<int>& nums) {\n    if (nums.empty()) return 0;\n    int slow = 0;\n    for (int fast = 1; fast < (int)nums.size(); fast++) {\n        if (nums[fast] != nums[slow]) {\n            slow++;\n            nums[slow] = nums[fast];\n        }\n    }\n    return slow + 1;\n}",
+      "rust": "fn remove_duplicates(nums: &mut Vec<i32>) -> usize {\n    if nums.is_empty() {\n        return 0;\n    }\n    let mut slow = 0;\n    for fast in 1..nums.len() {\n        if nums[fast] != nums[slow] {\n            slow += 1;\n            nums[slow] = nums[fast];\n        }\n    }\n    slow + 1\n}"
+    }
   }
 ]
