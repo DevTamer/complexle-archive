@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**81 puzzles** archived, from 2026-06-01 to 2026-10-10.
+**82 puzzles** archived, from 2026-06-01 to 2026-10-11.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-10-11 | [Pascal's Triangle](problems/2026-10-11-pascals-triangle.md) | arrays | `O(n²)` | `O(n²)` |
 | 2026-10-10 | [Remove Duplicates from Sorted Array](problems/2026-10-10-remove-duplicates-from-sorted-array.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-10-09 | [Linked List Cycle](problems/2026-10-09-linked-list-cycle.md) | cycle detection | `O(n)` | `O(1)` |
 | 2026-10-08 | [Merge Two Sorted Lists](problems/2026-10-08-merge-two-sorted-lists.md) | linked list | `O(n + m)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-09-14 | [Is Subsequence](problems/2026-09-14-is-subsequence.md) | two pointers | `O(n)` | `O(1)` |
 | 2026-09-13 | [Valid Sudoku](problems/2026-09-13-valid-sudoku.md) | arrays | `O(1)` | `O(1)` |
 | 2026-09-12 | [Backspace String Compare](problems/2026-09-12-backspace-string-compare.md) | two pointers | `O(n)` | `O(1)` |
-| 2026-09-11 | [Remove Element](problems/2026-09-11-remove-element.md) | two pointers | `O(n)` | `O(1)` |
 
 ## License & attribution
 
