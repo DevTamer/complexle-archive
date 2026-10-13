@@ -1146,5 +1146,19 @@
       "cpp": "std::vector<std::vector<int>> generatePascalsTriangle(int numRows) {\n    std::vector<std::vector<int>> result;\n    for (int i = 0; i < numRows; i++) {\n        std::vector<int> row(i + 1, 1);\n        for (int j = 1; j < i; j++) {\n            row[j] = result[i - 1][j - 1] + result[i - 1][j];\n        }\n        result.push_back(row);\n    }\n    return result;\n}",
       "rust": "fn generate_pascals_triangle(num_rows: usize) -> Vec<Vec<i32>> {\n    let mut result: Vec<Vec<i32>> = Vec::new();\n    for i in 0..num_rows {\n        let mut row = vec![1; i + 1];\n        for j in 1..i {\n            row[j] = result[i - 1][j - 1] + result[i - 1][j];\n        }\n        result.push(row);\n    }\n    result\n}"
     }
+  },
+  {
+    "date": "2026-10-12",
+    "title": "Symmetric Tree",
+    "category": "tree",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the recursive `mirror` function, which visits each node in the tree exactly once (pairing nodes symmetrically from left and right subtrees). Every node is compared at most one time, so the total work scales linearly with the number of nodes n. The space complexity is also O(n) because the call stack can grow as deep as the height of the tree — in the worst case (a completely skewed tree), that height is n. You might be tempted to say O(log n) space, which would only be true for a perfectly balanced tree where height is log n, but the algorithm must handle unbalanced trees too.",
+    "source_url": null,
+    "implementations": {
+      "python": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef is_symmetric(root: TreeNode | None) -> bool:\n    def mirror(a, b):\n        if a is None and b is None:\n            return True\n        if a is None or b is None or a.val != b.val:\n            return False\n        return mirror(a.left, b.right) and mirror(a.right, b.left)\n    return root is None or mirror(root.left, root.right)",
+      "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nbool mirror(TreeNode* a, TreeNode* b) {\n    if (!a && !b) return true;\n    if (!a || !b || a->val != b->val) return false;\n    return mirror(a->left, b->right) && mirror(a->right, b->left);\n}\n\nbool isSymmetric(TreeNode* root) {\n    return !root || mirror(root->left, root->right);\n}",
+      "rust": "struct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn mirror(a: Option<Rc<RefCell<TreeNode>>>, b: Option<Rc<RefCell<TreeNode>>>) -> bool {\n    match (a, b) {\n        (None, None) => true,\n        (Some(a), Some(b)) => {\n            let (a, b) = (a.borrow(), b.borrow());\n            a.val == b.val\n                && mirror(a.left.clone(), b.right.clone())\n                && mirror(a.right.clone(), b.left.clone())\n        }\n        _ => false,\n    }\n}\n\nfn is_symmetric(root: Option<Rc<RefCell<TreeNode>>>) -> bool {\n    match root {\n        None => true,\n        Some(node) => {\n            let n = node.borrow();\n            mirror(n.left.clone(), n.right.clone())\n        }\n    }\n}"
+    }
   }
 ]
