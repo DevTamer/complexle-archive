@@ -1160,5 +1160,19 @@
       "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nbool mirror(TreeNode* a, TreeNode* b) {\n    if (!a && !b) return true;\n    if (!a || !b || a->val != b->val) return false;\n    return mirror(a->left, b->right) && mirror(a->right, b->left);\n}\n\nbool isSymmetric(TreeNode* root) {\n    return !root || mirror(root->left, root->right);\n}",
       "rust": "struct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn mirror(a: Option<Rc<RefCell<TreeNode>>>, b: Option<Rc<RefCell<TreeNode>>>) -> bool {\n    match (a, b) {\n        (None, None) => true,\n        (Some(a), Some(b)) => {\n            let (a, b) = (a.borrow(), b.borrow());\n            a.val == b.val\n                && mirror(a.left.clone(), b.right.clone())\n                && mirror(a.right.clone(), b.left.clone())\n        }\n        _ => false,\n    }\n}\n\nfn is_symmetric(root: Option<Rc<RefCell<TreeNode>>>) -> bool {\n    match root {\n        None => true,\n        Some(node) => {\n            let n = node.borrow();\n            mirror(n.left.clone(), n.right.clone())\n        }\n    }\n}"
     }
+  },
+  {
+    "date": "2026-10-13",
+    "title": "Invert Binary Tree",
+    "category": "tree",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(h)",
+    "explanation": "The dominant cost is the recursive traversal of every node in the tree. Each call to invert_tree visits exactly one node and makes two recursive calls, so the function is called once per node — giving you O(n) time where n is the total number of nodes. The space complexity is driven by the call stack depth, which equals the height h of the tree; in the worst case (a completely skewed tree), h = n, but for a balanced tree h = log n, so we write O(h) to be precise. You might be tempted to say O(log n) for space, but that only holds for a perfectly balanced tree — a skewed tree pushes the call stack to O(n) depth, so O(h) is the correct general answer. Similarly, O(1) space is wrong because the recursive calls do consume stack frames proportional to the tree's height.",
+    "source_url": null,
+    "implementations": {
+      "python": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef invert_tree(root: TreeNode | None) -> TreeNode | None:\n    if root is None:\n        return None\n    root.left, root.right = invert_tree(root.right), invert_tree(root.left)\n    return root",
+      "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nTreeNode* invertTree(TreeNode* root) {\n    if (!root) return nullptr;\n    TreeNode* left = invertTree(root->left);\n    TreeNode* right = invertTree(root->right);\n    root->left = right;\n    root->right = left;\n    return root;\n}",
+      "rust": "struct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn invert_tree(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {\n    if let Some(node) = &root {\n        let (left, right) = {\n            let n = node.borrow();\n            (n.left.clone(), n.right.clone())\n        };\n        node.borrow_mut().left = invert_tree(right);\n        node.borrow_mut().right = invert_tree(left);\n    }\n    root\n}"
+    }
   }
 ]
