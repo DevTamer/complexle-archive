@@ -1174,5 +1174,19 @@
       "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nTreeNode* invertTree(TreeNode* root) {\n    if (!root) return nullptr;\n    TreeNode* left = invertTree(root->left);\n    TreeNode* right = invertTree(root->right);\n    root->left = right;\n    root->right = left;\n    return root;\n}",
       "rust": "struct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn invert_tree(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {\n    if let Some(node) = &root {\n        let (left, right) = {\n            let n = node.borrow();\n            (n.left.clone(), n.right.clone())\n        };\n        node.borrow_mut().left = invert_tree(right);\n        node.borrow_mut().right = invert_tree(left);\n    }\n    root\n}"
     }
+  },
+  {
+    "date": "2026-10-14",
+    "title": "Diameter of Binary Tree",
+    "category": "tree",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the recursive `height` function, which visits every node in the tree exactly once. Each node triggers a constant amount of work (two recursive calls, a max operation, and an addition), so the total time grows linearly with the number of nodes n. You might be tempted to say O(log n) because binary trees are involved, but that only applies to balanced trees — in the worst case (a completely skewed tree), the recursion goes n levels deep, not log n. The space complexity is also O(n) because the call stack can grow as deep as the height of the tree, which in the worst case (a linear chain of nodes) equals n frames.",
+    "source_url": null,
+    "implementations": {
+      "python": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef diameter_of_binary_tree(root: TreeNode | None) -> int:\n    diameter = 0\n    def height(node):\n        nonlocal diameter\n        if node is None:\n            return 0\n        left = height(node.left)\n        right = height(node.right)\n        diameter = max(diameter, left + right)\n        return 1 + max(left, right)\n    height(root)\n    return diameter",
+      "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nint height(TreeNode* node, int& diameter) {\n    if (!node) return 0;\n    int left = height(node->left, diameter);\n    int right = height(node->right, diameter);\n    diameter = std::max(diameter, left + right);\n    return 1 + std::max(left, right);\n}\n\nint diameterOfBinaryTree(TreeNode* root) {\n    int diameter = 0;\n    height(root, diameter);\n    return diameter;\n}",
+      "rust": "struct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn height(node: &Option<Rc<RefCell<TreeNode>>>, diameter: &mut i32) -> i32 {\n    match node {\n        None => 0,\n        Some(n) => {\n            let n = n.borrow();\n            let left = height(&n.left, diameter);\n            let right = height(&n.right, diameter);\n            *diameter = (*diameter).max(left + right);\n            1 + left.max(right)\n        }\n    }\n}\n\nfn diameter_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {\n    let mut diameter = 0;\n    height(&root, &mut diameter);\n    diameter\n}"
+    }
   }
 ]
