@@ -1188,5 +1188,19 @@
       "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nint height(TreeNode* node, int& diameter) {\n    if (!node) return 0;\n    int left = height(node->left, diameter);\n    int right = height(node->right, diameter);\n    diameter = std::max(diameter, left + right);\n    return 1 + std::max(left, right);\n}\n\nint diameterOfBinaryTree(TreeNode* root) {\n    int diameter = 0;\n    height(root, diameter);\n    return diameter;\n}",
       "rust": "struct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn height(node: &Option<Rc<RefCell<TreeNode>>>, diameter: &mut i32) -> i32 {\n    match node {\n        None => 0,\n        Some(n) => {\n            let n = n.borrow();\n            let left = height(&n.left, diameter);\n            let right = height(&n.right, diameter);\n            *diameter = (*diameter).max(left + right);\n            1 + left.max(right)\n        }\n    }\n}\n\nfn diameter_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {\n    let mut diameter = 0;\n    height(&root, &mut diameter);\n    diameter\n}"
     }
+  },
+  {
+    "date": "2026-10-15",
+    "title": "Validate Binary Search Tree",
+    "category": "tree",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the recursive `valid` function, which visits every node in the tree exactly once to check whether it satisfies the BST property. Each call does O(1) work (a comparison and two recursive calls), so the total time grows linearly with the number of nodes n. For space, the recursion stack is the key factor — in the worst case (a completely skewed/linear tree), you stack up n frames before hitting a base case, giving O(n) space. You might be tempted to say O(log n) space because a balanced BST has height log n, but the problem makes no guarantee about balance, so you must account for the worst-case skewed tree.",
+    "source_url": null,
+    "implementations": {
+      "python": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef is_valid_bst(root: TreeNode | None) -> bool:\n    def valid(node, low, high):\n        if node is None:\n            return True\n        if not (low < node.val < high):\n            return False\n        return valid(node.left, low, node.val) and valid(node.right, node.val, high)\n    return valid(root, float('-inf'), float('inf'))",
+      "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nbool valid(TreeNode* node, long low, long high) {\n    if (!node) return true;\n    if (!(low < node->val && node->val < high)) return false;\n    return valid(node->left, low, node->val) && valid(node->right, node->val, high);\n}\n\nbool isValidBST(TreeNode* root) {\n    return valid(root, std::numeric_limits<long>::min(), std::numeric_limits<long>::max());\n}",
+      "rust": "struct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn valid(node: &Option<Rc<RefCell<TreeNode>>>, low: i64, high: i64) -> bool {\n    match node {\n        None => true,\n        Some(n) => {\n            let n = n.borrow();\n            let v = n.val as i64;\n            if !(low < v && v < high) {\n                return false;\n            }\n            valid(&n.left, low, v) && valid(&n.right, v, high)\n        }\n    }\n}\n\nfn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {\n    valid(&root, i64::MIN, i64::MAX)\n}"
+    }
   }
 ]
