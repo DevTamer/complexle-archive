@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**86 puzzles** archived, from 2026-06-01 to 2026-10-15.
+**87 puzzles** archived, from 2026-06-01 to 2026-10-16.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-10-16 | [Jump Game](problems/2026-10-16-jump-game.md) | arrays | `O(n)` | `O(1)` |
 | 2026-10-15 | [Validate Binary Search Tree](problems/2026-10-15-validate-binary-search-tree.md) | tree | `O(n)` | `O(n)` |
 | 2026-10-14 | [Diameter of Binary Tree](problems/2026-10-14-diameter-of-binary-tree.md) | tree | `O(n)` | `O(n)` |
 | 2026-10-13 | [Invert Binary Tree](problems/2026-10-13-invert-binary-tree.md) | tree | `O(n)` | `O(h)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-09-19 | [Minimum Window Substring](problems/2026-09-19-minimum-window-substring.md) | sliding window | `O(n + m)` | `O(m)` |
 | 2026-09-18 | [Fruit Into Baskets](problems/2026-09-18-fruit-into-baskets.md) | sliding window | `O(n)` | `O(1)` |
 | 2026-09-17 | [Max Consecutive Ones III](problems/2026-09-17-max-consecutive-ones-iii.md) | sliding window | `O(n)` | `O(1)` |
-| 2026-09-16 | [Longest Repeating Character Replacement](problems/2026-09-16-longest-repeating-character-replacement.md) | sliding window | `O(n)` | `O(1)` |
 
 ## License & attribution
 
