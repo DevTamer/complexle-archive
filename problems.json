@@ -1202,5 +1202,19 @@
       "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nbool valid(TreeNode* node, long low, long high) {\n    if (!node) return true;\n    if (!(low < node->val && node->val < high)) return false;\n    return valid(node->left, low, node->val) && valid(node->right, node->val, high);\n}\n\nbool isValidBST(TreeNode* root) {\n    return valid(root, std::numeric_limits<long>::min(), std::numeric_limits<long>::max());\n}",
       "rust": "struct TreeNode {\n    val: i32,\n    left: Option<Rc<RefCell<TreeNode>>>,\n    right: Option<Rc<RefCell<TreeNode>>>,\n}\n\nfn valid(node: &Option<Rc<RefCell<TreeNode>>>, low: i64, high: i64) -> bool {\n    match node {\n        None => true,\n        Some(n) => {\n            let n = n.borrow();\n            let v = n.val as i64;\n            if !(low < v && v < high) {\n                return false;\n            }\n            valid(&n.left, low, v) && valid(&n.right, v, high)\n        }\n    }\n}\n\nfn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {\n    valid(&root, i64::MIN, i64::MAX)\n}"
     }
+  },
+  {
+    "date": "2026-10-16",
+    "title": "Jump Game",
+    "category": "arrays",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single for-loop that iterates over every element in the nums list exactly once. Each iteration does only constant-time work: a comparison, a max call, and an update to the 'reachable' variable. You might be tempted to think this is O(n²) because of the max() call inside the loop, but max() here compares exactly two values, making it O(1) per iteration. The only extra memory used is the single integer variable 'reachable', which does not grow with input size, giving O(1) space.",
+    "source_url": null,
+    "implementations": {
+      "python": "def can_jump(nums: list[int]) -> bool:\n    reachable = 0\n    for i, n in enumerate(nums):\n        if i > reachable:\n            return False\n        reachable = max(reachable, i + n)\n    return True",
+      "cpp": "bool canJump(std::vector<int>& nums) {\n    int reachable = 0;\n    for (int i = 0; i < (int)nums.size(); i++) {\n        if (i > reachable) return false;\n        reachable = std::max(reachable, i + nums[i]);\n    }\n    return true;\n}",
+      "rust": "fn can_jump(nums: &[i32]) -> bool {\n    let mut reachable = 0i32;\n    for (i, &n) in nums.iter().enumerate() {\n        if i as i32 > reachable {\n            return false;\n        }\n        reachable = reachable.max(i as i32 + n);\n    }\n    true\n}"
+    }
   }
 ]
