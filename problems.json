@@ -1244,5 +1244,19 @@
       "cpp": "std::vector<int> dailyTemperatures(std::vector<int>& temperatures) {\n    std::vector<int> result(temperatures.size(), 0);\n    std::stack<int> stk;\n    for (int i = 0; i < (int)temperatures.size(); i++) {\n        while (!stk.empty() && temperatures[stk.top()] < temperatures[i]) {\n            int j = stk.top(); stk.pop();\n            result[j] = i - j;\n        }\n        stk.push(i);\n    }\n    return result;\n}",
       "rust": "fn daily_temperatures(temperatures: &[i32]) -> Vec<i32> {\n    let mut result = vec![0; temperatures.len()];\n    let mut stack: Vec<usize> = Vec::new();\n    for (i, &t) in temperatures.iter().enumerate() {\n        while let Some(&j) = stack.last() {\n            if temperatures[j] < t {\n                result[j] = (i - j) as i32;\n                stack.pop();\n            } else {\n                break;\n            }\n        }\n        stack.push(i);\n    }\n    result\n}"
     }
+  },
+  {
+    "date": "2026-10-19",
+    "title": "Longest Increasing Subsequence",
+    "category": "dynamic programming",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the outer for-loop that iterates over all n elements of nums, and inside each iteration you call bisect.bisect_left on the tails list, which performs a binary search in O(log n) time. Multiplying these together gives O(n log n) overall. The tails list grows at most to length n (in the worst case when the input is strictly increasing), so the space complexity is O(n). You might be tempted to say O(n²) because maintaining a list inside a loop can sometimes involve shifting elements, but here tails[i] = n is a single index assignment — no shifting occurs — so the per-iteration work is truly O(log n), not O(n).",
+    "source_url": null,
+    "implementations": {
+      "python": "def length_of_lis(nums: list[int]) -> int:\n    tails = []\n    for n in nums:\n        i = bisect.bisect_left(tails, n)\n        if i == len(tails):\n            tails.append(n)\n        else:\n            tails[i] = n\n    return len(tails)",
+      "cpp": "int lengthOfLIS(std::vector<int>& nums) {\n    std::vector<int> tails;\n    for (int n : nums) {\n        auto it = std::lower_bound(tails.begin(), tails.end(), n);\n        if (it == tails.end()) tails.push_back(n);\n        else *it = n;\n    }\n    return tails.size();\n}",
+      "rust": "fn length_of_lis(nums: &[i32]) -> usize {\n    let mut tails: Vec<i32> = Vec::new();\n    for &n in nums {\n        match tails.binary_search(&n) {\n            Ok(i) => tails[i] = n,\n            Err(i) => {\n                if i == tails.len() {\n                    tails.push(n);\n                } else {\n                    tails[i] = n;\n                }\n            }\n        }\n    }\n    tails.len()\n}"
+    }
   }
 ]

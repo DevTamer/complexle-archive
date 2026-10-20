@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**89 puzzles** archived, from 2026-06-01 to 2026-10-18.
+**90 puzzles** archived, from 2026-06-01 to 2026-10-19.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-10-19 | [Longest Increasing Subsequence](problems/2026-10-19-longest-increasing-subsequence.md) | dynamic programming | `O(n log n)` | `O(n)` |
 | 2026-10-18 | [Daily Temperatures](problems/2026-10-18-daily-temperatures.md) | stack | `O(n)` | `O(n)` |
 | 2026-10-17 | [Spiral Matrix](problems/2026-10-17-spiral-matrix.md) | arrays | `O(m*n)` | `O(m*n)` |
 | 2026-10-16 | [Jump Game](problems/2026-10-16-jump-game.md) | arrays | `O(n)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-09-22 | [Find Peak Element](problems/2026-09-22-find-peak-element.md) | binary search | `O(log n)` | `O(1)` |
 | 2026-09-21 | [Search Insert Position](problems/2026-09-21-search-insert-position.md) | binary search | `O(log n)` | `O(1)` |
 | 2026-09-20 | [Subarray Product Less Than K](problems/2026-09-20-subarray-product-less-than-k.md) | sliding window | `O(n)` | `O(1)` |
-| 2026-09-19 | [Minimum Window Substring](problems/2026-09-19-minimum-window-substring.md) | sliding window | `O(n + m)` | `O(m)` |
 
 ## License & attribution
 
