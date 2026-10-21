@@ -1258,5 +1258,19 @@
       "cpp": "int lengthOfLIS(std::vector<int>& nums) {\n    std::vector<int> tails;\n    for (int n : nums) {\n        auto it = std::lower_bound(tails.begin(), tails.end(), n);\n        if (it == tails.end()) tails.push_back(n);\n        else *it = n;\n    }\n    return tails.size();\n}",
       "rust": "fn length_of_lis(nums: &[i32]) -> usize {\n    let mut tails: Vec<i32> = Vec::new();\n    for &n in nums {\n        match tails.binary_search(&n) {\n            Ok(i) => tails[i] = n,\n            Err(i) => {\n                if i == tails.len() {\n                    tails.push(n);\n                } else {\n                    tails[i] = n;\n                }\n            }\n        }\n    }\n    tails.len()\n}"
     }
+  },
+  {
+    "date": "2026-10-20",
+    "title": "Longest Palindromic Substring",
+    "category": "two pointers",
+    "time_complexity": "O(n²)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost comes from the outer for-loop iterating over each of the n characters, and for each character calling expand() which can itself expand outward up to O(n) steps in the worst case (e.g., a string of all identical characters). This gives you O(n) * O(n) = O(n²) total work. The most tempting wrong answer is O(n) — you might think expand() is cheap on average, but in the worst case every expansion touches the full string. For space, the algorithm only uses a fixed number of variables (start, end, l, r) regardless of input size, so it is O(1) extra space; the O(n) distractor is tempting because of the output string slice, but that is typically not counted as auxiliary space.",
+    "source_url": null,
+    "implementations": {
+      "python": "def longest_palindrome(s: str) -> str:\n    if not s:\n        return \"\"\n    start, end = 0, 0\n    def expand(l, r):\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            l -= 1\n            r += 1\n        return l + 1, r - 1\n    for i in range(len(s)):\n        l1, r1 = expand(i, i)\n        if r1 - l1 > end - start:\n            start, end = l1, r1\n        l2, r2 = expand(i, i + 1)\n        if r2 - l2 > end - start:\n            start, end = l2, r2\n    return s[start:end + 1]",
+      "cpp": "std::pair<int, int> expand(const std::string& s, int l, int r) {\n    while (l >= 0 && r < (int)s.size() && s[l] == s[r]) {\n        l--; r++;\n    }\n    return {l + 1, r - 1};\n}\n\nstd::string longestPalindrome(std::string s) {\n    if (s.empty()) return \"\";\n    int start = 0, end = 0;\n    for (int i = 0; i < (int)s.size(); i++) {\n        auto [l1, r1] = expand(s, i, i);\n        if (r1 - l1 > end - start) { start = l1; end = r1; }\n        auto [l2, r2] = expand(s, i, i + 1);\n        if (r2 - l2 > end - start) { start = l2; end = r2; }\n    }\n    return s.substr(start, end - start + 1);\n}",
+      "rust": "fn expand(s: &[u8], mut l: i32, mut r: i32) -> (i32, i32) {\n    while l >= 0 && (r as usize) < s.len() && s[l as usize] == s[r as usize] {\n        l -= 1;\n        r += 1;\n    }\n    (l + 1, r - 1)\n}\n\nfn longest_palindrome(s: &str) -> &str {\n    let bytes = s.as_bytes();\n    if bytes.is_empty() {\n        return \"\";\n    }\n    let (mut start, mut end) = (0i32, 0i32);\n    for i in 0..bytes.len() as i32 {\n        let (l1, r1) = expand(bytes, i, i);\n        if r1 - l1 > end - start {\n            start = l1;\n            end = r1;\n        }\n        let (l2, r2) = expand(bytes, i, i + 1);\n        if r2 - l2 > end - start {\n            start = l2;\n            end = r2;\n        }\n    }\n    &s[start as usize..=end as usize]\n}"
+    }
   }
 ]
