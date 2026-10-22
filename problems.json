@@ -1272,5 +1272,19 @@
       "cpp": "std::pair<int, int> expand(const std::string& s, int l, int r) {\n    while (l >= 0 && r < (int)s.size() && s[l] == s[r]) {\n        l--; r++;\n    }\n    return {l + 1, r - 1};\n}\n\nstd::string longestPalindrome(std::string s) {\n    if (s.empty()) return \"\";\n    int start = 0, end = 0;\n    for (int i = 0; i < (int)s.size(); i++) {\n        auto [l1, r1] = expand(s, i, i);\n        if (r1 - l1 > end - start) { start = l1; end = r1; }\n        auto [l2, r2] = expand(s, i, i + 1);\n        if (r2 - l2 > end - start) { start = l2; end = r2; }\n    }\n    return s.substr(start, end - start + 1);\n}",
       "rust": "fn expand(s: &[u8], mut l: i32, mut r: i32) -> (i32, i32) {\n    while l >= 0 && (r as usize) < s.len() && s[l as usize] == s[r as usize] {\n        l -= 1;\n        r += 1;\n    }\n    (l + 1, r - 1)\n}\n\nfn longest_palindrome(s: &str) -> &str {\n    let bytes = s.as_bytes();\n    if bytes.is_empty() {\n        return \"\";\n    }\n    let (mut start, mut end) = (0i32, 0i32);\n    for i in 0..bytes.len() as i32 {\n        let (l1, r1) = expand(bytes, i, i);\n        if r1 - l1 > end - start {\n            start = l1;\n            end = r1;\n        }\n        let (l2, r2) = expand(bytes, i, i + 1);\n        if r2 - l2 > end - start {\n            start = l2;\n            end = r2;\n        }\n    }\n    &s[start as usize..=end as usize]\n}"
     }
+  },
+  {
+    "date": "2026-10-21",
+    "title": "Maximum Product Subarray",
+    "category": "dynamic programming",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost is the single for-loop that iterates over nums[1:], visiting each element exactly once. Inside the loop, every operation — the swap, the max/min calls, and the result update — runs in constant time, so the total work scales linearly with the length of the input array. You might be tempted to think the max() and min() calls add extra complexity, but they each compare only two values, making them O(1) regardless of n. For space, you only maintain a fixed set of scalar variables (result, cur_max, cur_min) no matter how large the input is, so no additional memory proportional to n is ever allocated.",
+    "source_url": null,
+    "implementations": {
+      "python": "def max_product(nums: list[int]) -> int:\n    result = nums[0]\n    cur_max = cur_min = nums[0]\n    for n in nums[1:]:\n        if n < 0:\n            cur_max, cur_min = cur_min, cur_max\n        cur_max = max(n, cur_max * n)\n        cur_min = min(n, cur_min * n)\n        result = max(result, cur_max)\n    return result",
+      "cpp": "int maxProduct(std::vector<int>& nums) {\n    int result = nums[0];\n    int curMax = nums[0], curMin = nums[0];\n    for (size_t i = 1; i < nums.size(); i++) {\n        int n = nums[i];\n        if (n < 0) std::swap(curMax, curMin);\n        curMax = std::max(n, curMax * n);\n        curMin = std::min(n, curMin * n);\n        result = std::max(result, curMax);\n    }\n    return result;\n}",
+      "rust": "fn max_product(nums: &[i32]) -> i32 {\n    let mut result = nums[0];\n    let (mut cur_max, mut cur_min) = (nums[0], nums[0]);\n    for &n in &nums[1..] {\n        if n < 0 {\n            std::mem::swap(&mut cur_max, &mut cur_min);\n        }\n        cur_max = n.max(cur_max * n);\n        cur_min = n.min(cur_min * n);\n        result = result.max(cur_max);\n    }\n    result\n}"
+    }
   }
 ]
