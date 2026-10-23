@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**92 puzzles** archived, from 2026-06-01 to 2026-10-21.
+**93 puzzles** archived, from 2026-06-01 to 2026-10-22.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-10-22 | [Top K Frequent Elements](problems/2026-10-22-top-k-frequent-elements.md) | heap | `O(n log k)` | `O(n)` |
 | 2026-10-21 | [Maximum Product Subarray](problems/2026-10-21-maximum-product-subarray.md) | dynamic programming | `O(n)` | `O(1)` |
 | 2026-10-20 | [Longest Palindromic Substring](problems/2026-10-20-longest-palindromic-substring.md) | two pointers | `O(n²)` | `O(1)` |
 | 2026-10-19 | [Longest Increasing Subsequence](problems/2026-10-19-longest-increasing-subsequence.md) | dynamic programming | `O(n log n)` | `O(n)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-09-25 | [Find First and Last Position of Element in Sorted Array](problems/2026-09-25-find-first-and-last-position-of-element-in-sorted-array.md) | binary search | `O(log n)` | `O(1)` |
 | 2026-09-24 | [Minimum Size Subarray Sum](problems/2026-09-24-minimum-size-subarray-sum.md) | sliding window | `O(n)` | `O(1)` |
 | 2026-09-23 | [Longest Subarray of 1's After Deleting One Element](problems/2026-09-23-longest-subarray-of-1s-after-deleting-one-element.md) | sliding window | `O(n)` | `O(1)` |
-| 2026-09-22 | [Find Peak Element](problems/2026-09-22-find-peak-element.md) | binary search | `O(log n)` | `O(1)` |
 
 ## License & attribution
 

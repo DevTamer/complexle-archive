@@ -1286,5 +1286,19 @@
       "cpp": "int maxProduct(std::vector<int>& nums) {\n    int result = nums[0];\n    int curMax = nums[0], curMin = nums[0];\n    for (size_t i = 1; i < nums.size(); i++) {\n        int n = nums[i];\n        if (n < 0) std::swap(curMax, curMin);\n        curMax = std::max(n, curMax * n);\n        curMin = std::min(n, curMin * n);\n        result = std::max(result, curMax);\n    }\n    return result;\n}",
       "rust": "fn max_product(nums: &[i32]) -> i32 {\n    let mut result = nums[0];\n    let (mut cur_max, mut cur_min) = (nums[0], nums[0]);\n    for &n in &nums[1..] {\n        if n < 0 {\n            std::mem::swap(&mut cur_max, &mut cur_min);\n        }\n        cur_max = n.max(cur_max * n);\n        cur_min = n.min(cur_min * n);\n        result = result.max(cur_max);\n    }\n    result\n}"
     }
+  },
+  {
+    "date": "2026-10-22",
+    "title": "Top K Frequent Elements",
+    "category": "heap",
+    "time_complexity": "O(n log k)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the loop over all unique elements in 'counts', where each iteration performs a heap push and occasionally a heap pop — both costing O(log k) since the heap is kept at most size k. You iterate over at most n unique elements (in the worst case all elements are distinct), giving O(n log k) total. The Counter construction is O(n) which is dominated by the heap operations when k is not trivially small. You might be tempted to say O(n log n) because sorting-based solutions are common for this problem, but this heap-based approach caps heap size at k, making each operation O(log k) rather than O(log n). For space, the Counter can hold up to n entries in the worst case (all elements distinct), making it O(n), which dominates the O(k) heap; choosing O(k) ignores the space used by the frequency map.",
+    "source_url": null,
+    "implementations": {
+      "python": "def top_k_frequent(nums: list[int], k: int) -> list[int]:\n    counts = Counter(nums)\n    heap = []\n    for num, freq in counts.items():\n        heapq.heappush(heap, (freq, num))\n        if len(heap) > k:\n            heapq.heappop(heap)\n    return [num for freq, num in heap]",
+      "cpp": "std::vector<int> topKFrequent(std::vector<int>& nums, int k) {\n    std::unordered_map<int, int> counts;\n    for (int n : nums) counts[n]++;\n    std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<>> minHeap;\n    for (auto& [num, freq] : counts) {\n        minHeap.push({freq, num});\n        if ((int)minHeap.size() > k) minHeap.pop();\n    }\n    std::vector<int> result;\n    while (!minHeap.empty()) {\n        result.push_back(minHeap.top().second);\n        minHeap.pop();\n    }\n    return result;\n}",
+      "rust": "fn top_k_frequent(nums: &[i32], k: usize) -> Vec<i32> {\n    let mut counts: HashMap<i32, i32> = HashMap::new();\n    for &n in nums {\n        *counts.entry(n).or_insert(0) += 1;\n    }\n    let mut heap: BinaryHeap<Reverse<(i32, i32)>> = BinaryHeap::new();\n    for (&num, &freq) in counts.iter() {\n        heap.push(Reverse((freq, num)));\n        if heap.len() > k {\n            heap.pop();\n        }\n    }\n    heap.into_iter().map(|Reverse((_, num))| num).collect()\n}"
+    }
   }
 ]
