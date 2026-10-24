@@ -1300,5 +1300,19 @@
       "cpp": "std::vector<int> topKFrequent(std::vector<int>& nums, int k) {\n    std::unordered_map<int, int> counts;\n    for (int n : nums) counts[n]++;\n    std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<>> minHeap;\n    for (auto& [num, freq] : counts) {\n        minHeap.push({freq, num});\n        if ((int)minHeap.size() > k) minHeap.pop();\n    }\n    std::vector<int> result;\n    while (!minHeap.empty()) {\n        result.push_back(minHeap.top().second);\n        minHeap.pop();\n    }\n    return result;\n}",
       "rust": "fn top_k_frequent(nums: &[i32], k: usize) -> Vec<i32> {\n    let mut counts: HashMap<i32, i32> = HashMap::new();\n    for &n in nums {\n        *counts.entry(n).or_insert(0) += 1;\n    }\n    let mut heap: BinaryHeap<Reverse<(i32, i32)>> = BinaryHeap::new();\n    for (&num, &freq) in counts.iter() {\n        heap.push(Reverse((freq, num)));\n        if heap.len() > k {\n            heap.pop();\n        }\n    }\n    heap.into_iter().map(|Reverse((_, num))| num).collect()\n}"
     }
+  },
+  {
+    "date": "2026-10-23",
+    "title": "Merge Intervals",
+    "category": "sorting",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the sort at the start of the function, which takes O(n log n) time for n intervals. After sorting, the single for-loop runs through all intervals exactly once, giving O(n) work — but since O(n log n) grows faster, the sort dominates the overall time complexity. You might be tempted to say O(n) because the loop is so simple and linear, but you cannot ignore the sort that happens before it. For space, the result list can hold up to n intervals in the worst case (when no intervals overlap), giving O(n) auxiliary space; the sort itself may also use O(log n) stack space, but O(n) dominates.",
+    "source_url": null,
+    "implementations": {
+      "python": "def merge_intervals(intervals: list[list[int]]) -> list[list[int]]:\n    intervals.sort(key=lambda x: x[0])\n    result = []\n    for start, end in intervals:\n        if result and start <= result[-1][1]:\n            result[-1][1] = max(result[-1][1], end)\n        else:\n            result.append([start, end])\n    return result",
+      "cpp": "std::vector<std::vector<int>> mergeIntervals(std::vector<std::vector<int>>& intervals) {\n    std::sort(intervals.begin(), intervals.end());\n    std::vector<std::vector<int>> result;\n    for (auto& interval : intervals) {\n        if (!result.empty() && interval[0] <= result.back()[1]) {\n            result.back()[1] = std::max(result.back()[1], interval[1]);\n        } else {\n            result.push_back(interval);\n        }\n    }\n    return result;\n}",
+      "rust": "fn merge_intervals(mut intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n    intervals.sort_by_key(|iv| iv[0]);\n    let mut result: Vec<Vec<i32>> = Vec::new();\n    for interval in intervals {\n        if let Some(last) = result.last_mut() {\n            if interval[0] <= last[1] {\n                last[1] = last[1].max(interval[1]);\n                continue;\n            }\n        }\n        result.push(interval);\n    }\n    result\n}"
+    }
   }
 ]
