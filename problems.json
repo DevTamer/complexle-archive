@@ -1314,5 +1314,19 @@
       "cpp": "std::vector<std::vector<int>> mergeIntervals(std::vector<std::vector<int>>& intervals) {\n    std::sort(intervals.begin(), intervals.end());\n    std::vector<std::vector<int>> result;\n    for (auto& interval : intervals) {\n        if (!result.empty() && interval[0] <= result.back()[1]) {\n            result.back()[1] = std::max(result.back()[1], interval[1]);\n        } else {\n            result.push_back(interval);\n        }\n    }\n    return result;\n}",
       "rust": "fn merge_intervals(mut intervals: Vec<Vec<i32>>) -> Vec<Vec<i32>> {\n    intervals.sort_by_key(|iv| iv[0]);\n    let mut result: Vec<Vec<i32>> = Vec::new();\n    for interval in intervals {\n        if let Some(last) = result.last_mut() {\n            if interval[0] <= last[1] {\n                last[1] = last[1].max(interval[1]);\n                continue;\n            }\n        }\n        result.push(interval);\n    }\n    result\n}"
     }
+  },
+  {
+    "date": "2026-10-24",
+    "title": "Valid Anagram",
+    "category": "hash map",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "The dominant cost comes from the two sequential for-loops, one over string s and one over string t, each running in O(n) where n is the length of the strings. Since these loops run one after the other (not nested), the total time is O(n) + O(n) = O(n). You might be tempted to say O(26n) because of the fixed-size counts array, but the constant factor of 26 is dropped in Big-O notation, keeping it O(n). The space complexity is O(1) because the counts array is always exactly 26 integers regardless of the input size — it does not grow with n, making it constant space even though you allocate an array.",
+    "source_url": null,
+    "implementations": {
+      "python": "def is_anagram(s: str, t: str) -> bool:\n    # s and t consist of lowercase English letters only.\n    if len(s) != len(t):\n        return False\n    counts = [0] * 26\n    for c in s:\n        counts[ord(c) - ord('a')] += 1\n    for c in t:\n        i = ord(c) - ord('a')\n        counts[i] -= 1\n        if counts[i] < 0:\n            return False\n    return True",
+      "cpp": "// s and t consist of lowercase English letters only.\nbool isAnagram(std::string s, std::string t) {\n    if (s.size() != t.size()) return false;\n    std::array<int, 26> counts{};\n    for (char c : s) counts[c - 'a']++;\n    for (char c : t) {\n        if (--counts[c - 'a'] < 0) return false;\n    }\n    return true;\n}",
+      "rust": "// s and t consist of lowercase English letters only.\nfn is_anagram(s: &str, t: &str) -> bool {\n    if s.len() != t.len() {\n        return false;\n    }\n    let mut counts = [0i32; 26];\n    for c in s.bytes() {\n        counts[(c - b'a') as usize] += 1;\n    }\n    for c in t.bytes() {\n        let i = (c - b'a') as usize;\n        counts[i] -= 1;\n        if counts[i] < 0 {\n            return false;\n        }\n    }\n    true\n}"
+    }
   }
 ]
