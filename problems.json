@@ -1342,5 +1342,19 @@
       "cpp": "int findMin(std::vector<int>& nums) {\n    int left = 0, right = nums.size();\n    int target = nums.back();\n\n    while (left < right) {\n        int mid = left + (right - left) / 2;\n\n        if (nums[mid] <= target) {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    return nums[left];\n}\n",
       "rust": "fn find_min(nums: &[i32]) -> i32 {\n    let mut left = 0usize;\n    let mut right = nums.len();\n    let target = nums[nums.len() - 1];\n\n    while left < right {\n        let mid = left + (right - left) / 2;\n\n        if nums[mid] <= target {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    nums[left]\n}\n"
     }
+  },
+  {
+    "date": "2026-10-26",
+    "title": "4Sum II",
+    "category": "hash map",
+    "time_complexity": "O(n²)",
+    "space_complexity": "O(n²)",
+    "explanation": "The Counter is built from a doubly nested generator over a and b, which produces n × n pair sums, so building it costs O(n²). The return statement runs a second doubly nested generator over c and d, another n × n iterations, each doing one constant-time dictionary lookup. Two quadratic passes still total O(n²). The natural wrong answer is O(n³) or O(n⁴) by assuming all four arrays must be nested together — the whole point of the hash map is that it collapses four nested loops into two independent pairs. Space is also O(n²) because ab_sum stores one entry per distinct pair sum, and there can be up to n² distinct sums.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/4sum-ii.py",
+    "implementations": {
+      "python": "def four_sum_count(a: list[int], b: list[int], c: list[int], d: list[int]) -> int:\n    ab_sum = Counter(x + y for x in a for y in b)\n    return sum(ab_sum[-x - y] for x in c for y in d)\n",
+      "cpp": "int fourSumCount(std::vector<int>& a, std::vector<int>& b, std::vector<int>& c, std::vector<int>& d) {\n    std::unordered_map<int, int> abSum;\n    for (int x : a) {\n        for (int y : b) {\n            ++abSum[x + y];\n        }\n    }\n    int result = 0;\n    for (int x : c) {\n        for (int y : d) {\n            auto it = abSum.find(-x - y);\n            if (it != abSum.end()) {\n                result += it->second;\n            }\n        }\n    }\n    return result;\n}\n",
+      "rust": "fn four_sum_count(a: &[i32], b: &[i32], c: &[i32], d: &[i32]) -> i32 {\n    let mut ab_sum: HashMap<i32, i32> = HashMap::new();\n    for &x in a {\n        for &y in b {\n            *ab_sum.entry(x + y).or_insert(0) += 1;\n        }\n    }\n    let mut result = 0;\n    for &x in c {\n        for &y in d {\n            if let Some(&count) = ab_sum.get(&(-x - y)) {\n                result += count;\n            }\n        }\n    }\n    result\n}\n"
+    }
   }
 ]
