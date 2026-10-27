@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**96 puzzles** archived, from 2026-06-01 to 2026-10-25.
+**97 puzzles** archived, from 2026-06-01 to 2026-10-26.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-10-26 | [4Sum II](problems/2026-10-26-4sum-ii.md) | hash map | `O(n²)` | `O(n²)` |
 | 2026-10-25 | [Find Minimum in Rotated Sorted Array](problems/2026-10-25-find-minimum-in-rotated-sorted-array.md) | binary search | `O(log n)` | `O(1)` |
 | 2026-10-24 | [Valid Anagram](problems/2026-10-24-valid-anagram.md) | hash map | `O(n)` | `O(1)` |
 | 2026-10-23 | [Merge Intervals](problems/2026-10-23-merge-intervals.md) | sorting | `O(n log n)` | `O(n)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-09-29 | [Candy](problems/2026-09-29-candy.md) | arrays | `O(n)` | `O(n)` |
 | 2026-09-28 | [Summary Ranges](problems/2026-09-28-summary-ranges.md) | arrays | `O(n)` | `O(n)` |
 | 2026-09-27 | [Missing Number](problems/2026-09-27-missing-number.md) | arrays | `O(n)` | `O(1)` |
-| 2026-09-26 | [Single Number](problems/2026-09-26-single-number.md) | arrays | `O(n)` | `O(1)` |
 
 ## License & attribution
 
