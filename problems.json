@@ -1356,5 +1356,19 @@
       "cpp": "int fourSumCount(std::vector<int>& a, std::vector<int>& b, std::vector<int>& c, std::vector<int>& d) {\n    std::unordered_map<int, int> abSum;\n    for (int x : a) {\n        for (int y : b) {\n            ++abSum[x + y];\n        }\n    }\n    int result = 0;\n    for (int x : c) {\n        for (int y : d) {\n            auto it = abSum.find(-x - y);\n            if (it != abSum.end()) {\n                result += it->second;\n            }\n        }\n    }\n    return result;\n}\n",
       "rust": "fn four_sum_count(a: &[i32], b: &[i32], c: &[i32], d: &[i32]) -> i32 {\n    let mut ab_sum: HashMap<i32, i32> = HashMap::new();\n    for &x in a {\n        for &y in b {\n            *ab_sum.entry(x + y).or_insert(0) += 1;\n        }\n    }\n    let mut result = 0;\n    for &x in c {\n        for &y in d {\n            if let Some(&count) = ab_sum.get(&(-x - y)) {\n                result += count;\n            }\n        }\n    }\n    result\n}\n"
     }
+  },
+  {
+    "date": "2026-10-27",
+    "title": "Longest Substring with At Most Two Distinct Characters",
+    "category": "hash map",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "explanation": "Although there is a while loop nested inside the for loop, this is a sliding window: start only ever moves forward, and across the entire run it advances at most n times in total. Each character is therefore added once and removed at most once, giving O(n) amortized rather than the O(n²) the nested loops suggest at a glance. The space complexity is the interesting part: visited is a fixed array of 256 counters, sized by the character set rather than by the input, so it does not grow with n. That makes the extra space O(1) even though the array looks large — a common trap is to call it O(n) because it is a list.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/longest-substring-with-at-most-two-distinct-characters.py",
+    "implementations": {
+      "python": "def length_of_longest_substring_two_distinct(s: str) -> int:\n    longest, start, distinct_count = 0, 0, 0\n    visited = [0] * 256\n    for i, char in enumerate(s):\n        if visited[ord(char)] == 0:\n            distinct_count += 1\n        visited[ord(char)] += 1\n        while distinct_count > 2:\n            visited[ord(s[start])] -= 1\n            if visited[ord(s[start])] == 0:\n                distinct_count -= 1\n            start += 1\n        longest = max(longest, i - start + 1)\n    return longest\n",
+      "cpp": "int lengthOfLongestSubstringTwoDistinct(const std::string& s) {\n    int longest = 0, start = 0, distinct_count = 0;\n    std::array<int, 256> visited = {0};\n    for (int i = 0; i < (int)s.length(); ++i) {\n        if (visited[(unsigned char)s[i]] == 0) {\n            ++distinct_count;\n        }\n        ++visited[(unsigned char)s[i]];\n        while (distinct_count > 2) {\n            --visited[(unsigned char)s[start]];\n            if (visited[(unsigned char)s[start]] == 0) {\n                --distinct_count;\n            }\n            ++start;\n        }\n        longest = std::max(longest, i - start + 1);\n    }\n    return longest;\n}\n",
+      "rust": "fn length_of_longest_substring_two_distinct(s: &str) -> i32 {\n    let bytes = s.as_bytes();\n    let mut longest = 0i32;\n    let mut start = 0usize;\n    let mut distinct_count = 0i32;\n    let mut visited = [0i32; 256];\n    for i in 0..bytes.len() {\n        let c = bytes[i] as usize;\n        if visited[c] == 0 {\n            distinct_count += 1;\n        }\n        visited[c] += 1;\n        while distinct_count > 2 {\n            let sc = bytes[start] as usize;\n            visited[sc] -= 1;\n            if visited[sc] == 0 {\n                distinct_count -= 1;\n            }\n            start += 1;\n        }\n        longest = longest.max((i - start + 1) as i32);\n    }\n    longest\n}\n"
+    }
   }
 ]
