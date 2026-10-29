@@ -1370,5 +1370,19 @@
       "cpp": "int lengthOfLongestSubstringTwoDistinct(const std::string& s) {\n    int longest = 0, start = 0, distinct_count = 0;\n    std::array<int, 256> visited = {0};\n    for (int i = 0; i < (int)s.length(); ++i) {\n        if (visited[(unsigned char)s[i]] == 0) {\n            ++distinct_count;\n        }\n        ++visited[(unsigned char)s[i]];\n        while (distinct_count > 2) {\n            --visited[(unsigned char)s[start]];\n            if (visited[(unsigned char)s[start]] == 0) {\n                --distinct_count;\n            }\n            ++start;\n        }\n        longest = std::max(longest, i - start + 1);\n    }\n    return longest;\n}\n",
       "rust": "fn length_of_longest_substring_two_distinct(s: &str) -> i32 {\n    let bytes = s.as_bytes();\n    let mut longest = 0i32;\n    let mut start = 0usize;\n    let mut distinct_count = 0i32;\n    let mut visited = [0i32; 256];\n    for i in 0..bytes.len() {\n        let c = bytes[i] as usize;\n        if visited[c] == 0 {\n            distinct_count += 1;\n        }\n        visited[c] += 1;\n        while distinct_count > 2 {\n            let sc = bytes[start] as usize;\n            visited[sc] -= 1;\n            if visited[sc] == 0 {\n                distinct_count -= 1;\n            }\n            start += 1;\n        }\n        longest = longest.max((i - start + 1) as i32);\n    }\n    longest\n}\n"
     }
+  },
+  {
+    "date": "2026-10-28",
+    "title": "First Unique Character in a String",
+    "category": "hash map",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The for loop makes a single pass over the string, and each iteration does only constant-time work: a dictionary get, plus a set add or discard. The final min(candidates) scans the candidate set once, which is at most n elements, so it adds another O(n) and does not change the overall linear bound. Space is O(n) because both lookup and candidates can grow with the number of distinct characters, which in the worst case — every character unique — is n entries. If the problem were restricted to a fixed alphabet the space would collapse to O(1), but nothing in this code bounds the character set, so it scales with the input.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/first-unique-character-in-a-string.py",
+    "implementations": {
+      "python": "def first_uniq_char(s: str) -> int:\n    lookup: dict[str, int] = {}\n    candidates: set[int] = set()\n    for i, c in enumerate(s):\n        if lookup.get(c):\n            candidates.discard(lookup[c])\n        else:\n            lookup[c] = i + 1\n            candidates.add(i + 1)\n    return min(candidates) - 1 if candidates else -1\n",
+      "cpp": "int firstUniqChar(const std::string& s) {\n    std::unordered_map<char, int> lookup;\n    std::unordered_set<int> candidates;\n    for (int i = 0; i < (int)s.length(); ++i) {\n        char c = s[i];\n        if (lookup[c]) {\n            candidates.erase(lookup[c]);\n        } else {\n            lookup[c] = i + 1;\n            candidates.insert(i + 1);\n        }\n    }\n    if (candidates.empty()) return -1;\n    int m = *candidates.begin();\n    for (int v : candidates) {\n        if (v < m) m = v;\n    }\n    return m - 1;\n}\n",
+      "rust": "fn first_uniq_char(s: &str) -> i32 {\n    let mut lookup: HashMap<char, i32> = HashMap::new();\n    let mut candidates: HashSet<i32> = HashSet::new();\n    for (i, c) in s.chars().enumerate() {\n        let idx = i as i32 + 1;\n        let entry = lookup.entry(c).or_insert(0);\n        if *entry != 0 {\n            candidates.remove(entry);\n        } else {\n            *entry = idx;\n            candidates.insert(idx);\n        }\n    }\n    match candidates.iter().min() {\n        Some(&m) => m - 1,\n        None => -1,\n    }\n}\n"
+    }
   }
 ]
