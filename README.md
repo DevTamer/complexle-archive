@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**98 puzzles** archived, from 2026-06-01 to 2026-10-27.
+**99 puzzles** archived, from 2026-06-01 to 2026-10-28.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-10-28 | [First Unique Character in a String](problems/2026-10-28-first-unique-character-in-a-string.md) | hash map | `O(n)` | `O(n)` |
 | 2026-10-27 | [Longest Substring with At Most Two Distinct Characters](problems/2026-10-27-longest-substring-with-at-most-two-distinct-characters.md) | hash map | `O(n)` | `O(1)` |
 | 2026-10-26 | [4Sum II](problems/2026-10-26-4sum-ii.md) | hash map | `O(n²)` | `O(n²)` |
 | 2026-10-25 | [Find Minimum in Rotated Sorted Array](problems/2026-10-25-find-minimum-in-rotated-sorted-array.md) | binary search | `O(log n)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-01 | [Gas Station](problems/2026-10-01-gas-station.md) | arrays | `O(n)` | `O(1)` |
 | 2026-09-30 | [Non-overlapping Intervals](problems/2026-09-30-non-overlapping-intervals.md) | arrays | `O(n log n)` | `O(log n)` |
 | 2026-09-29 | [Candy](problems/2026-09-29-candy.md) | arrays | `O(n)` | `O(n)` |
-| 2026-09-28 | [Summary Ranges](problems/2026-09-28-summary-ranges.md) | arrays | `O(n)` | `O(n)` |
 
 ## License & attribution
 
