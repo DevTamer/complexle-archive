@@ -1384,5 +1384,19 @@
       "cpp": "int firstUniqChar(const std::string& s) {\n    std::unordered_map<char, int> lookup;\n    std::unordered_set<int> candidates;\n    for (int i = 0; i < (int)s.length(); ++i) {\n        char c = s[i];\n        if (lookup[c]) {\n            candidates.erase(lookup[c]);\n        } else {\n            lookup[c] = i + 1;\n            candidates.insert(i + 1);\n        }\n    }\n    if (candidates.empty()) return -1;\n    int m = *candidates.begin();\n    for (int v : candidates) {\n        if (v < m) m = v;\n    }\n    return m - 1;\n}\n",
       "rust": "fn first_uniq_char(s: &str) -> i32 {\n    let mut lookup: HashMap<char, i32> = HashMap::new();\n    let mut candidates: HashSet<i32> = HashSet::new();\n    for (i, c) in s.chars().enumerate() {\n        let idx = i as i32 + 1;\n        let entry = lookup.entry(c).or_insert(0);\n        if *entry != 0 {\n            candidates.remove(entry);\n        } else {\n            *entry = idx;\n            candidates.insert(idx);\n        }\n    }\n    match candidates.iter().min() {\n        Some(&m) => m - 1,\n        None => -1,\n    }\n}\n"
     }
+  },
+  {
+    "date": "2026-10-29",
+    "title": "Intersection of Two Arrays II",
+    "category": "hash map",
+    "time_complexity": "O(n + m)",
+    "space_complexity": "O(min(n, m))",
+    "explanation": "One pass builds a frequency map over the first array and a second pass walks the other array, doing constant-time dictionary operations at each step, so the time is proportional to the two lengths added together rather than multiplied. The tempting answer is O(n * m) by assuming each element of one array is searched for in the other, but the hash map removes that inner search entirely. Space is the subtle part: the first two lines swap the arguments so the smaller array is always the one turned into a map, which bounds the map at min(n, m) entries rather than the size of whichever array happened to be passed first.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/intersection-of-two-arrays-ii.py",
+    "implementations": {
+      "python": "def intersect(nums1: list[int], nums2: list[int]) -> list[int]:\n    if len(nums1) > len(nums2):\n        return intersect(nums2, nums1)\n\n    lookup: dict[int, int] = {}\n    for i in nums1:\n        lookup[i] = lookup.get(i, 0) + 1\n\n    res: list[int] = []\n    for i in nums2:\n        if lookup.get(i, 0) > 0:\n            res.append(i)\n            lookup[i] -= 1\n\n    return res\n",
+      "cpp": "std::vector<int> intersect(std::vector<int>& nums1, std::vector<int>& nums2) {\n    if (nums1.size() > nums2.size()) {\n        return intersect(nums2, nums1);\n    }\n\n    std::unordered_map<int, int> lookup;\n    for (const auto& i : nums1) {\n        ++lookup[i];\n    }\n\n    std::vector<int> result;\n    for (const auto& i : nums2) {\n        if (lookup[i] > 0) {\n            result.push_back(i);\n            --lookup[i];\n        }\n    }\n\n    return result;\n}\n",
+      "rust": "fn intersect(nums1: &[i32], nums2: &[i32]) -> Vec<i32> {\n    if nums1.len() > nums2.len() {\n        return intersect(nums2, nums1);\n    }\n\n    let mut lookup: HashMap<i32, i32> = HashMap::new();\n    for &i in nums1 {\n        *lookup.entry(i).or_insert(0) += 1;\n    }\n\n    let mut res = Vec::new();\n    for &i in nums2 {\n        if let Some(count) = lookup.get_mut(&i) {\n            if *count > 0 {\n                res.push(i);\n                *count -= 1;\n            }\n        }\n    }\n\n    res\n}\n"
+    }
   }
 ]
