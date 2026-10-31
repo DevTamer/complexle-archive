@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**100 puzzles** archived, from 2026-06-01 to 2026-10-29.
+**101 puzzles** archived, from 2026-06-01 to 2026-10-30.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-10-30 | [Intersection of Two Arrays](problems/2026-10-30-intersection-of-two-arrays.md) | hash map | `O(n + m)` | `O(min(n, m))` |
 | 2026-10-29 | [Intersection of Two Arrays II](problems/2026-10-29-intersection-of-two-arrays-ii.md) | hash map | `O(n + m)` | `O(min(n, m))` |
 | 2026-10-28 | [First Unique Character in a String](problems/2026-10-28-first-unique-character-in-a-string.md) | hash map | `O(n)` | `O(n)` |
 | 2026-10-27 | [Longest Substring with At Most Two Distinct Characters](problems/2026-10-27-longest-substring-with-at-most-two-distinct-characters.md) | hash map | `O(n)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-03 | [Set Matrix Zeroes](problems/2026-10-03-set-matrix-zeroes.md) | arrays | `O(m*n)` | `O(1)` |
 | 2026-10-02 | [H-Index](problems/2026-10-02-h-index.md) | arrays | `O(n)` | `O(n)` |
 | 2026-10-01 | [Gas Station](problems/2026-10-01-gas-station.md) | arrays | `O(n)` | `O(1)` |
-| 2026-09-30 | [Non-overlapping Intervals](problems/2026-09-30-non-overlapping-intervals.md) | arrays | `O(n log n)` | `O(log n)` |
 
 ## License & attribution
 

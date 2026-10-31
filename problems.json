@@ -1398,5 +1398,19 @@
       "cpp": "std::vector<int> intersect(std::vector<int>& nums1, std::vector<int>& nums2) {\n    if (nums1.size() > nums2.size()) {\n        return intersect(nums2, nums1);\n    }\n\n    std::unordered_map<int, int> lookup;\n    for (const auto& i : nums1) {\n        ++lookup[i];\n    }\n\n    std::vector<int> result;\n    for (const auto& i : nums2) {\n        if (lookup[i] > 0) {\n            result.push_back(i);\n            --lookup[i];\n        }\n    }\n\n    return result;\n}\n",
       "rust": "fn intersect(nums1: &[i32], nums2: &[i32]) -> Vec<i32> {\n    if nums1.len() > nums2.len() {\n        return intersect(nums2, nums1);\n    }\n\n    let mut lookup: HashMap<i32, i32> = HashMap::new();\n    for &i in nums1 {\n        *lookup.entry(i).or_insert(0) += 1;\n    }\n\n    let mut res = Vec::new();\n    for &i in nums2 {\n        if let Some(count) = lookup.get_mut(&i) {\n            if *count > 0 {\n                res.push(i);\n                *count -= 1;\n            }\n        }\n    }\n\n    res\n}\n"
     }
+  },
+  {
+    "date": "2026-10-30",
+    "title": "Intersection of Two Arrays",
+    "category": "hash map",
+    "time_complexity": "O(n + m)",
+    "space_complexity": "O(min(n, m))",
+    "explanation": "Building the set from the first array is linear in its length, and the loop over the second array performs one constant-time membership test and at most one discard per element, so the total is proportional to n plus m rather than their product. The obvious wrong answer is O(n * m), which is what you would get with a nested scan instead of a set. Space is O(min(n, m)) rather than plain O(n): the guard at the top recurses with the arguments swapped so that the set is always built from the shorter array, capping the extra memory at the smaller of the two input sizes.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/intersection-of-two-arrays.py",
+    "implementations": {
+      "python": "def intersection(nums1: list[int], nums2: list[int]) -> list[int]:\n    if len(nums1) > len(nums2):\n        return intersection(nums2, nums1)\n\n    lookup = set(nums1)\n    res = []\n    for i in nums2:\n        if i in lookup:\n            res.append(i)\n            lookup.discard(i)\n    return res",
+      "cpp": "std::vector<int> intersection(std::vector<int>& nums1, std::vector<int>& nums2) {\n    if (nums1.size() > nums2.size()) {\n        return intersection(nums2, nums1);\n    }\n\n    std::unordered_set<int> lookup(nums1.begin(), nums1.end());\n\n    std::vector<int> result;\n    for (const auto& i : nums2) {\n        if (lookup.count(i)) {\n            result.push_back(i);\n            lookup.erase(i);\n        }\n    }\n\n    return result;\n}",
+      "rust": "fn intersection(nums1: &[i32], nums2: &[i32]) -> Vec<i32> {\n    if nums1.len() > nums2.len() {\n        return intersection(nums2, nums1);\n    }\n\n    let mut lookup: HashSet<i32> = nums1.iter().cloned().collect();\n\n    let mut res = Vec::new();\n    for &i in nums2 {\n        if lookup.contains(&i) {\n            res.push(i);\n            lookup.remove(&i);\n        }\n    }\n\n    res\n}"
+    }
   }
 ]
