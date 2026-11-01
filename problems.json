@@ -1412,5 +1412,19 @@
       "cpp": "std::vector<int> intersection(std::vector<int>& nums1, std::vector<int>& nums2) {\n    if (nums1.size() > nums2.size()) {\n        return intersection(nums2, nums1);\n    }\n\n    std::unordered_set<int> lookup(nums1.begin(), nums1.end());\n\n    std::vector<int> result;\n    for (const auto& i : nums2) {\n        if (lookup.count(i)) {\n            result.push_back(i);\n            lookup.erase(i);\n        }\n    }\n\n    return result;\n}",
       "rust": "fn intersection(nums1: &[i32], nums2: &[i32]) -> Vec<i32> {\n    if nums1.len() > nums2.len() {\n        return intersection(nums2, nums1);\n    }\n\n    let mut lookup: HashSet<i32> = nums1.iter().cloned().collect();\n\n    let mut res = Vec::new();\n    for &i in nums2 {\n        if lookup.contains(&i) {\n            res.push(i);\n            lookup.remove(&i);\n        }\n    }\n\n    res\n}"
     }
+  },
+  {
+    "date": "2026-10-31",
+    "title": "Task Scheduler",
+    "category": "heap",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "Counter walks the task list once, max scans the counts once, and list(...).count(...) scans them again — three linear passes, with the final arithmetic being constant time, so the whole function is O(n). There is no sorting and no heap here despite the greedy scheduling flavour of the problem, so O(n log n) is the natural but incorrect guess. Space is O(n) because the Counter holds one entry per distinct task and list(counter.values()) materialises those counts into a new list; in the worst case every task is distinct and both structures hold n elements.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/task-scheduler.py",
+    "implementations": {
+      "python": "def least_interval(tasks: list[str], n: int) -> int:\n    counter = Counter(tasks)\n    max_count = max(counter.values())\n    num_max = list(counter.values()).count(max_count)\n    return max((max_count - 1) * (n + 1) + num_max, len(tasks))\n",
+      "cpp": "int leastInterval(std::vector<char>& tasks, int n) {\n    std::unordered_map<char, int> count;\n    int max_count = 0;\n    for (const auto& task : tasks) {\n        ++count[task];\n        max_count = std::max(max_count, count[task]);\n    }\n    int result = (max_count - 1) * (n + 1);\n    for (const auto& kvp : count) {\n        if (kvp.second == max_count) {\n            ++result;\n        }\n    }\n    return std::max(result, static_cast<int>(tasks.size()));\n}\n",
+      "rust": "fn least_interval(tasks: &[char], n: i32) -> i32 {\n    let mut count: HashMap<char, i32> = HashMap::new();\n    let mut max_count = 0;\n    for &task in tasks {\n        let c = count.entry(task).or_insert(0);\n        *c += 1;\n        if *c > max_count {\n            max_count = *c;\n        }\n    }\n    let mut result = (max_count - 1) * (n + 1);\n    for (_, &v) in count.iter() {\n        if v == max_count {\n            result += 1;\n        }\n    }\n    std::cmp::max(result, tasks.len() as i32)\n}\n"
+    }
   }
 ]
