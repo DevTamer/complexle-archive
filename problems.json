@@ -1426,5 +1426,19 @@
       "cpp": "int leastInterval(std::vector<char>& tasks, int n) {\n    std::unordered_map<char, int> count;\n    int max_count = 0;\n    for (const auto& task : tasks) {\n        ++count[task];\n        max_count = std::max(max_count, count[task]);\n    }\n    int result = (max_count - 1) * (n + 1);\n    for (const auto& kvp : count) {\n        if (kvp.second == max_count) {\n            ++result;\n        }\n    }\n    return std::max(result, static_cast<int>(tasks.size()));\n}\n",
       "rust": "fn least_interval(tasks: &[char], n: i32) -> i32 {\n    let mut count: HashMap<char, i32> = HashMap::new();\n    let mut max_count = 0;\n    for &task in tasks {\n        let c = count.entry(task).or_insert(0);\n        *c += 1;\n        if *c > max_count {\n            max_count = *c;\n        }\n    }\n    let mut result = (max_count - 1) * (n + 1);\n    for (_, &v) in count.iter() {\n        if v == max_count {\n            result += 1;\n        }\n    }\n    std::cmp::max(result, tasks.len() as i32)\n}\n"
     }
+  },
+  {
+    "date": "2026-11-01",
+    "title": "Last Stone Weight",
+    "category": "heap",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "explanation": "heapify itself is only O(n), but the loop that follows runs n - 1 times and each iteration performs two pops and one push, every one of those costing O(log n) to restore the heap invariant. The loop therefore dominates at O(n log n). Answering O(n) is the common mistake — it credits the linear heapify and overlooks that the real work is the n heap operations after it. Space is O(n) because the negated copy of the stones list is a new list holding every element; the heap is maintained in that list rather than in the original input.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/last-stone-weight.py",
+    "implementations": {
+      "python": "def last_stone_weight(stones: list[int]) -> int:\n    max_heap = [-x for x in stones]\n    heapq.heapify(max_heap)\n    for _ in range(len(stones) - 1):\n        x, y = -heapq.heappop(max_heap), -heapq.heappop(max_heap)\n        heapq.heappush(max_heap, -abs(x - y))\n    return -max_heap[0]",
+      "cpp": "int lastStoneWeight(std::vector<int>& stones) {\n    std::priority_queue<int> max_heap(stones.begin(), stones.end());\n    for (size_t i = 0; i + 1 < stones.size(); ++i) {\n        int x = max_heap.top(); max_heap.pop();\n        int y = max_heap.top(); max_heap.pop();\n        max_heap.push(std::abs(x - y));\n    }\n    return max_heap.top();\n}",
+      "rust": "fn last_stone_weight(stones: &[i32]) -> i32 {\n    let mut max_heap: BinaryHeap<i32> = stones.iter().cloned().collect();\n    let n = stones.len();\n    for _ in 0..n.saturating_sub(1) {\n        let x = max_heap.pop().unwrap();\n        let y = max_heap.pop().unwrap();\n        max_heap.push((x - y).abs());\n    }\n    *max_heap.peek().unwrap_or(&0)\n}"
+    }
   }
 ]
