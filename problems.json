@@ -1440,5 +1440,19 @@
       "cpp": "int lastStoneWeight(std::vector<int>& stones) {\n    std::priority_queue<int> max_heap(stones.begin(), stones.end());\n    for (size_t i = 0; i + 1 < stones.size(); ++i) {\n        int x = max_heap.top(); max_heap.pop();\n        int y = max_heap.top(); max_heap.pop();\n        max_heap.push(std::abs(x - y));\n    }\n    return max_heap.top();\n}",
       "rust": "fn last_stone_weight(stones: &[i32]) -> i32 {\n    let mut max_heap: BinaryHeap<i32> = stones.iter().cloned().collect();\n    let n = stones.len();\n    for _ in 0..n.saturating_sub(1) {\n        let x = max_heap.pop().unwrap();\n        let y = max_heap.pop().unwrap();\n        max_heap.push((x - y).abs());\n    }\n    *max_heap.peek().unwrap_or(&0)\n}"
     }
+  },
+  {
+    "date": "2026-11-02",
+    "title": "Remove All Adjacent Duplicates In String",
+    "category": "stack",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "Each character of the string is appended to the result list at most once and popped at most once, so although the loop body can both push and pop, the total number of stack operations across the whole run is bounded by 2n. That amortised accounting gives O(n), and the final join is another linear pass. Space is O(n) because the result list can hold every character when no adjacent duplicates exist — for example a string with all distinct characters is copied in full — so the extra memory scales with the input rather than being constant.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/remove-all-adjacent-duplicates-in-string.py",
+    "implementations": {
+      "python": "def remove_duplicates(s: str) -> str:\n    result = []\n    for c in s:\n        if result and result[-1] == c:\n            result.pop()\n        else:\n            result.append(c)\n    return \"\".join(result)",
+      "cpp": "std::string removeDuplicates(std::string s) {\n    std::string result;\n    for (char c : s) {\n        if (!result.empty() && result.back() == c) {\n            result.pop_back();\n        } else {\n            result.push_back(c);\n        }\n    }\n    return result;\n}",
+      "rust": "fn remove_duplicates(s: &str) -> String {\n    let mut result: Vec<char> = Vec::new();\n    for c in s.chars() {\n        if result.last() == Some(&c) {\n            result.pop();\n        } else {\n            result.push(c);\n        }\n    }\n    result.into_iter().collect()\n}"
+    }
   }
 ]
