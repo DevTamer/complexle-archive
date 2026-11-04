@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**104 puzzles** archived, from 2026-06-01 to 2026-11-02.
+**105 puzzles** archived, from 2026-06-01 to 2026-11-03.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-11-03 | [Largest Rectangle in Histogram](problems/2026-11-03-largest-rectangle-in-histogram.md) | stack | `O(n)` | `O(n)` |
 | 2026-11-02 | [Remove All Adjacent Duplicates In String](problems/2026-11-02-remove-all-adjacent-duplicates-in-string.md) | stack | `O(n)` | `O(n)` |
 | 2026-11-01 | [Last Stone Weight](problems/2026-11-01-last-stone-weight.md) | heap | `O(n log n)` | `O(n)` |
 | 2026-10-31 | [Task Scheduler](problems/2026-10-31-task-scheduler.md) | heap | `O(n)` | `O(n)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-07 | [Majority Element](problems/2026-10-07-majority-element.md) | arrays | `O(n)` | `O(1)` |
 | 2026-10-06 | [Contains Duplicate](problems/2026-10-06-contains-duplicate.md) | hash map | `O(n)` | `O(n)` |
 | 2026-10-05 | [Best Time to Buy and Sell Stock](problems/2026-10-05-best-time-to-buy-and-sell-stock.md) | arrays | `O(n)` | `O(1)` |
-| 2026-10-04 | [Game of Life](problems/2026-10-04-game-of-life.md) | arrays | `O(m*n)` | `O(1)` |
 
 ## License & attribution
 
