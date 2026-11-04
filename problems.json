@@ -1454,5 +1454,19 @@
       "cpp": "std::string removeDuplicates(std::string s) {\n    std::string result;\n    for (char c : s) {\n        if (!result.empty() && result.back() == c) {\n            result.pop_back();\n        } else {\n            result.push_back(c);\n        }\n    }\n    return result;\n}",
       "rust": "fn remove_duplicates(s: &str) -> String {\n    let mut result: Vec<char> = Vec::new();\n    for c in s.chars() {\n        if result.last() == Some(&c) {\n            result.pop();\n        } else {\n            result.push(c);\n        }\n    }\n    result.into_iter().collect()\n}"
     }
+  },
+  {
+    "date": "2026-11-03",
+    "title": "Largest Rectangle in Histogram",
+    "category": "stack",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The inner while loop makes this look quadratic, but it is a monotonic stack: every index is pushed exactly once and popped at most once across the entire run, so the total number of inner iterations is bounded by n regardless of how many fire in any single outer step. Amortised over the outer loop that gives O(n), and O(n²) is precisely the trap the nested loops set. Space is O(n) for the stack, which in the worst case — a strictly increasing histogram, where nothing is ever popped until the end — holds an entry for every bar.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/largest-rectangle-in-histogram.py",
+    "implementations": {
+      "python": "def largest_rectangle_area(heights: list[int]) -> int:\n    stk: list[int] = [-1]\n    result = 0\n    for i in range(len(heights) + 1):\n        while stk[-1] != -1 and (i == len(heights) or heights[stk[-1]] >= heights[i]):\n            h = heights[stk.pop()]\n            result = max(result, h * ((i - 1) - stk[-1]))\n        stk.append(i)\n    return result\n",
+      "cpp": "int largestRectangleArea(std::vector<int>& heights) {\n    std::vector<int> stk = {-1};\n    int result = 0;\n    int n = static_cast<int>(heights.size());\n    for (int i = 0; i <= n; ++i) {\n        while (stk.back() != -1 && (i == n || heights[stk.back()] >= heights[i])) {\n            int last = stk.back(); stk.pop_back();\n            result = std::max(result, heights[last] * ((i - 1) - stk.back()));\n        }\n        stk.push_back(i);\n    }\n    return result;\n}\n",
+      "rust": "fn largest_rectangle_area(heights: &[i32]) -> i32 {\n    let n = heights.len();\n    let mut stk: Vec<i32> = vec![-1];\n    let mut result = 0;\n    for i in 0..=n {\n        while *stk.last().unwrap() != -1\n            && (i == n || heights[*stk.last().unwrap() as usize] >= heights[i])\n        {\n            let last = stk.pop().unwrap();\n            let h = heights[last as usize];\n            let top = *stk.last().unwrap();\n            let width = (i as i32 - 1) - top;\n            result = result.max(h * width);\n        }\n        stk.push(i as i32);\n    }\n    result\n}\n"
+    }
   }
 ]
