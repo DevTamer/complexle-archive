@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**106 puzzles** archived, from 2026-06-01 to 2026-11-04.
+**107 puzzles** archived, from 2026-06-01 to 2026-11-05.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-11-05 | [Maximal Rectangle](problems/2026-11-05-maximal-rectangle.md) | stack | `O(m*n)` | `O(n)` |
 | 2026-11-04 | [Next Greater Element II](problems/2026-11-04-next-greater-element-ii.md) | stack | `O(n)` | `O(n)` |
 | 2026-11-03 | [Largest Rectangle in Histogram](problems/2026-11-03-largest-rectangle-in-histogram.md) | stack | `O(n)` | `O(n)` |
 | 2026-11-02 | [Remove All Adjacent Duplicates In String](problems/2026-11-02-remove-all-adjacent-duplicates-in-string.md) | stack | `O(n)` | `O(n)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-09 | [Linked List Cycle](problems/2026-10-09-linked-list-cycle.md) | cycle detection | `O(n)` | `O(1)` |
 | 2026-10-08 | [Merge Two Sorted Lists](problems/2026-10-08-merge-two-sorted-lists.md) | linked list | `O(n + m)` | `O(1)` |
 | 2026-10-07 | [Majority Element](problems/2026-10-07-majority-element.md) | arrays | `O(n)` | `O(1)` |
-| 2026-10-06 | [Contains Duplicate](problems/2026-10-06-contains-duplicate.md) | hash map | `O(n)` | `O(n)` |
 
 ## License & attribution
 
