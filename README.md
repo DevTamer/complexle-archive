@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**110 puzzles** archived, from 2026-06-01 to 2026-11-08.
+**111 puzzles** archived, from 2026-06-01 to 2026-11-09.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-11-09 | [Copy List with Random Pointer](problems/2026-11-09-copy-list-with-random-pointer.md) | linked list | `O(n)` | `O(n)` |
 | 2026-11-08 | [Add Two Numbers](problems/2026-11-08-add-two-numbers.md) | linked list | `O(n + m)` | `O(n + m)` |
 | 2026-11-07 | [Remove Duplicate Letters](problems/2026-11-07-remove-duplicate-letters.md) | stack | `O(n)` | `O(n)` |
 | 2026-11-06 | [Next Greater Element I](problems/2026-11-06-next-greater-element-i.md) | stack | `O(n + m)` | `O(n + m)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-13 | [Invert Binary Tree](problems/2026-10-13-invert-binary-tree.md) | tree | `O(n)` | `O(h)` |
 | 2026-10-12 | [Symmetric Tree](problems/2026-10-12-symmetric-tree.md) | tree | `O(n)` | `O(n)` |
 | 2026-10-11 | [Pascal's Triangle](problems/2026-10-11-pascals-triangle.md) | arrays | `O(n²)` | `O(n²)` |
-| 2026-10-10 | [Remove Duplicates from Sorted Array](problems/2026-10-10-remove-duplicates-from-sorted-array.md) | two pointers | `O(n)` | `O(1)` |
 
 ## License & attribution
 
