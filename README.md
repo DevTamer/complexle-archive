@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**114 puzzles** archived, from 2026-06-01 to 2026-11-12.
+**115 puzzles** archived, from 2026-06-01 to 2026-11-13.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-11-13 | [Add Two Numbers II](problems/2026-11-13-add-two-numbers-ii.md) | linked list | `O(n + m)` | `O(n + m)` |
 | 2026-11-12 | [Binary Tree Inorder Traversal](problems/2026-11-12-binary-tree-inorder-traversal.md) | tree | `O(n)` | `O(n)` |
 | 2026-11-11 | [Binary Tree Zigzag Level Order Traversal](problems/2026-11-11-binary-tree-zigzag-level-order-traversal.md) | tree | `O(n)` | `O(n)` |
 | 2026-11-10 | [Odd Even Linked List](problems/2026-11-10-odd-even-linked-list.md) | linked list | `O(n)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-17 | [Spiral Matrix](problems/2026-10-17-spiral-matrix.md) | arrays | `O(m*n)` | `O(m*n)` |
 | 2026-10-16 | [Jump Game](problems/2026-10-16-jump-game.md) | arrays | `O(n)` | `O(1)` |
 | 2026-10-15 | [Validate Binary Search Tree](problems/2026-10-15-validate-binary-search-tree.md) | tree | `O(n)` | `O(n)` |
-| 2026-10-14 | [Diameter of Binary Tree](problems/2026-10-14-diameter-of-binary-tree.md) | tree | `O(n)` | `O(n)` |
 
 ## License & attribution
 
