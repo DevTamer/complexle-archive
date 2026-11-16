@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**116 puzzles** archived, from 2026-06-01 to 2026-11-14.
+**117 puzzles** archived, from 2026-06-01 to 2026-11-15.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-11-15 | [Path Sum](problems/2026-11-15-path-sum.md) | tree | `O(n)` | `O(h)` |
 | 2026-11-14 | [Binary Tree Right Side View](problems/2026-11-14-binary-tree-right-side-view.md) | tree | `O(n)` | `O(h)` |
 | 2026-11-13 | [Add Two Numbers II](problems/2026-11-13-add-two-numbers-ii.md) | linked list | `O(n + m)` | `O(n + m)` |
 | 2026-11-12 | [Binary Tree Inorder Traversal](problems/2026-11-12-binary-tree-inorder-traversal.md) | tree | `O(n)` | `O(n)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-19 | [Longest Increasing Subsequence](problems/2026-10-19-longest-increasing-subsequence.md) | dynamic programming | `O(n log n)` | `O(n)` |
 | 2026-10-18 | [Daily Temperatures](problems/2026-10-18-daily-temperatures.md) | stack | `O(n)` | `O(n)` |
 | 2026-10-17 | [Spiral Matrix](problems/2026-10-17-spiral-matrix.md) | arrays | `O(m*n)` | `O(m*n)` |
-| 2026-10-16 | [Jump Game](problems/2026-10-16-jump-game.md) | arrays | `O(n)` | `O(1)` |
 
 ## License & attribution
 

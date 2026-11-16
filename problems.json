@@ -1622,5 +1622,19 @@
       "cpp": "struct TreeNode {\n    int val;\n    TreeNode* left;\n    TreeNode* right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nvoid rightSideViewDFS(TreeNode* node, int depth, std::vector<int>& result) {\n    if (!node) return;\n    if (depth > (int)result.size()) {\n        result.push_back(node->val);\n    }\n    rightSideViewDFS(node->right, depth + 1, result);\n    rightSideViewDFS(node->left, depth + 1, result);\n}\n\nstd::vector<int> rightSideView(TreeNode* root) {\n    std::vector<int> result;\n    rightSideViewDFS(root, 1, result);\n    return result;\n}\n",
       "rust": "#[derive(Debug)]\nstruct TreeNode {\n    val: i32,\n    left: Option<Box<TreeNode>>,\n    right: Option<Box<TreeNode>>,\n}\n\nimpl TreeNode {\n    fn new(val: i32) -> Self {\n        TreeNode { val, left: None, right: None }\n    }\n}\n\nfn right_side_view(root: Option<Box<TreeNode>>) -> Vec<i32> {\n    let mut result = Vec::new();\n\n    fn dfs(node: &Option<Box<TreeNode>>, depth: usize, result: &mut Vec<i32>) {\n        if let Some(n) = node {\n            if depth > result.len() {\n                result.push(n.val);\n            }\n            dfs(&n.right, depth + 1, result);\n            dfs(&n.left, depth + 1, result);\n        }\n    }\n\n    dfs(&root, 1, &mut result);\n    result\n}\n"
     }
+  },
+  {
+    "date": "2026-11-15",
+    "title": "Path Sum",
+    "category": "tree",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(h)",
+    "explanation": "In the worst case — when no qualifying path exists — the recursion visits every node exactly once, doing a constant amount of comparison and subtraction at each, so the time is O(n). The short-circuiting or can return early on a lucky path, but early exits improve the best case without changing the worst-case bound. Space is O(h) for the call stack: the recursion only ever holds frames for the current root-to-leaf path, which is the height of the tree — about log n when balanced, but n for a tree that degenerates into a single chain.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/path-sum.py",
+    "implementations": {
+      "python": "class TreeNode:\n    def __init__(self, val: int = 0, left: \"Optional[TreeNode]\" = None, right: \"Optional[TreeNode]\" = None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef has_path_sum(root: Optional[TreeNode], target_sum: int) -> bool:\n    if root is None:\n        return False\n\n    if root.left is None and root.right is None and root.val == target_sum:\n        return True\n\n    return has_path_sum(root.left, target_sum - root.val) or has_path_sum(root.right, target_sum - root.val)\n",
+      "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nbool hasPathSum(TreeNode* root, int targetSum) {\n    if (root == nullptr) return false;\n\n    if (root->left == nullptr && root->right == nullptr && root->val == targetSum) return true;\n\n    return hasPathSum(root->left, targetSum - root->val) || hasPathSum(root->right, targetSum - root->val);\n}\n",
+      "rust": "#[derive(Debug)]\nstruct TreeNode {\n    val: i32,\n    left: Option<Box<TreeNode>>,\n    right: Option<Box<TreeNode>>,\n}\n\nimpl TreeNode {\n    fn new(val: i32) -> Self {\n        TreeNode { val, left: None, right: None }\n    }\n}\n\nfn has_path_sum(root: &Option<Box<TreeNode>>, target_sum: i32) -> bool {\n    match root {\n        None => false,\n        Some(node) => {\n            if node.left.is_none() && node.right.is_none() && node.val == target_sum {\n                return true;\n            }\n            has_path_sum(&node.left, target_sum - node.val) || has_path_sum(&node.right, target_sum - node.val)\n        }\n    }\n}\n"
+    }
   }
 ]
