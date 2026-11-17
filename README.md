@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**117 puzzles** archived, from 2026-06-01 to 2026-11-15.
+**118 puzzles** archived, from 2026-06-01 to 2026-11-16.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-11-16 | [Ransom Note](problems/2026-11-16-ransom-note.md) | hash map | `O(n + m)` | `O(1)` |
 | 2026-11-15 | [Path Sum](problems/2026-11-15-path-sum.md) | tree | `O(n)` | `O(h)` |
 | 2026-11-14 | [Binary Tree Right Side View](problems/2026-11-14-binary-tree-right-side-view.md) | tree | `O(n)` | `O(h)` |
 | 2026-11-13 | [Add Two Numbers II](problems/2026-11-13-add-two-numbers-ii.md) | linked list | `O(n + m)` | `O(n + m)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-20 | [Longest Palindromic Substring](problems/2026-10-20-longest-palindromic-substring.md) | two pointers | `O(n²)` | `O(1)` |
 | 2026-10-19 | [Longest Increasing Subsequence](problems/2026-10-19-longest-increasing-subsequence.md) | dynamic programming | `O(n log n)` | `O(n)` |
 | 2026-10-18 | [Daily Temperatures](problems/2026-10-18-daily-temperatures.md) | stack | `O(n)` | `O(n)` |
-| 2026-10-17 | [Spiral Matrix](problems/2026-10-17-spiral-matrix.md) | arrays | `O(m*n)` | `O(m*n)` |
 
 ## License & attribution
 

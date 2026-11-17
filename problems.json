@@ -1636,5 +1636,19 @@
       "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nbool hasPathSum(TreeNode* root, int targetSum) {\n    if (root == nullptr) return false;\n\n    if (root->left == nullptr && root->right == nullptr && root->val == targetSum) return true;\n\n    return hasPathSum(root->left, targetSum - root->val) || hasPathSum(root->right, targetSum - root->val);\n}\n",
       "rust": "#[derive(Debug)]\nstruct TreeNode {\n    val: i32,\n    left: Option<Box<TreeNode>>,\n    right: Option<Box<TreeNode>>,\n}\n\nimpl TreeNode {\n    fn new(val: i32) -> Self {\n        TreeNode { val, left: None, right: None }\n    }\n}\n\nfn has_path_sum(root: &Option<Box<TreeNode>>, target_sum: i32) -> bool {\n    match root {\n        None => false,\n        Some(node) => {\n            if node.left.is_none() && node.right.is_none() && node.val == target_sum {\n                return true;\n            }\n            has_path_sum(&node.left, target_sum - node.val) || has_path_sum(&node.right, target_sum - node.val)\n        }\n    }\n}\n"
     }
+  },
+  {
+    "date": "2026-11-16",
+    "title": "Ransom Note",
+    "category": "hash map",
+    "time_complexity": "O(n + m)",
+    "space_complexity": "O(1)",
+    "explanation": "Each string is scanned once with constant-time array indexing per character, so the time is proportional to the two lengths added together; the early break can stop the second loop sooner but does not change the worst case. The space is the point of the puzzle: counts is a fixed array of 26 slots, one per lowercase letter, and its size never depends on how long the inputs are. Extra space is therefore O(1), even though a list is allocated — a frequency structure is only O(n) when it can grow with the input, as a dictionary would.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/ransom-note.py",
+    "implementations": {
+      "python": "def can_construct(ransom_note: str, magazine: str) -> bool:\n    counts = [0] * 26\n    letters = 0\n\n    for c in ransom_note:\n        idx = ord(c) - ord('a')\n        if counts[idx] == 0:\n            letters += 1\n        counts[idx] += 1\n\n    for c in magazine:\n        idx = ord(c) - ord('a')\n        counts[idx] -= 1\n        if counts[idx] == 0:\n            letters -= 1\n            if letters == 0:\n                break\n\n    return letters == 0\n",
+      "cpp": "bool canConstruct(std::string ransomNote, std::string magazine) {\n    std::vector<int> counts(26, 0);\n    int letters = 0;\n    for (char c : ransomNote) {\n        if (counts[c - 'a']++ == 0) {\n            ++letters;\n        }\n    }\n    for (char c : magazine) {\n        if (--counts[c - 'a'] == 0 && --letters == 0) {\n            break;\n        }\n    }\n    return letters == 0;\n}\n",
+      "rust": "fn can_construct(ransom_note: &str, magazine: &str) -> bool {\n    let mut counts = [0i32; 26];\n    let mut letters = 0;\n\n    for c in ransom_note.bytes() {\n        let idx = (c - b'a') as usize;\n        if counts[idx] == 0 {\n            letters += 1;\n        }\n        counts[idx] += 1;\n    }\n\n    for c in magazine.bytes() {\n        let idx = (c - b'a') as usize;\n        counts[idx] -= 1;\n        if counts[idx] == 0 {\n            letters -= 1;\n            if letters == 0 {\n                break;\n            }\n        }\n    }\n\n    letters == 0\n}\n"
+    }
   }
 ]
