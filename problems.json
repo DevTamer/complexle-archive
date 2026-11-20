@@ -1678,5 +1678,19 @@
       "cpp": "struct TreeNode {\n    int val;\n    TreeNode *left;\n    TreeNode *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nstd::vector<std::vector<int>> levelOrder(TreeNode* root) {\n    std::vector<std::vector<int>> result;\n    if (root == nullptr) return result;\n    std::vector<TreeNode*> current = {root};\n    while (!current.empty()) {\n        std::vector<TreeNode*> next_level;\n        std::vector<int> vals;\n        for (auto* node : current) {\n            vals.push_back(node->val);\n            if (node->left) next_level.push_back(node->left);\n            if (node->right) next_level.push_back(node->right);\n        }\n        current = next_level;\n        result.push_back(vals);\n    }\n    return result;\n}\n",
       "rust": "#[derive(Debug)]\nstruct TreeNode {\n    val: i32,\n    left: Option<Box<TreeNode>>,\n    right: Option<Box<TreeNode>>,\n}\n\nimpl TreeNode {\n    fn new(val: i32) -> Self {\n        TreeNode { val, left: None, right: None }\n    }\n}\n\nfn level_order(root: Option<Box<TreeNode>>) -> Vec<Vec<i32>> {\n    let mut result: Vec<Vec<i32>> = Vec::new();\n    let mut current: Vec<Box<TreeNode>> = Vec::new();\n    if let Some(node) = root {\n        current.push(node);\n    }\n    while !current.is_empty() {\n        let mut next_level: Vec<Box<TreeNode>> = Vec::new();\n        let mut vals: Vec<i32> = Vec::new();\n        for mut node in current {\n            vals.push(node.val);\n            if let Some(left) = node.left.take() {\n                next_level.push(left);\n            }\n            if let Some(right) = node.right.take() {\n                next_level.push(right);\n            }\n        }\n        current = next_level;\n        result.push(vals);\n    }\n    result\n}\n"
     }
+  },
+  {
+    "date": "2026-11-19",
+    "title": "Subarray Sum Equals K",
+    "category": "hash map",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The loop makes one pass over the array, and each iteration does a constant amount of work: one addition, one dictionary lookup, and one dictionary update. The prefix-sum map is what makes this linear — the brute-force alternative of checking every subarray would be O(n²), and that is the tempting answer here. Space is O(n) because the lookup dictionary records every distinct running sum encountered, and with all-distinct prefix sums that is one entry per element of the input.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/subarray-sum-equals-k.py",
+    "implementations": {
+      "python": "def subarray_sum(nums: list[int], k: int) -> int:\n    result = 0\n    accumulated_sum = 0\n    lookup: dict[int, int] = {}\n    lookup[0] = 1\n    for num in nums:\n        accumulated_sum += num\n        result += lookup.get(accumulated_sum - k, 0)\n        lookup[accumulated_sum] = lookup.get(accumulated_sum, 0) + 1\n    return result\n",
+      "cpp": "int subarraySum(std::vector<int>& nums, int k) {\n    int result = 0;\n    int accumulated_sum = 0;\n    std::unordered_map<int, int> lookup;\n    ++lookup[0];\n    for (const auto& num : nums) {\n        accumulated_sum += num;\n        result += lookup[accumulated_sum - k];\n        ++lookup[accumulated_sum];\n    }\n    return result;\n}\n",
+      "rust": "fn subarray_sum(nums: &[i32], k: i32) -> i32 {\n    let mut result = 0;\n    let mut accumulated_sum = 0;\n    let mut lookup: HashMap<i32, i32> = HashMap::new();\n    lookup.insert(0, 1);\n    for &num in nums {\n        accumulated_sum += num;\n        result += *lookup.get(&(accumulated_sum - k)).unwrap_or(&0);\n        *lookup.entry(accumulated_sum).or_insert(0) += 1;\n    }\n    result\n}\n"
+    }
   }
 ]
