@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**122 puzzles** archived, from 2026-06-01 to 2026-11-20.
+**123 puzzles** archived, from 2026-06-01 to 2026-11-21.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-11-21 | [Search a 2D Matrix](problems/2026-11-21-search-a-2d-matrix.md) | binary search | `O(log(m*n))` | `O(1)` |
 | 2026-11-20 | [Koko Eating Bananas](problems/2026-11-20-koko-eating-bananas.md) | binary search | `O(n log m)` | `O(1)` |
 | 2026-11-19 | [Subarray Sum Equals K](problems/2026-11-19-subarray-sum-equals-k.md) | hash map | `O(n)` | `O(n)` |
 | 2026-11-18 | [Binary Tree Level Order Traversal](problems/2026-11-18-binary-tree-level-order-traversal.md) | tree | `O(n)` | `O(n)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-25 | [Find Minimum in Rotated Sorted Array](problems/2026-10-25-find-minimum-in-rotated-sorted-array.md) | binary search | `O(log n)` | `O(1)` |
 | 2026-10-24 | [Valid Anagram](problems/2026-10-24-valid-anagram.md) | hash map | `O(n)` | `O(1)` |
 | 2026-10-23 | [Merge Intervals](problems/2026-10-23-merge-intervals.md) | sorting | `O(n log n)` | `O(n)` |
-| 2026-10-22 | [Top K Frequent Elements](problems/2026-10-22-top-k-frequent-elements.md) | heap | `O(n log k)` | `O(n)` |
 
 ## License & attribution
 

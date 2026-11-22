@@ -1706,5 +1706,19 @@
       "cpp": "bool possible(const std::vector<int>& piles, int h, int k) {\n    int time = 0;\n    for (const auto& pile : piles) {\n        time += (pile - 1) / k + 1;\n    }\n    return time <= h;\n}\n\nint minEatingSpeed(std::vector<int>& piles, int h) {\n    int left = 1, right = *std::max_element(piles.cbegin(), piles.cend());\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        if (possible(piles, h, mid)) {\n            right = mid - 1;\n        } else {\n            left = mid + 1;\n        }\n    }\n    return left;\n}\n",
       "rust": "fn possible(piles: &[i32], h: i32, k: i32) -> bool {\n    let time: i32 = piles.iter().map(|&pile| (pile - 1) / k + 1).sum();\n    time <= h\n}\n\nfn min_eating_speed(piles: &[i32], h: i32) -> i32 {\n    let mut left = 1;\n    let mut right = *piles.iter().max().unwrap();\n    while left <= right {\n        let mid = left + (right - left) / 2;\n        if possible(piles, h, mid) {\n            right = mid - 1;\n        } else {\n            left = mid + 1;\n        }\n    }\n    left\n}\n"
     }
+  },
+  {
+    "date": "2026-11-21",
+    "title": "Search a 2D Matrix",
+    "category": "binary search",
+    "time_complexity": "O(log(m*n))",
+    "space_complexity": "O(1)",
+    "explanation": "The matrix is treated as one flat sorted array of m × n entries, with mid // n and mid % n converting a flat index back into a row and column. The loop is therefore a single binary search over m*n elements, halving the range each time for O(log(m*n)) — equivalently O(log m + log n). Answering O(m + n) is the natural guess, matching the staircase walk used when rows and columns are only individually sorted; this stronger fully-sorted layout allows the faster search. Space is O(1), since only index variables are kept and the matrix is never copied.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/search-a-2d-matrix.py",
+    "implementations": {
+      "python": "def search_matrix(matrix: list[list[int]], target: int) -> bool:\n    if not matrix:\n        return False\n\n    m, n = len(matrix), len(matrix[0])\n    left, right = 0, m * n\n    while left < right:\n        mid = left + (right - left) // 2\n        if matrix[mid // n][mid % n] >= target:\n            right = mid\n        else:\n            left = mid + 1\n\n    return left < m * n and matrix[left // n][left % n] == target",
+      "cpp": "bool searchMatrix(std::vector<std::vector<int>>& matrix, int target) {\n    if (matrix.empty()) {\n        return false;\n    }\n\n    int m = matrix.size();\n    int n = matrix[0].size();\n    int left = 0, right = m * n;\n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        if (matrix[mid / n][mid % n] >= target) {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    return left < m * n && matrix[left / n][left % n] == target;\n}",
+      "rust": "fn search_matrix(matrix: &[Vec<i32>], target: i32) -> bool {\n    if matrix.is_empty() {\n        return false;\n    }\n\n    let m = matrix.len();\n    let n = matrix[0].len();\n    let mut left: usize = 0;\n    let mut right: usize = m * n;\n    while left < right {\n        let mid = left + (right - left) / 2;\n        if matrix[mid / n][mid % n] >= target {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n\n    left < m * n && matrix[left / n][left % n] == target\n}"
+    }
   }
 ]
