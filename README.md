@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**124 puzzles** archived, from 2026-06-01 to 2026-11-22.
+**125 puzzles** archived, from 2026-06-01 to 2026-11-23.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-11-23 | [Middle of the Linked List](problems/2026-11-23-middle-of-the-linked-list.md) | linked list | `O(n)` | `O(1)` |
 | 2026-11-22 | [Word Pattern](problems/2026-11-22-word-pattern.md) | hash map | `O(n + m)` | `O(n + m)` |
 | 2026-11-21 | [Search a 2D Matrix](problems/2026-11-21-search-a-2d-matrix.md) | binary search | `O(log(m*n))` | `O(1)` |
 | 2026-11-20 | [Koko Eating Bananas](problems/2026-11-20-koko-eating-bananas.md) | binary search | `O(n log m)` | `O(1)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-27 | [Longest Substring with At Most Two Distinct Characters](problems/2026-10-27-longest-substring-with-at-most-two-distinct-characters.md) | hash map | `O(n)` | `O(1)` |
 | 2026-10-26 | [4Sum II](problems/2026-10-26-4sum-ii.md) | hash map | `O(n²)` | `O(n²)` |
 | 2026-10-25 | [Find Minimum in Rotated Sorted Array](problems/2026-10-25-find-minimum-in-rotated-sorted-array.md) | binary search | `O(log n)` | `O(1)` |
-| 2026-10-24 | [Valid Anagram](problems/2026-10-24-valid-anagram.md) | hash map | `O(n)` | `O(1)` |
 
 ## License & attribution
 
