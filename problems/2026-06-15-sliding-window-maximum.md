@@ -7,7 +7,7 @@
 
 ## Explanation
 
-Each element is added to and removed from the deque at most once across the entire iteration, making the total number of deque operations O(2n) = O(n). The space complexity is O(k) because the deque holds at most k indices at any given time, corresponding to the current sliding window, while the result array is not counted as auxiliary space.
+Each element is added to and removed from the deque at most once across the entire iteration, making the total number of deque operations O(2 * n) = O(n). The space complexity is O(k) because the deque holds at most k indices at any given time, corresponding to the current sliding window, while the result array is not counted as auxiliary space.
 
 ## Implementations
 

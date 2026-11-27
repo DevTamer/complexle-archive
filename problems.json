@@ -87,9 +87,9 @@
     "date": "2026-06-07",
     "title": "Longest Common Subsequence",
     "category": "dynamic programming",
-    "time_complexity": "O(m*n)",
-    "space_complexity": "O(m*n)",
-    "explanation": "The algorithm uses two nested loops, one iterating over all m characters of text1 and one over all n characters of text2, resulting in O(m*n) time complexity. The space complexity is also O(m*n) because a 2D DP table of size (m+1)*(n+1) is allocated to store intermediate LCS lengths. Note that space could be optimized to O(min(m,n)) by using rolling arrays, but this implementation does not do that.",
+    "time_complexity": "O(m * n)",
+    "space_complexity": "O(m * n)",
+    "explanation": "The algorithm uses two nested loops, one iterating over all m characters of text1 and one over all n characters of text2, resulting in O(m * n) time complexity. The space complexity is also O(m * n) because a 2D DP table of size (m+1) * (n+1) is allocated to store intermediate LCS lengths. Note that space could be optimized to O(min(m,n)) by using rolling arrays, but this implementation does not do that.",
     "source_url": null,
     "implementations": {
       "python": "def lcs(text1: str, text2: str) -> int:\n    m, n = len(text1), len(text2)\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if text1[i-1] == text2[j-1]:\n                dp[i][j] = dp[i-1][j-1] + 1\n            else:\n                dp[i][j] = max(dp[i-1][j], dp[i][j-1])\n    return dp[m][n]",
@@ -101,9 +101,9 @@
     "date": "2026-06-08",
     "title": "Number of Islands",
     "category": "graph",
-    "time_complexity": "O(m*n)",
-    "space_complexity": "O(m*n)",
-    "explanation": "Every cell in the m×n grid is visited at most once by the outer loop and DFS combined, since visited cells are marked '0' immediately, giving O(m*n) time. The space complexity is O(m*n) in the worst case due to the DFS recursion stack, which can reach depth m*n when the entire grid is one large island (e.g., a snake-shaped path covering all cells).",
+    "time_complexity": "O(m * n)",
+    "space_complexity": "O(m * n)",
+    "explanation": "Every cell in the m * n grid is visited at most once by the outer loop and DFS combined, since visited cells are marked '0' immediately, giving O(m * n) time. The space complexity is O(m * n) in the worst case due to the DFS recursion stack, which can reach depth m * n when the entire grid is one large island (e.g., a snake-shaped path covering all cells).",
     "source_url": null,
     "implementations": {
       "python": "def num_islands(grid: list[list[str]]) -> int:\n    if not grid:\n        return 0\n    rows, cols = len(grid), len(grid[0])\n    count = 0\n\n    def dfs(r, c):\n        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != '1':\n            return\n        grid[r][c] = '0'\n        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:\n            dfs(r+dr, c+dc)\n\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1':\n                dfs(r, c)\n                count += 1\n    return count",
@@ -201,7 +201,7 @@
     "category": "sliding window",
     "time_complexity": "O(n)",
     "space_complexity": "O(k)",
-    "explanation": "Each element is added to and removed from the deque at most once across the entire iteration, making the total number of deque operations O(2n) = O(n). The space complexity is O(k) because the deque holds at most k indices at any given time, corresponding to the current sliding window, while the result array is not counted as auxiliary space.",
+    "explanation": "Each element is added to and removed from the deque at most once across the entire iteration, making the total number of deque operations O(2 * n) = O(n). The space complexity is O(k) because the deque holds at most k indices at any given time, corresponding to the current sliding window, while the result array is not counted as auxiliary space.",
     "source_url": null,
     "implementations": {
       "python": "def max_sliding_window(nums: list[int], k: int) -> list[int]:\n    dq = deque()  # stores indices\n    result = []\n    for i, n in enumerate(nums):\n        while dq and nums[dq[-1]] < n:\n            dq.pop()\n        dq.append(i)\n        if dq[0] == i - k:\n            dq.popleft()\n        if i >= k - 1:\n            result.append(nums[dq[0]])\n    return result",
@@ -313,7 +313,7 @@
     "category": "hash map",
     "time_complexity": "O(n * k)",
     "space_complexity": "O(n * k)",
-    "explanation": "The dominant cost is the outer loop over all n strings, and for each string, the inner loop over its characters of length k, making the total time O(n * k). The key insight is that building the frequency count array takes O(k) per string, and converting it to a tuple also takes O(26) which is constant, so the character counting drives the cost. You might be tempted to say O(n * k * log k) thinking that sorting each string is required — but this solution cleverly avoids sorting by using a fixed-size 26-element count array as the key instead. For space, you store every original string in the hash map and each key is a tuple of 26 integers, so across all n strings of average length k the total storage is O(n * k) for the strings themselves, which dominates the O(26n) key storage.",
+    "explanation": "The dominant cost is the outer loop over all n strings, and for each string, the inner loop over its characters of length k, making the total time O(n * k). The key insight is that building the frequency count array takes O(k) per string, and converting it to a tuple also takes O(26) which is constant, so the character counting drives the cost. You might be tempted to say O(n * k * log k) thinking that sorting each string is required — but this solution cleverly avoids sorting by using a fixed-size 26-element count array as the key instead. For space, you store every original string in the hash map and each key is a tuple of 26 integers, so across all n strings of average length k the total storage is O(n * k) for the strings themselves, which dominates the O(26 * n) key storage.",
     "source_url": null,
     "implementations": {
       "python": "def group_anagrams(strs: list[str]) -> list[list[str]]:\n    groups = defaultdict(list)\n    for s in strs:\n        key = [0] * 26\n        for ch in s:\n            key[ord(ch) - ord('a')] += 1\n        groups[tuple(key)].append(s)\n    return list(groups.values())",
@@ -339,9 +339,9 @@
     "date": "2026-06-25",
     "title": "Rotting Oranges",
     "category": "graph",
-    "time_complexity": "O(m*n)",
-    "space_complexity": "O(m*n)",
-    "explanation": "The dominant cost is the BFS traversal of the grid, where m and n are the number of rows and columns. Every cell in the grid is visited at most once — rotten oranges are added to the queue exactly once and fresh oranges are converted to rotten (value 2) before being enqueued, preventing re-processing. You might be tempted to say O((m*n)²) because there's a while loop containing a for loop over 4 directions, but the 4-directional check is a constant factor and each cell is enqueued at most once, so the total work across all iterations is proportional to m*n. The space complexity is also O(m*n) because in the worst case (e.g., all cells are rotten from the start) the queue could hold every cell in the grid simultaneously.",
+    "time_complexity": "O(m * n)",
+    "space_complexity": "O(m * n)",
+    "explanation": "The dominant cost is the BFS traversal of the grid, where m and n are the number of rows and columns. Every cell in the grid is visited at most once — rotten oranges are added to the queue exactly once and fresh oranges are converted to rotten (value 2) before being enqueued, preventing re-processing. You might be tempted to say O((m * n)²) because there's a while loop containing a for loop over 4 directions, but the 4-directional check is a constant factor and each cell is enqueued at most once, so the total work across all iterations is proportional to m * n. The space complexity is also O(m * n) because in the worst case (e.g., all cells are rotten from the start) the queue could hold every cell in the grid simultaneously.",
     "source_url": null,
     "implementations": {
       "python": "def oranges_rotting(grid: list[list[int]]) -> int:\n    rows, cols = len(grid), len(grid[0])\n    queue = deque()\n    fresh = 0\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == 2: queue.append((r, c, 0))\n            elif grid[r][c] == 1: fresh += 1\n    minutes = 0\n    while queue:\n        r, c, t = queue.popleft()\n        minutes = t\n        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:\n            nr, nc = r + dr, c + dc\n            if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1:\n                grid[nr][nc] = 2\n                fresh -= 1\n                queue.append((nr, nc, t + 1))\n    return minutes if fresh == 0 else -1",
@@ -383,7 +383,7 @@
     "category": "trie",
     "time_complexity": "O(n)",
     "space_complexity": "O(n)",
-    "explanation": "Each operation (insert, search, starts_with) iterates through the characters of the input string one by one, making the dominant cost proportional to the length of the string — O(n) where n is the number of characters. The for-loop in _find and insert drives this cost, visiting exactly one trie node per character. For space, inserting a word of length n creates at most n new Trie nodes in the worst case (when no prefix is shared), so space per insertion is O(n), and total space across all insertions is O(sum of word lengths). You might be tempted to say O(26n) because each node can have up to 26 children (for lowercase letters), but Big-O drops constant factors, so O(26n) simplifies to O(n).",
+    "explanation": "Each operation (insert, search, starts_with) iterates through the characters of the input string one by one, making the dominant cost proportional to the length of the string — O(n) where n is the number of characters. The for-loop in _find and insert drives this cost, visiting exactly one trie node per character. For space, inserting a word of length n creates at most n new Trie nodes in the worst case (when no prefix is shared), so space per insertion is O(n), and total space across all insertions is O(sum of word lengths). You might be tempted to say O(26 * n) because each node can have up to 26 children (for lowercase letters), but Big-O drops constant factors, so O(26 * n) simplifies to O(n).",
     "source_url": null,
     "implementations": {
       "python": "class Trie:\n    def __init__(self):\n        self.children = {}\n        self.end = False\n\n    def insert(self, word: str) -> None:\n        node = self\n        for ch in word:\n            if ch not in node.children:\n                node.children[ch] = Trie()\n            node = node.children[ch]\n        node.end = True\n\n    def search(self, word: str) -> bool:\n        node = self._find(word)\n        return node is not None and node.end\n\n    def starts_with(self, prefix: str) -> bool:\n        return self._find(prefix) is not None\n\n    def _find(self, s: str):\n        node = self\n        for ch in s:\n            if ch not in node.children:\n                return None\n            node = node.children[ch]\n        return node",
@@ -761,7 +761,7 @@
     "category": "two pointers",
     "time_complexity": "O(n)",
     "space_complexity": "O(1)",
-    "explanation": "The dominant cost here is the single for loop that iterates over t once, where n is the length of t. You only ever move forward through t, comparing each character to s[i] and incrementing i when there's a match, so the work done is directly proportional to the length of t, giving O(n) time. A tempting but wrong answer is O(m*n), where m is the length of s, since it looks like you're matching two strings against each other; but there's no nested loop or inner scan over s—i only advances forward and the loop breaks early once i reaches len(s), so s's length doesn't multiply into the cost. Space is O(1) because the only extra memory used is the integer index i, regardless of how long s or t are; no arrays, lists, or recursive stacks are created that scale with input size.",
+    "explanation": "The dominant cost here is the single for loop that iterates over t once, where n is the length of t. You only ever move forward through t, comparing each character to s[i] and incrementing i when there's a match, so the work done is directly proportional to the length of t, giving O(n) time. A tempting but wrong answer is O(m * n), where m is the length of s, since it looks like you're matching two strings against each other; but there's no nested loop or inner scan over s—i only advances forward and the loop breaks early once i reaches len(s), so s's length doesn't multiply into the cost. Space is O(1) because the only extra memory used is the integer index i, regardless of how long s or t are; no arrays, lists, or recursive stacks are created that scale with input size.",
     "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/is-subsequence.py",
     "implementations": {
       "python": "def is_subsequence(s: str, t: str) -> bool:\n    if not s:\n        return True\n\n    i = 0\n    for c in t:\n        if c == s[i]:\n            i += 1\n        if i == len(s):\n            break\n    return i == len(s)",
@@ -831,7 +831,7 @@
     "category": "sliding window",
     "time_complexity": "O(n + m)",
     "space_complexity": "O(m)",
-    "explanation": "You have two pointers, i and j, that each move forward through the string s, and the inner while loop's total iterations across the whole run are bounded by n because i never resets or moves backward, so the sliding window scan is O(n), plus O(m) to build the Counter from t. It's tempting to think the while loop nested inside the for loop makes this O(n^2), but that's wrong because i only increases and never exceeds j, so combined the two pointers do at most 2n steps total, not n*m or n^2. The space cost comes from the Counter dictionary, which stores at most one entry per distinct character in t, giving O(m) where m is the length of t (or O(1) if you assume a fixed alphabet like ASCII). Since count is built from t and only ever tracks characters from t, it doesn't grow with the size of s, so space isn't O(n) or O(n+m).",
+    "explanation": "You have two pointers, i and j, that each move forward through the string s, and the inner while loop's total iterations across the whole run are bounded by n because i never resets or moves backward, so the sliding window scan is O(n), plus O(m) to build the Counter from t. It's tempting to think the while loop nested inside the for loop makes this O(n^2), but that's wrong because i only increases and never exceeds j, so combined the two pointers do at most 2n steps total, not n * m or n^2. The space cost comes from the Counter dictionary, which stores at most one entry per distinct character in t, giving O(m) where m is the length of t (or O(1) if you assume a fixed alphabet like ASCII). Since count is built from t and only ever tracks characters from t, it doesn't grow with the size of s, so space isn't O(n) or O(n+m).",
     "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/minimum-window-substring.py",
     "implementations": {
       "python": "def min_window(s: str, t: str) -> str:\n    count = collections.Counter(t)\n    remain = len(t)\n    i, left, right = 0, -1, -1\n    for j, c in enumerate(s):\n        remain -= count[c] > 0\n        count[c] -= 1\n        if remain:\n            continue\n        while count[s[i]] < 0:\n            count[s[i]] += 1\n            i += 1\n        if right == -1 or j - i + 1 < right - left + 1:\n            left, right = i, j\n    return s[left:right + 1]\n",
@@ -1025,9 +1025,9 @@
     "date": "2026-10-03",
     "title": "Set Matrix Zeroes",
     "category": "arrays",
-    "time_complexity": "O(m*n)",
+    "time_complexity": "O(m * n)",
     "space_complexity": "O(1)",
-    "explanation": "The dominant cost comes from the nested loops that scan every cell of the matrix twice (once to mark zeros, once to apply them), where m is the number of rows and n is the number of columns. Since each loop visits every element a constant number of times, the total work scales directly with the total number of cells, giving O(m*n) time. You might be tempted to think it's O(m+n) because the algorithm uses the first row and column as markers, but that only describes the size of the marker storage, not the actual work done scanning the whole grid. Space stays O(1) because the algorithm cleverly reuses the first row and column of the input matrix itself as marker flags instead of allocating separate arrays, so no extra memory grows with the input size.",
+    "explanation": "The dominant cost comes from the nested loops that scan every cell of the matrix twice (once to mark zeros, once to apply them), where m is the number of rows and n is the number of columns. Since each loop visits every element a constant number of times, the total work scales directly with the total number of cells, giving O(m * n) time. You might be tempted to think it's O(m+n) because the algorithm uses the first row and column as markers, but that only describes the size of the marker storage, not the actual work done scanning the whole grid. Space stays O(1) because the algorithm cleverly reuses the first row and column of the input matrix itself as marker flags instead of allocating separate arrays, so no extra memory grows with the input size.",
     "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/set-matrix-zeroes.py",
     "implementations": {
       "python": "def set_zeroes(matrix: list[list[int]]) -> list[list[int]]:\n    first_col = any(matrix[i][0] == 0 for i in range(len(matrix)))\n    first_row = any(matrix[0][j] == 0 for j in range(len(matrix[0])))\n\n    for i in range(1, len(matrix)):\n        for j in range(1, len(matrix[0])):\n            if matrix[i][j] == 0:\n                matrix[i][0], matrix[0][j] = 0, 0\n\n    for i in range(1, len(matrix)):\n        for j in range(1, len(matrix[0])):\n            if matrix[i][0] == 0 or matrix[0][j] == 0:\n                matrix[i][j] = 0\n\n    if first_col:\n        for i in range(len(matrix)):\n            matrix[i][0] = 0\n\n    if first_row:\n        for j in range(len(matrix[0])):\n            matrix[0][j] = 0\n\n    return matrix\n",
@@ -1039,9 +1039,9 @@
     "date": "2026-10-04",
     "title": "Game of Life",
     "category": "arrays",
-    "time_complexity": "O(m*n)",
+    "time_complexity": "O(m * n)",
     "space_complexity": "O(1)",
-    "explanation": "You should focus on the two nested loops over i and j, which run m*n times total. Inside, there's an inner double loop over the 3x3 neighborhood, but that's bounded by a constant (at most 9 cells), so it doesn't grow with input size and just contributes a constant factor. The board is modified in place using bit tricks (storing next state in the second bit), so no extra data structures scale with input, giving constant extra space. The tempting distractor O(m*n*9) is wrong only in notation—Big-O drops constant multipliers, so it simplifies to O(m*n), not a separate complexity class.",
+    "explanation": "You should focus on the two nested loops over i and j, which run m * n times total. Inside, there's an inner double loop over the 3x3 neighborhood, but that's bounded by a constant (at most 9 cells), so it doesn't grow with input size and just contributes a constant factor. The board is modified in place using bit tricks (storing next state in the second bit), so no extra data structures scale with input, giving constant extra space. The tempting distractor O(m * n * 9) is wrong only in notation—Big-O drops constant multipliers, so it simplifies to O(m * n), not a separate complexity class.",
     "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/game-of-life.py",
     "implementations": {
       "python": "def game_of_life(board: list[list[int]]) -> list[list[int]]:\n    m = len(board)\n    n = len(board[0]) if m else 0\n    for i in range(m):\n        for j in range(n):\n            count = 0\n            for I in range(max(i - 1, 0), min(i + 2, m)):\n                for J in range(max(j - 1, 0), min(j + 2, n)):\n                    count += board[I][J] & 1\n            if (count == 4 and board[i][j]) or count == 3:\n                board[i][j] |= 2\n    for i in range(m):\n        for j in range(n):\n            board[i][j] >>= 1\n    return board\n",
@@ -1139,7 +1139,7 @@
     "category": "arrays",
     "time_complexity": "O(n²)",
     "space_complexity": "O(n²)",
-    "explanation": "The dominant cost comes from the two nested loops: the outer loop runs n times (once per row), and the inner loop for row i runs roughly i times, giving a total of 1 + 2 + 3 + ... + n = n*(n+1)/2 operations, which is O(n²). The inner loop `for j in range(1, i)` is the specific construct that drives this — it grows linearly with each row index i. For space, you store the entire triangle in `result`, which holds 1 + 2 + ... + n = n*(n+1)/2 integers total, also O(n²). The most tempting wrong answer for both time and space is O(n), because you might only count the outer loop or think only about the number of rows rather than the total number of elements across all rows.",
+    "explanation": "The dominant cost comes from the two nested loops: the outer loop runs n times (once per row), and the inner loop for row i runs roughly i times, giving a total of 1 + 2 + 3 + ... + n = n * (n+1)/2 operations, which is O(n²). The inner loop `for j in range(1, i)` is the specific construct that drives this — it grows linearly with each row index i. For space, you store the entire triangle in `result`, which holds 1 + 2 + ... + n = n * (n+1)/2 integers total, also O(n²). The most tempting wrong answer for both time and space is O(n), because you might only count the outer loop or think only about the number of rows rather than the total number of elements across all rows.",
     "source_url": null,
     "implementations": {
       "python": "def generate_pascals_triangle(num_rows: int) -> list[list[int]]:\n    result = []\n    for i in range(num_rows):\n        row = [1] * (i + 1)\n        for j in range(1, i):\n            row[j] = result[i - 1][j - 1] + result[i - 1][j]\n        result.append(row)\n    return result",
@@ -1221,9 +1221,9 @@
     "date": "2026-10-17",
     "title": "Spiral Matrix",
     "category": "arrays",
-    "time_complexity": "O(m*n)",
-    "space_complexity": "O(m*n)",
-    "explanation": "The dominant cost is the set of for-loops inside the while loop, which together visit every element in the matrix exactly once. Because each cell is appended to the result exactly one time regardless of the spiral path taken, the total work is proportional to the total number of elements, m*n (rows times columns). You might be tempted to say O((m+n)²) because the while loop runs roughly (m+n)/2 times and each iteration does O(m+n) work, but that product still simplifies to O(m*n), not a larger expression. For space, the result list stores every element of the matrix, so it grows to size m*n; the boundary variables (top, bottom, left, right) are O(1) extra, making the output list the dominant space cost.",
+    "time_complexity": "O(m * n)",
+    "space_complexity": "O(m * n)",
+    "explanation": "The dominant cost is the set of for-loops inside the while loop, which together visit every element in the matrix exactly once. Because each cell is appended to the result exactly one time regardless of the spiral path taken, the total work is proportional to the total number of elements, m * n (rows times columns). You might be tempted to say O((m+n)²) because the while loop runs roughly (m+n)/2 times and each iteration does O(m+n) work, but that product still simplifies to O(m * n), not a larger expression. For space, the result list stores every element of the matrix, so it grows to size m * n; the boundary variables (top, bottom, left, right) are O(1) extra, making the output list the dominant space cost.",
     "source_url": null,
     "implementations": {
       "python": "def spiral_order(matrix: list[list[int]]) -> list[int]:\n    result = []\n    if not matrix:\n        return result\n    top, bottom = 0, len(matrix) - 1\n    left, right = 0, len(matrix[0]) - 1\n    while top <= bottom and left <= right:\n        for j in range(left, right + 1):\n            result.append(matrix[top][j])\n        top += 1\n        for i in range(top, bottom + 1):\n            result.append(matrix[i][right])\n        right -= 1\n        if top <= bottom:\n            for j in range(right, left - 1, -1):\n                result.append(matrix[bottom][j])\n            bottom -= 1\n        if left <= right:\n            for i in range(bottom, top - 1, -1):\n                result.append(matrix[i][left])\n            left += 1\n    return result",
@@ -1321,7 +1321,7 @@
     "category": "hash map",
     "time_complexity": "O(n)",
     "space_complexity": "O(1)",
-    "explanation": "The dominant cost comes from the two sequential for-loops, one over string s and one over string t, each running in O(n) where n is the length of the strings. Since these loops run one after the other (not nested), the total time is O(n) + O(n) = O(n). You might be tempted to say O(26n) because of the fixed-size counts array, but the constant factor of 26 is dropped in Big-O notation, keeping it O(n). The space complexity is O(1) because the counts array is always exactly 26 integers regardless of the input size — it does not grow with n, making it constant space even though you allocate an array.",
+    "explanation": "The dominant cost comes from the two sequential for-loops, one over string s and one over string t, each running in O(n) where n is the length of the strings. Since these loops run one after the other (not nested), the total time is O(n) + O(n) = O(n). You might be tempted to say O(26 * n) because of the fixed-size counts array, but the constant factor of 26 is dropped in Big-O notation, keeping it O(n). The space complexity is O(1) because the counts array is always exactly 26 integers regardless of the input size — it does not grow with n, making it constant space even though you allocate an array.",
     "source_url": null,
     "implementations": {
       "python": "def is_anagram(s: str, t: str) -> bool:\n    # s and t consist of lowercase English letters only.\n    if len(s) != len(t):\n        return False\n    counts = [0] * 26\n    for c in s:\n        counts[ord(c) - ord('a')] += 1\n    for c in t:\n        i = ord(c) - ord('a')\n        counts[i] -= 1\n        if counts[i] < 0:\n            return False\n    return True",
@@ -1349,7 +1349,7 @@
     "category": "hash map",
     "time_complexity": "O(n²)",
     "space_complexity": "O(n²)",
-    "explanation": "The Counter is built from a doubly nested generator over a and b, which produces n × n pair sums, so building it costs O(n²). The return statement runs a second doubly nested generator over c and d, another n × n iterations, each doing one constant-time dictionary lookup. Two quadratic passes still total O(n²). The natural wrong answer is O(n³) or O(n⁴) by assuming all four arrays must be nested together — the whole point of the hash map is that it collapses four nested loops into two independent pairs. Space is also O(n²) because ab_sum stores one entry per distinct pair sum, and there can be up to n² distinct sums.",
+    "explanation": "The Counter is built from a doubly nested generator over a and b, which produces n * n pair sums, so building it costs O(n²). The return statement runs a second doubly nested generator over c and d, another n * n iterations, each doing one constant-time dictionary lookup. Two quadratic passes still total O(n²). The natural wrong answer is O(n³) or O(n⁴) by assuming all four arrays must be nested together — the whole point of the hash map is that it collapses four nested loops into two independent pairs. Space is also O(n²) because ab_sum stores one entry per distinct pair sum, and there can be up to n² distinct sums.",
     "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/4sum-ii.py",
     "implementations": {
       "python": "def four_sum_count(a: list[int], b: list[int], c: list[int], d: list[int]) -> int:\n    ab_sum = Counter(x + y for x in a for y in b)\n    return sum(ab_sum[-x - y] for x in c for y in d)\n",
@@ -1487,9 +1487,9 @@
     "date": "2026-11-05",
     "title": "Maximal Rectangle",
     "category": "stack",
-    "time_complexity": "O(m*n)",
+    "time_complexity": "O(m * n)",
     "space_complexity": "O(n)",
-    "explanation": "The outer loop runs once per row and the inner loop updates one histogram entry per column, which is m × n work in total. largest_rectangle_area is called once per row, but it is a monotonic stack that runs in O(n) per call — each column index is pushed and popped at most once — so those calls add another m × n rather than something quadratic in n. Space is only O(n): the heights array and the stack are both sized by the number of columns and are reused across rows. Answering O(m*n) for space is the natural trap, since the matrix itself is that large, but no copy of it is ever made.",
+    "explanation": "The outer loop runs once per row and the inner loop updates one histogram entry per column, which is m * n work in total. largest_rectangle_area is called once per row, but it is a monotonic stack that runs in O(n) per call — each column index is pushed and popped at most once — so those calls add another m * n rather than something quadratic in n. Space is only O(n): the heights array and the stack are both sized by the number of columns and are reused across rows. Answering O(m * n) for space is the natural trap, since the matrix itself is that large, but no copy of it is ever made.",
     "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/maximal-rectangle.py",
     "implementations": {
       "python": "def maximal_rectangle(matrix: list[list[str]]) -> int:\n    def largest_rectangle_area(heights: list[int]) -> int:\n        stk = [-1]\n        result = 0\n        for i in range(len(heights) + 1):\n            while stk[-1] != -1 and (i == len(heights) or heights[stk[-1]] >= heights[i]):\n                h = heights[stk.pop()]\n                result = max(result, h * ((i - 1) - stk[-1]))\n            stk.append(i)\n        return result\n\n    if not matrix:\n        return 0\n    result = 0\n    heights = [0] * len(matrix[0])\n    for i in range(len(matrix)):\n        for j in range(len(matrix[0])):\n            heights[j] = heights[j] + 1 if matrix[i][j] == '1' else 0\n        result = max(result, largest_rectangle_area(heights))\n    return result\n",
@@ -1711,9 +1711,9 @@
     "date": "2026-11-21",
     "title": "Search a 2D Matrix",
     "category": "binary search",
-    "time_complexity": "O(log(m*n))",
+    "time_complexity": "O(log(m * n))",
     "space_complexity": "O(1)",
-    "explanation": "The matrix is treated as one flat sorted array of m × n entries, with mid // n and mid % n converting a flat index back into a row and column. The loop is therefore a single binary search over m*n elements, halving the range each time for O(log(m*n)) — equivalently O(log m + log n). Answering O(m + n) is the natural guess, matching the staircase walk used when rows and columns are only individually sorted; this stronger fully-sorted layout allows the faster search. Space is O(1), since only index variables are kept and the matrix is never copied.",
+    "explanation": "The matrix is treated as one flat sorted array of m * n entries, with mid // n and mid % n converting a flat index back into a row and column. The loop is therefore a single binary search over m * n elements, halving the range each time for O(log(m * n)) — equivalently O(log m + log n). Answering O(m + n) is the natural guess, matching the staircase walk used when rows and columns are only individually sorted; this stronger fully-sorted layout allows the faster search. Space is O(1), since only index variables are kept and the matrix is never copied.",
     "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/search-a-2d-matrix.py",
     "implementations": {
       "python": "def search_matrix(matrix: list[list[int]], target: int) -> bool:\n    if not matrix:\n        return False\n\n    m, n = len(matrix), len(matrix[0])\n    left, right = 0, m * n\n    while left < right:\n        mid = left + (right - left) // 2\n        if matrix[mid // n][mid % n] >= target:\n            right = mid\n        else:\n            left = mid + 1\n\n    return left < m * n and matrix[left // n][left % n] == target",
@@ -1775,6 +1775,20 @@
       "python": "def check_subarray_sum(nums: list[int], k: int) -> bool:\n    count = 0\n    lookup: dict[int, int] = {0: -1}\n    for i, num in enumerate(nums):\n        count += num\n        if k:\n            count %= k\n        if count in lookup:\n            if i - lookup[count] > 1:\n                return True\n        else:\n            lookup[count] = i\n    return False\n",
       "cpp": "bool checkSubarraySum(std::vector<int>& nums, int k) {\n    int count = 0;\n    std::unordered_map<int, int> lookup;\n    lookup[0] = -1;\n    for (int i = 0; i < (int)nums.size(); ++i) {\n        count += nums[i];\n        if (k != 0) {\n            count %= k;\n        }\n        if (lookup.count(count)) {\n            if (i - lookup[count] > 1) {\n                return true;\n            }\n        } else {\n            lookup[count] = i;\n        }\n    }\n    return false;\n}\n",
       "rust": "fn check_subarray_sum(nums: &[i32], k: i32) -> bool {\n    let mut count: i32 = 0;\n    let mut lookup: HashMap<i32, i32> = HashMap::new();\n    lookup.insert(0, -1);\n    for (i, &num) in nums.iter().enumerate() {\n        count += num;\n        if k != 0 {\n            count %= k;\n        }\n        if let Some(&prev) = lookup.get(&count) {\n            if (i as i32) - prev > 1 {\n                return true;\n            }\n        } else {\n            lookup.insert(count, i as i32);\n        }\n    }\n    false\n}\n"
+    }
+  },
+  {
+    "date": "2026-11-26",
+    "title": "Contiguous Array",
+    "category": "hash map",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the single pass over nums, where each step does a constant amount of work plus one hash map lookup or insert. Dictionary operations take average O(1) time, so n iterations give O(n) total time. The lookup dictionary stores the first index of each distinct running count, and the count can range from -n to n, so in the worst case (all 0s or all 1s) it holds about n entries, giving O(n) space. You might be tempted by O(n²), since the brute-force approach checks every subarray, but the prefix-count trick avoids nested loops entirely. You might also guess O(1) space because only a few scalar variables appear, but the dictionary grows with the input.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/contiguous-array.py",
+    "implementations": {
+      "python": "def find_max_length(nums: list[int]) -> int:\n    result = 0\n    count = 0\n    lookup = {0: -1}\n    for i, num in enumerate(nums):\n        count += 1 if num == 1 else -1\n        if count in lookup:\n            result = max(result, i - lookup[count])\n        else:\n            lookup[count] = i\n    return result",
+      "cpp": "int findMaxLength(std::vector<int>& nums) {\n    int result = 0, count = 0;\n    std::unordered_map<int, int> lookup;\n    lookup[0] = -1;\n    for (int i = 0; i < (int)nums.size(); i++) {\n        count += nums[i] == 1 ? 1 : -1;\n        if (lookup.count(count)) {\n            result = std::max(result, i - lookup[count]);\n        } else {\n            lookup[count] = i;\n        }\n    }\n    return result;\n}",
+      "rust": "fn find_max_length(nums: &[i32]) -> i32 {\n    let mut result: i32 = 0;\n    let mut count: i32 = 0;\n    let mut lookup: HashMap<i32, i32> = HashMap::new();\n    lookup.insert(0, -1);\n    for (i, &num) in nums.iter().enumerate() {\n        count += if num == 1 { 1 } else { -1 };\n        let i = i as i32;\n        if let Some(&j) = lookup.get(&count) {\n            result = result.max(i - j);\n        } else {\n            lookup.insert(count, i);\n        }\n    }\n    result\n}"
     }
   }
 ]

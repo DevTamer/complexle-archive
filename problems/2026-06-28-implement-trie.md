@@ -7,7 +7,7 @@
 
 ## Explanation
 
-Each operation (insert, search, starts_with) iterates through the characters of the input string one by one, making the dominant cost proportional to the length of the string — O(n) where n is the number of characters. The for-loop in _find and insert drives this cost, visiting exactly one trie node per character. For space, inserting a word of length n creates at most n new Trie nodes in the worst case (when no prefix is shared), so space per insertion is O(n), and total space across all insertions is O(sum of word lengths). You might be tempted to say O(26n) because each node can have up to 26 children (for lowercase letters), but Big-O drops constant factors, so O(26n) simplifies to O(n).
+Each operation (insert, search, starts_with) iterates through the characters of the input string one by one, making the dominant cost proportional to the length of the string — O(n) where n is the number of characters. The for-loop in _find and insert drives this cost, visiting exactly one trie node per character. For space, inserting a word of length n creates at most n new Trie nodes in the worst case (when no prefix is shared), so space per insertion is O(n), and total space across all insertions is O(sum of word lengths). You might be tempted to say O(26 * n) because each node can have up to 26 children (for lowercase letters), but Big-O drops constant factors, so O(26 * n) simplifies to O(n).
 
 ## Implementations
 

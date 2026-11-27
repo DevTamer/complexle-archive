@@ -2,12 +2,12 @@
 
 **Puzzle date:** 2026-10-17  
 **Category:** arrays  
-**Time complexity:** `O(m*n)`  
-**Space complexity:** `O(m*n)`
+**Time complexity:** `O(m * n)`  
+**Space complexity:** `O(m * n)`
 
 ## Explanation
 
-The dominant cost is the set of for-loops inside the while loop, which together visit every element in the matrix exactly once. Because each cell is appended to the result exactly one time regardless of the spiral path taken, the total work is proportional to the total number of elements, m*n (rows times columns). You might be tempted to say O((m+n)²) because the while loop runs roughly (m+n)/2 times and each iteration does O(m+n) work, but that product still simplifies to O(m*n), not a larger expression. For space, the result list stores every element of the matrix, so it grows to size m*n; the boundary variables (top, bottom, left, right) are O(1) extra, making the output list the dominant space cost.
+The dominant cost is the set of for-loops inside the while loop, which together visit every element in the matrix exactly once. Because each cell is appended to the result exactly one time regardless of the spiral path taken, the total work is proportional to the total number of elements, m * n (rows times columns). You might be tempted to say O((m+n)²) because the while loop runs roughly (m+n)/2 times and each iteration does O(m+n) work, but that product still simplifies to O(m * n), not a larger expression. For space, the result list stores every element of the matrix, so it grows to size m * n; the boundary variables (top, bottom, left, right) are O(1) extra, making the output list the dominant space cost.
 
 ## Implementations
 

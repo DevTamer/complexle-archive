@@ -7,7 +7,7 @@
 
 ## Explanation
 
-The dominant cost is the outer loop over all n strings, and for each string, the inner loop over its characters of length k, making the total time O(n * k). The key insight is that building the frequency count array takes O(k) per string, and converting it to a tuple also takes O(26) which is constant, so the character counting drives the cost. You might be tempted to say O(n * k * log k) thinking that sorting each string is required — but this solution cleverly avoids sorting by using a fixed-size 26-element count array as the key instead. For space, you store every original string in the hash map and each key is a tuple of 26 integers, so across all n strings of average length k the total storage is O(n * k) for the strings themselves, which dominates the O(26n) key storage.
+The dominant cost is the outer loop over all n strings, and for each string, the inner loop over its characters of length k, making the total time O(n * k). The key insight is that building the frequency count array takes O(k) per string, and converting it to a tuple also takes O(26) which is constant, so the character counting drives the cost. You might be tempted to say O(n * k * log k) thinking that sorting each string is required — but this solution cleverly avoids sorting by using a fixed-size 26-element count array as the key instead. For space, you store every original string in the hash map and each key is a tuple of 26 integers, so across all n strings of average length k the total storage is O(n * k) for the strings themselves, which dominates the O(26 * n) key storage.
 
 ## Implementations
 

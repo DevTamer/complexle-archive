@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**127 puzzles** archived, from 2026-06-01 to 2026-11-25.
+**128 puzzles** archived, from 2026-06-01 to 2026-11-26.
 
 ## Recent puzzles
 
@@ -24,11 +24,12 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-11-26 | [Contiguous Array](problems/2026-11-26-contiguous-array.md) | hash map | `O(n)` | `O(n)` |
 | 2026-11-25 | [Continuous Subarray Sum](problems/2026-11-25-continuous-subarray-sum.md) | hash map | `O(n)` | `O(min(n, k))` |
 | 2026-11-24 | [Construct Binary Tree from Preorder and Inorder Traversal](problems/2026-11-24-construct-binary-tree-from-preorder-and-inorder-traversal.md) | tree | `O(n)` | `O(n)` |
 | 2026-11-23 | [Middle of the Linked List](problems/2026-11-23-middle-of-the-linked-list.md) | linked list | `O(n)` | `O(1)` |
 | 2026-11-22 | [Word Pattern](problems/2026-11-22-word-pattern.md) | hash map | `O(n + m)` | `O(n + m)` |
-| 2026-11-21 | [Search a 2D Matrix](problems/2026-11-21-search-a-2d-matrix.md) | binary search | `O(log(m*n))` | `O(1)` |
+| 2026-11-21 | [Search a 2D Matrix](problems/2026-11-21-search-a-2d-matrix.md) | binary search | `O(log(m * n))` | `O(1)` |
 | 2026-11-20 | [Koko Eating Bananas](problems/2026-11-20-koko-eating-bananas.md) | binary search | `O(n log m)` | `O(1)` |
 | 2026-11-19 | [Subarray Sum Equals K](problems/2026-11-19-subarray-sum-equals-k.md) | hash map | `O(n)` | `O(n)` |
 | 2026-11-18 | [Binary Tree Level Order Traversal](problems/2026-11-18-binary-tree-level-order-traversal.md) | tree | `O(n)` | `O(n)` |
@@ -44,7 +45,7 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-11-08 | [Add Two Numbers](problems/2026-11-08-add-two-numbers.md) | linked list | `O(n + m)` | `O(n + m)` |
 | 2026-11-07 | [Remove Duplicate Letters](problems/2026-11-07-remove-duplicate-letters.md) | stack | `O(n)` | `O(n)` |
 | 2026-11-06 | [Next Greater Element I](problems/2026-11-06-next-greater-element-i.md) | stack | `O(n + m)` | `O(n + m)` |
-| 2026-11-05 | [Maximal Rectangle](problems/2026-11-05-maximal-rectangle.md) | stack | `O(m*n)` | `O(n)` |
+| 2026-11-05 | [Maximal Rectangle](problems/2026-11-05-maximal-rectangle.md) | stack | `O(m * n)` | `O(n)` |
 | 2026-11-04 | [Next Greater Element II](problems/2026-11-04-next-greater-element-ii.md) | stack | `O(n)` | `O(n)` |
 | 2026-11-03 | [Largest Rectangle in Histogram](problems/2026-11-03-largest-rectangle-in-histogram.md) | stack | `O(n)` | `O(n)` |
 | 2026-11-02 | [Remove All Adjacent Duplicates In String](problems/2026-11-02-remove-all-adjacent-duplicates-in-string.md) | stack | `O(n)` | `O(n)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-30 | [Intersection of Two Arrays](problems/2026-10-30-intersection-of-two-arrays.md) | hash map | `O(n + m)` | `O(min(n, m))` |
 | 2026-10-29 | [Intersection of Two Arrays II](problems/2026-10-29-intersection-of-two-arrays-ii.md) | hash map | `O(n + m)` | `O(min(n, m))` |
 | 2026-10-28 | [First Unique Character in a String](problems/2026-10-28-first-unique-character-in-a-string.md) | hash map | `O(n)` | `O(n)` |
-| 2026-10-27 | [Longest Substring with At Most Two Distinct Characters](problems/2026-10-27-longest-substring-with-at-most-two-distinct-characters.md) | hash map | `O(n)` | `O(1)` |
 
 ## License & attribution
 

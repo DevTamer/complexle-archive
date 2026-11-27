@@ -7,7 +7,7 @@
 
 ## Explanation
 
-The dominant cost comes from the two sequential for-loops, one over string s and one over string t, each running in O(n) where n is the length of the strings. Since these loops run one after the other (not nested), the total time is O(n) + O(n) = O(n). You might be tempted to say O(26n) because of the fixed-size counts array, but the constant factor of 26 is dropped in Big-O notation, keeping it O(n). The space complexity is O(1) because the counts array is always exactly 26 integers regardless of the input size — it does not grow with n, making it constant space even though you allocate an array.
+The dominant cost comes from the two sequential for-loops, one over string s and one over string t, each running in O(n) where n is the length of the strings. Since these loops run one after the other (not nested), the total time is O(n) + O(n) = O(n). You might be tempted to say O(26 * n) because of the fixed-size counts array, but the constant factor of 26 is dropped in Big-O notation, keeping it O(n). The space complexity is O(1) because the counts array is always exactly 26 integers regardless of the input size — it does not grow with n, making it constant space even though you allocate an array.
 
 ## Implementations
 

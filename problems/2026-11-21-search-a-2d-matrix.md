@@ -2,12 +2,12 @@
 
 **Puzzle date:** 2026-11-21  
 **Category:** binary search  
-**Time complexity:** `O(log(m*n))`  
+**Time complexity:** `O(log(m * n))`  
 **Space complexity:** `O(1)`
 
 ## Explanation
 
-The matrix is treated as one flat sorted array of m × n entries, with mid // n and mid % n converting a flat index back into a row and column. The loop is therefore a single binary search over m*n elements, halving the range each time for O(log(m*n)) — equivalently O(log m + log n). Answering O(m + n) is the natural guess, matching the staircase walk used when rows and columns are only individually sorted; this stronger fully-sorted layout allows the faster search. Space is O(1), since only index variables are kept and the matrix is never copied.
+The matrix is treated as one flat sorted array of m * n entries, with mid // n and mid % n converting a flat index back into a row and column. The loop is therefore a single binary search over m * n elements, halving the range each time for O(log(m * n)) — equivalently O(log m + log n). Answering O(m + n) is the natural guess, matching the staircase walk used when rows and columns are only individually sorted; this stronger fully-sorted layout allows the faster search. Space is O(1), since only index variables are kept and the matrix is never copied.
 
 ## Implementations
 

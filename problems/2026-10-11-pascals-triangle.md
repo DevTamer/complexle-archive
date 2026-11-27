@@ -7,7 +7,7 @@
 
 ## Explanation
 
-The dominant cost comes from the two nested loops: the outer loop runs n times (once per row), and the inner loop for row i runs roughly i times, giving a total of 1 + 2 + 3 + ... + n = n*(n+1)/2 operations, which is O(n²). The inner loop `for j in range(1, i)` is the specific construct that drives this — it grows linearly with each row index i. For space, you store the entire triangle in `result`, which holds 1 + 2 + ... + n = n*(n+1)/2 integers total, also O(n²). The most tempting wrong answer for both time and space is O(n), because you might only count the outer loop or think only about the number of rows rather than the total number of elements across all rows.
+The dominant cost comes from the two nested loops: the outer loop runs n times (once per row), and the inner loop for row i runs roughly i times, giving a total of 1 + 2 + 3 + ... + n = n * (n+1)/2 operations, which is O(n²). The inner loop `for j in range(1, i)` is the specific construct that drives this — it grows linearly with each row index i. For space, you store the entire triangle in `result`, which holds 1 + 2 + ... + n = n * (n+1)/2 integers total, also O(n²). The most tempting wrong answer for both time and space is O(n), because you might only count the outer loop or think only about the number of rows rather than the total number of elements across all rows.
 
 ## Implementations
 

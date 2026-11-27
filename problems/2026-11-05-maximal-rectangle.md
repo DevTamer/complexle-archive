@@ -2,12 +2,12 @@
 
 **Puzzle date:** 2026-11-05  
 **Category:** stack  
-**Time complexity:** `O(m*n)`  
+**Time complexity:** `O(m * n)`  
 **Space complexity:** `O(n)`
 
 ## Explanation
 
-The outer loop runs once per row and the inner loop updates one histogram entry per column, which is m × n work in total. largest_rectangle_area is called once per row, but it is a monotonic stack that runs in O(n) per call — each column index is pushed and popped at most once — so those calls add another m × n rather than something quadratic in n. Space is only O(n): the heights array and the stack are both sized by the number of columns and are reused across rows. Answering O(m*n) for space is the natural trap, since the matrix itself is that large, but no copy of it is ever made.
+The outer loop runs once per row and the inner loop updates one histogram entry per column, which is m * n work in total. largest_rectangle_area is called once per row, but it is a monotonic stack that runs in O(n) per call — each column index is pushed and popped at most once — so those calls add another m * n rather than something quadratic in n. Space is only O(n): the heights array and the stack are both sized by the number of columns and are reused across rows. Answering O(m * n) for space is the natural trap, since the matrix itself is that large, but no copy of it is ever made.
 
 ## Implementations
 

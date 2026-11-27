@@ -2,12 +2,12 @@
 
 **Puzzle date:** 2026-06-25  
 **Category:** graph  
-**Time complexity:** `O(m*n)`  
-**Space complexity:** `O(m*n)`
+**Time complexity:** `O(m * n)`  
+**Space complexity:** `O(m * n)`
 
 ## Explanation
 
-The dominant cost is the BFS traversal of the grid, where m and n are the number of rows and columns. Every cell in the grid is visited at most once — rotten oranges are added to the queue exactly once and fresh oranges are converted to rotten (value 2) before being enqueued, preventing re-processing. You might be tempted to say O((m*n)²) because there's a while loop containing a for loop over 4 directions, but the 4-directional check is a constant factor and each cell is enqueued at most once, so the total work across all iterations is proportional to m*n. The space complexity is also O(m*n) because in the worst case (e.g., all cells are rotten from the start) the queue could hold every cell in the grid simultaneously.
+The dominant cost is the BFS traversal of the grid, where m and n are the number of rows and columns. Every cell in the grid is visited at most once — rotten oranges are added to the queue exactly once and fresh oranges are converted to rotten (value 2) before being enqueued, preventing re-processing. You might be tempted to say O((m * n)²) because there's a while loop containing a for loop over 4 directions, but the 4-directional check is a constant factor and each cell is enqueued at most once, so the total work across all iterations is proportional to m * n. The space complexity is also O(m * n) because in the worst case (e.g., all cells are rotten from the start) the queue could hold every cell in the grid simultaneously.
 
 ## Implementations
 

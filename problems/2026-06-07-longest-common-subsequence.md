@@ -2,12 +2,12 @@
 
 **Puzzle date:** 2026-06-07  
 **Category:** dynamic programming  
-**Time complexity:** `O(m*n)`  
-**Space complexity:** `O(m*n)`
+**Time complexity:** `O(m * n)`  
+**Space complexity:** `O(m * n)`
 
 ## Explanation
 
-The algorithm uses two nested loops, one iterating over all m characters of text1 and one over all n characters of text2, resulting in O(m*n) time complexity. The space complexity is also O(m*n) because a 2D DP table of size (m+1)*(n+1) is allocated to store intermediate LCS lengths. Note that space could be optimized to O(min(m,n)) by using rolling arrays, but this implementation does not do that.
+The algorithm uses two nested loops, one iterating over all m characters of text1 and one over all n characters of text2, resulting in O(m * n) time complexity. The space complexity is also O(m * n) because a 2D DP table of size (m+1) * (n+1) is allocated to store intermediate LCS lengths. Note that space could be optimized to O(min(m,n)) by using rolling arrays, but this implementation does not do that.
 
 ## Implementations
 

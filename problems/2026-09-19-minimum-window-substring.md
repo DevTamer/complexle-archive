@@ -7,7 +7,7 @@
 
 ## Explanation
 
-You have two pointers, i and j, that each move forward through the string s, and the inner while loop's total iterations across the whole run are bounded by n because i never resets or moves backward, so the sliding window scan is O(n), plus O(m) to build the Counter from t. It's tempting to think the while loop nested inside the for loop makes this O(n^2), but that's wrong because i only increases and never exceeds j, so combined the two pointers do at most 2n steps total, not n*m or n^2. The space cost comes from the Counter dictionary, which stores at most one entry per distinct character in t, giving O(m) where m is the length of t (or O(1) if you assume a fixed alphabet like ASCII). Since count is built from t and only ever tracks characters from t, it doesn't grow with the size of s, so space isn't O(n) or O(n+m).
+You have two pointers, i and j, that each move forward through the string s, and the inner while loop's total iterations across the whole run are bounded by n because i never resets or moves backward, so the sliding window scan is O(n), plus O(m) to build the Counter from t. It's tempting to think the while loop nested inside the for loop makes this O(n^2), but that's wrong because i only increases and never exceeds j, so combined the two pointers do at most 2n steps total, not n * m or n^2. The space cost comes from the Counter dictionary, which stores at most one entry per distinct character in t, giving O(m) where m is the length of t (or O(1) if you assume a fixed alphabet like ASCII). Since count is built from t and only ever tracks characters from t, it doesn't grow with the size of s, so space isn't O(n) or O(n+m).
 
 ## Implementations
 

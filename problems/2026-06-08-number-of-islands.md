@@ -2,12 +2,12 @@
 
 **Puzzle date:** 2026-06-08  
 **Category:** graph  
-**Time complexity:** `O(m*n)`  
-**Space complexity:** `O(m*n)`
+**Time complexity:** `O(m * n)`  
+**Space complexity:** `O(m * n)`
 
 ## Explanation
 
-Every cell in the m×n grid is visited at most once by the outer loop and DFS combined, since visited cells are marked '0' immediately, giving O(m*n) time. The space complexity is O(m*n) in the worst case due to the DFS recursion stack, which can reach depth m*n when the entire grid is one large island (e.g., a snake-shaped path covering all cells).
+Every cell in the m * n grid is visited at most once by the outer loop and DFS combined, since visited cells are marked '0' immediately, giving O(m * n) time. The space complexity is O(m * n) in the worst case due to the DFS recursion stack, which can reach depth m * n when the entire grid is one large island (e.g., a snake-shaped path covering all cells).
 
 ## Implementations
 

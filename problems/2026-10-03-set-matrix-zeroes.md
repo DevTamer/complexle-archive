@@ -2,12 +2,12 @@
 
 **Puzzle date:** 2026-10-03  
 **Category:** arrays  
-**Time complexity:** `O(m*n)`  
+**Time complexity:** `O(m * n)`  
 **Space complexity:** `O(1)`
 
 ## Explanation
 
-The dominant cost comes from the nested loops that scan every cell of the matrix twice (once to mark zeros, once to apply them), where m is the number of rows and n is the number of columns. Since each loop visits every element a constant number of times, the total work scales directly with the total number of cells, giving O(m*n) time. You might be tempted to think it's O(m+n) because the algorithm uses the first row and column as markers, but that only describes the size of the marker storage, not the actual work done scanning the whole grid. Space stays O(1) because the algorithm cleverly reuses the first row and column of the input matrix itself as marker flags instead of allocating separate arrays, so no extra memory grows with the input size.
+The dominant cost comes from the nested loops that scan every cell of the matrix twice (once to mark zeros, once to apply them), where m is the number of rows and n is the number of columns. Since each loop visits every element a constant number of times, the total work scales directly with the total number of cells, giving O(m * n) time. You might be tempted to think it's O(m+n) because the algorithm uses the first row and column as markers, but that only describes the size of the marker storage, not the actual work done scanning the whole grid. Space stays O(1) because the algorithm cleverly reuses the first row and column of the input matrix itself as marker flags instead of allocating separate arrays, so no extra memory grows with the input size.
 
 ## Implementations
 

@@ -7,7 +7,7 @@
 
 ## Explanation
 
-The dominant cost here is the single for loop that iterates over t once, where n is the length of t. You only ever move forward through t, comparing each character to s[i] and incrementing i when there's a match, so the work done is directly proportional to the length of t, giving O(n) time. A tempting but wrong answer is O(m*n), where m is the length of s, since it looks like you're matching two strings against each other; but there's no nested loop or inner scan over s—i only advances forward and the loop breaks early once i reaches len(s), so s's length doesn't multiply into the cost. Space is O(1) because the only extra memory used is the integer index i, regardless of how long s or t are; no arrays, lists, or recursive stacks are created that scale with input size.
+The dominant cost here is the single for loop that iterates over t once, where n is the length of t. You only ever move forward through t, comparing each character to s[i] and incrementing i when there's a match, so the work done is directly proportional to the length of t, giving O(n) time. A tempting but wrong answer is O(m * n), where m is the length of s, since it looks like you're matching two strings against each other; but there's no nested loop or inner scan over s—i only advances forward and the loop breaks early once i reaches len(s), so s's length doesn't multiply into the cost. Space is O(1) because the only extra memory used is the integer index i, regardless of how long s or t are; no arrays, lists, or recursive stacks are created that scale with input size.
 
 ## Implementations
 

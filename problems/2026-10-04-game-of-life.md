@@ -2,12 +2,12 @@
 
 **Puzzle date:** 2026-10-04  
 **Category:** arrays  
-**Time complexity:** `O(m*n)`  
+**Time complexity:** `O(m * n)`  
 **Space complexity:** `O(1)`
 
 ## Explanation
 
-You should focus on the two nested loops over i and j, which run m*n times total. Inside, there's an inner double loop over the 3x3 neighborhood, but that's bounded by a constant (at most 9 cells), so it doesn't grow with input size and just contributes a constant factor. The board is modified in place using bit tricks (storing next state in the second bit), so no extra data structures scale with input, giving constant extra space. The tempting distractor O(m*n*9) is wrong only in notation—Big-O drops constant multipliers, so it simplifies to O(m*n), not a separate complexity class.
+You should focus on the two nested loops over i and j, which run m * n times total. Inside, there's an inner double loop over the 3x3 neighborhood, but that's bounded by a constant (at most 9 cells), so it doesn't grow with input size and just contributes a constant factor. The board is modified in place using bit tricks (storing next state in the second bit), so no extra data structures scale with input, giving constant extra space. The tempting distractor O(m * n * 9) is wrong only in notation—Big-O drops constant multipliers, so it simplifies to O(m * n), not a separate complexity class.
 
 ## Implementations
 
