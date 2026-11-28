@@ -15,7 +15,7 @@ Updated daily, automatically, as each puzzle retires.
 - [`problems.json`](problems.json) — the full dataset, one object per puzzle
 - [`problems/`](problems/) — one Markdown page per puzzle, browsable on GitHub
 
-**128 puzzles** archived, from 2026-06-01 to 2026-11-26.
+**129 puzzles** archived, from 2026-06-01 to 2026-11-27.
 
 ## Recent puzzles
 
@@ -24,6 +24,7 @@ Showing the 30 most recent. For the full archive, browse
 
 | Date | Problem | Category | Time | Space |
 |------|---------|----------|------|-------|
+| 2026-11-27 | [Asteroid Collision](problems/2026-11-27-asteroid-collision.md) | stack | `O(n)` | `O(n)` |
 | 2026-11-26 | [Contiguous Array](problems/2026-11-26-contiguous-array.md) | hash map | `O(n)` | `O(n)` |
 | 2026-11-25 | [Continuous Subarray Sum](problems/2026-11-25-continuous-subarray-sum.md) | hash map | `O(n)` | `O(min(n, k))` |
 | 2026-11-24 | [Construct Binary Tree from Preorder and Inorder Traversal](problems/2026-11-24-construct-binary-tree-from-preorder-and-inorder-traversal.md) | tree | `O(n)` | `O(n)` |
@@ -53,7 +54,6 @@ Showing the 30 most recent. For the full archive, browse
 | 2026-10-31 | [Task Scheduler](problems/2026-10-31-task-scheduler.md) | heap | `O(n)` | `O(n)` |
 | 2026-10-30 | [Intersection of Two Arrays](problems/2026-10-30-intersection-of-two-arrays.md) | hash map | `O(n + m)` | `O(min(n, m))` |
 | 2026-10-29 | [Intersection of Two Arrays II](problems/2026-10-29-intersection-of-two-arrays-ii.md) | hash map | `O(n + m)` | `O(min(n, m))` |
-| 2026-10-28 | [First Unique Character in a String](problems/2026-10-28-first-unique-character-in-a-string.md) | hash map | `O(n)` | `O(n)` |
 
 ## License & attribution
 

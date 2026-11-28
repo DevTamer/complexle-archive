@@ -1790,5 +1790,19 @@
       "cpp": "int findMaxLength(std::vector<int>& nums) {\n    int result = 0, count = 0;\n    std::unordered_map<int, int> lookup;\n    lookup[0] = -1;\n    for (int i = 0; i < (int)nums.size(); i++) {\n        count += nums[i] == 1 ? 1 : -1;\n        if (lookup.count(count)) {\n            result = std::max(result, i - lookup[count]);\n        } else {\n            lookup[count] = i;\n        }\n    }\n    return result;\n}",
       "rust": "fn find_max_length(nums: &[i32]) -> i32 {\n    let mut result: i32 = 0;\n    let mut count: i32 = 0;\n    let mut lookup: HashMap<i32, i32> = HashMap::new();\n    lookup.insert(0, -1);\n    for (i, &num) in nums.iter().enumerate() {\n        count += if num == 1 { 1 } else { -1 };\n        let i = i as i32;\n        if let Some(&j) = lookup.get(&count) {\n            result = result.max(i - j);\n        } else {\n            lookup.insert(count, i);\n        }\n    }\n    result\n}"
     }
+  },
+  {
+    "date": "2026-11-27",
+    "title": "Asteroid Collision",
+    "category": "stack",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "explanation": "The dominant cost is the single pass over the asteroids, plus the inner while loop that pops from the result stack. Each asteroid is pushed onto the stack at most once and popped at most once, so across the whole run the pops can never total more than n. That makes the total work proportional to n. The tempting answer is O(n²) because a while loop sits inside a for loop, but the inner loop's work is shared across all iterations rather than repeated, so it averages out to constant time per asteroid. Space is O(n) because the result stack can hold every asteroid, for example when they all move right.",
+    "source_url": "https://github.com/kamyu104/LeetCode-Solutions/blob/master/Python/asteroid-collision.py",
+    "implementations": {
+      "python": "def asteroid_collision(asteroids: list[int]) -> list[int]:\n    result = []\n    for x in asteroids:\n        if x > 0:\n            result.append(x)\n            continue\n        while result and 0 < result[-1] < -x:\n            result.pop()\n        if result and 0 < result[-1]:\n            if result[-1] == -x:\n                result.pop()\n            continue\n        result.append(x)\n    return result",
+      "cpp": "std::vector<int> asteroidCollision(std::vector<int>& asteroids) {\n    std::vector<int> result;\n    for (int x : asteroids) {\n        if (x > 0) {\n            result.push_back(x);\n            continue;\n        }\n        while (!result.empty() && 0 < result.back() && result.back() < -x) {\n            result.pop_back();\n        }\n        if (!result.empty() && 0 < result.back()) {\n            if (result.back() == -x)\n                result.pop_back();\n            continue;\n        }\n        result.push_back(x);\n    }\n    return result;\n}",
+      "rust": "fn asteroid_collision(asteroids: &[i32]) -> Vec<i32> {\n    let mut result: Vec<i32> = Vec::new();\n    for &x in asteroids {\n        if x > 0 {\n            result.push(x);\n            continue;\n        }\n        while let Some(&top) = result.last() {\n            if 0 < top && top < -x {\n                result.pop();\n            } else {\n                break;\n            }\n        }\n        if let Some(&top) = result.last() {\n            if top > 0 {\n                if top == -x {\n                    result.pop();\n                }\n                continue;\n            }\n        }\n        result.push(x);\n    }\n    result\n}"
+    }
   }
 ]
